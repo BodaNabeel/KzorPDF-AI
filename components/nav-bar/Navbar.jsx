@@ -15,29 +15,51 @@ import { useRouter } from "next/router";
 
 function Navbar() {
   const router = useRouter();
-  const pathname = router.pathname
-  const formattedPathname = pathname.replace("/", "")
-  const [selectdPath, setSelectedPath] = useState("home")
+  const pathname = router.pathname;
+  const formattedPathname = pathname.replace("/", "");
+  const [selectdPath, setSelectedPath] = useState(formattedPathname);
   return (
-    <aside className=" py-5 bg-white w-[15%] h-full flex flex-col  items-center">
+    <aside className=" py-5 bg-white w-[15%] h-full flex flex-col  items-center  left-0 top-0">
       <header className="mb-10">Logo of Company</header>
       <button className="mb-10 bg-[#4865ff]  rounded-md w-[90%] px-2 py-3 ">
         <p className="text-white font-semibold w-full">+ Create New</p>
       </button>
       <nav className="mb-10 flex flex-col w-[80%] gap-5 font-medium justify-self-center">
-        <Link className="flex items-end gap-3" href={"/home"} onClick={() => setSelectedPath("home")}>
-          {selectdPath === "home" ? <SolidHomeIcon className="h-6 w-6 text-black"/> : <OutlineHomeIcon className="h-6 w-6 text-black"/>}
+        <Link
+          className="flex items-end gap-3"
+          href={"/home"}
+          onClick={() => setSelectedPath("home")}
+        >
+          {selectdPath === "home" ? (
+            <SolidHomeIcon className="h-6 w-6 text-black" />
+          ) : (
+            <OutlineHomeIcon className="h-6 w-6 text-black" />
+          )}
           <p>Home</p>
         </Link>
-        <Link href={"/books"} className="flex items-end gap-3" onClick={() => setSelectedPath("books")}>
-          {selectdPath === "books" ? <SolidBookOpenIcon className="h-6 w-6 text-black"/> : <OutlineBookOpenIcon className="h-6 w-6 text-black"/>}
-
+        <Link
+          href={"/books"}
+          className="flex items-end gap-3"
+          onClick={() => setSelectedPath("books")}
+        >
+          {selectdPath === "books" ? (
+            <SolidBookOpenIcon className="h-6 w-6 text-black" />
+          ) : (
+            <OutlineBookOpenIcon className="h-6 w-6 text-black" />
+          )}
 
           <p>Books</p>
         </Link>
-        <Link href={"/bookmarks"} className="flex items-end gap-3" onClick={() => setSelectedPath("bookmarks")}>
-          {selectdPath === "bookmarks" ? <SolidBookmarkIcon className="h-6 w-6 text-black"/> : <OutlineBookmarkIcon className="h-6 w-6 text-black"/>}
-
+        <Link
+          href={"/bookmarks"}
+          className="flex items-end gap-3"
+          onClick={() => setSelectedPath("bookmarks")}
+        >
+          {selectdPath === "bookmarks" ? (
+            <SolidBookmarkIcon className="h-6 w-6 text-black" />
+          ) : (
+            <OutlineBookmarkIcon className="h-6 w-6 text-black" />
+          )}
 
           <p>Bookmarks</p>
         </Link>
