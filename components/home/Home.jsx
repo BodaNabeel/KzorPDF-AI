@@ -4,7 +4,6 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 function HomePage(props) {
   const { data } = props;
   const [fetchedData, setFetchedData] = useState(data);
-  // console.log(fetchedData);
   function handler(id) {
     const tempData = [...fetchedData]
     tempData.splice(id,1)
@@ -12,15 +11,14 @@ function HomePage(props) {
   }
 
   return (
-    <div className="lg:my-16">
+    <div className="">
       {fetchedData.map((data, index) => {
         return (
           <div
             key={index}
-            onClick={() => console.log(index)}
             className="flex py-4 px-7 justify-between bg-white rounded-lg cursor-pointer bg-gradient-to-r from-[#e2e6f3] to-[#e9e1fa] mb-10"
           >
-            <div className="border-2 w-[70%]">
+            <div className=" w-[70%]">
               <h3 className="font-semibold">{data.title}</h3>
             </div>
             <div className="flex gap-10 items-center">
