@@ -22,10 +22,10 @@ function Navbar() {
     const formattedPathname = pathname.replace("/", "");
     const [selectdPath, setSelectedPath] = useState(formattedPathname);
   return (
-    <div className="drawer lg:drawer-open  ">
+    <div className="drawer lg:drawer-open w-min ">
   <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
   <div className="drawer-content flex flex-col items-center justify-center ">
-    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden w-screen flex justify-start"><Bars3BottomLeftIcon className="h-6 w-6 text-white left-0" /></label>
+    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden w-screen flex justify-start rounded-none"><Bars3BottomLeftIcon className="h-6 w-6 text-white left-0" /></label>
   
   </div> 
   <div className="drawer-side">
