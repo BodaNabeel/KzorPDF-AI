@@ -19,7 +19,7 @@ function Navbar() {
   const formattedPathname = pathname.replace("/", "");
   const [selectdPath, setSelectedPath] = useState(formattedPathname);
   return (
-    <aside className=" py-5 bg-white w-[15%] h-full flex flex-col  items-center  left-0 top-0">
+    <aside className=" py-5 bg-white w-[18%]  flex flex-col  items-center h-screen sticky top-0 ">
       <header className="mb-10">Logo of Company</header>
       <button className="mb-10 bg-[#4865ff]  rounded-md w-[90%] px-2 py-3 ">
         <p className="text-white font-semibold w-full">+ Create New</p>
