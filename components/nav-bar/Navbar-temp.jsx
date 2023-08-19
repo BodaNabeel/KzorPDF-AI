@@ -1,11 +1,10 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   HomeIcon as OutlineHomeIcon,
   BookOpenIcon as OutlineBookOpenIcon,
   BookmarkIcon as OutlineBookmarkIcon,
   EllipsisHorizontalCircleIcon,
-  Bars3BottomLeftIcon
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as SolidHomeIcon,
@@ -14,30 +13,40 @@ import {
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 
-
-
 function Navbar() {
-    const router = useRouter();
-    const pathname = router.pathname;
-    const formattedPathname = pathname.replace("/", "");
-    const [selectdPath, setSelectedPath] = useState(formattedPathname);
-  return (
-    <div className="drawer lg:drawer-open  ">
-  <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-  <div className="drawer-content flex flex-col items-center justify-center ">
-    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden w-screen flex justify-start"><Bars3BottomLeftIcon className="h-6 w-6 text-white left-0" /></label>
-  
-  </div> 
-  <div className="drawer-side">
-    <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
-    
-    <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
-    
+  console.log("hello")
+  const router = useRouter();
+  const pathname = router.pathname;
+  const formattedPathname = pathname.replace("/", "");
+  const [selectdPath, setSelectedPath] = useState(formattedPathname);
+  const [isDisplayed, setIsDisplayed] = useState(false);
+  function toggleDisplay() {
+    setIsDisplayed((prevState) => !prevState);
+  }
+    const [screenWidth, setScreenWidth] = useState()
+    useEffect(()=> {
+      setSelectedPath(window.innerWidth)
+      window.addEventListener('resize', ()=> {
+          setScreenWidth(window.innerWidth)
+          console.log(screenWidth)
+      })
+   }, [])
+
+  function SideMenu() {
+    return (
+      <div>
+        {isDisplayed && screenWidth < 920 ? (
+          <div className="absolute  z-20 h-screen w-screen bg-cyan-100 " onClick={toggleDisplay}></div>
+        ) : null}
+        {isDisplayed  &&  screenWidth < 920 ? (
+          <aside
+            className={`py-5 bg-white w-[20%] tablet:w-[50%]  mobile:w-[80%] flex flex-col  items-center h-screen sticky top-0 sm-md:absolute z-40`}
+          >
             <header className="mb-10">Logo of Company</header>
             <button className="mb-10 bg-[#4865ff]  rounded-md w-[90%] px-2 py-3 ">
               <p className="text-white font-semibold w-full">+ Create New</p>
             </button>
-            <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
+            <nav className="mb-10 flex flex-col w-[80%] gap-5 font-medium justify-self-center">
               <Link
                 className="flex items-end gap-3"
                 href={"/home"}
@@ -99,11 +108,16 @@ function Navbar() {
                 <button>Logout</button>
               </div>
             </div>
+          </aside>
+        ) : null}
+        {!isDisplayed ? <button onClick={toggleDisplay}>hamburger menu</button>: null}
+      </div>
+    );
+  }
 
-    </div>
-  
-  </div>
-</div>
+  return (
+    // {screenWidth > 800 ? :}
+    <SideMenu />
   );
 }
 
