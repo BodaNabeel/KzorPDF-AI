@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
     <div className="flex flex-col lg:flex-row">
       <Navbar className=""/>
       <main className="w-screen ">
-        <Component {...pageProps} />
+        <Component  {...pageProps} />
       </main>
     </div>
   );
