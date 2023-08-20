@@ -34,7 +34,7 @@ function BooksPage() {
         return (
           <div
             key={index}
-            className="flex flex-col w-64 h-96 bg-[#8dd384] rounded-tl-lg rounded-bl-lg rounded-tr-2xl rounded-br-2xl x items-center  justify-center cursor-pointer shadow-[0px_0px_15px_2px_#8dd384] gap-12"
+            className="flex flex-col w-64 h-96 bg-[#8dd384] rounded-tl-lg rounded-bl-lg rounded-tr-[2.5rem] rounded-br-[2.5rem] x items-center  justify-center cursor-pointer shadow-[0px_0px_15px_2px_#8dd384] gap-12"
           >
             <h1 className="font-bold text-3xl h-[65%] w-[80%] text-white overflow-hidden mx-auto leading-snug line-clamp-6">
               {book.name}
