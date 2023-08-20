@@ -5,8 +5,8 @@ function HomePage(props) {
   const { data } = props;
   const [fetchedData, setFetchedData] = useState(data);
   function handler(id) {
-    const tempData = [...fetchedData]
-    tempData.splice(id,1)
+    const tempData = [...fetchedData];
+    tempData.splice(id, 1);
     setFetchedData(tempData);
   }
 
@@ -16,7 +16,7 @@ function HomePage(props) {
         return (
           <div
             key={index}
-            className="flex py-4 px-7 justify-between bg-white rounded-lg cursor-pointer bg-gradient-to-r from-[#e2e6f3] to-[#e9e1fa] mb-10"
+            className="flex py-4 px-7 justify-between rounded-lg cursor-pointer bg-gradient-to-r from-[#e2e6f3] to-[#e9e1fa] mb-10"
           >
             <div className=" w-[70%]">
               <h3 className="font-semibold">{data.title}</h3>
