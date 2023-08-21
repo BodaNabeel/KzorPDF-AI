@@ -37,14 +37,14 @@ function ChatSection() {
         {DUMMY_DATA.map((data, index) => {
           if (!data.user) {
             return (
-              <div className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-2">
+              <div className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-2 rounded-tl-none">
                 <h1>{data.text}</h1>
               </div>
             );
           }
           if (data.user) {
             return (
-              <div className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4">
+              <div className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 rounded-tr-none">
                 <h1>{data.text}</h1>
               </div>
             );
