@@ -5,31 +5,29 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 function BookmarkPage() {
   const [displayBooks, setDisplayBooks] = useState(true);
   const [displayPDF, setDisplayPDF] = useState(false);
-  function toggleBooksDisplayState() {
-    setDisplayBooks((prevState) => !prevState);
-  }
-  function togglePDFDisplayState() {
-    setDisplayPDF((prevState) => !prevState);
-  }
+
   return (
     <div className="flex flex-col gap-5">
-      <div className="  w-[100%]  bg-white rounded-md border-b-4 border-black">
+      <div
+        className={` w-[100%] h-max bg-white rounded-md border-b-4 border-black `}
+      >
         <div
-          onClick={toggleBooksDisplayState}
+          onClick={() => setDisplayBooks((prevState) => !prevState)}
           className="flex justify-between px-5 py-5 cursor-pointer border-b-1 "
         >
           <h1>Books</h1>
-          {displayBooks ? (
-            <XMarkIcon className="h-6 w-6 text-black" />
-          ) : (
-            <ChevronDownIcon className="h-6 w-6 text-black" />
-          )}
+          <ChevronDownIcon
+            className={`h-6 w-6 text-black rotate-180 transition-all ease-in-out duration-300 ${
+              displayBooks ? `rotate-180` : "rotate-0"
+            }`}
+          />
         </div>
         <div
-          className={`overflow-x-auto    ${displayBooks ? null : "hidden"} 
-          `}
+          className={`overflow-x-auto overflow-y-hidden transition-max-height ease-in-out duration-300 ${
+            displayBooks ? "max-h-[40rem] " : "max-h-0 "
+          }`}
         >
-          <table className="table">
+          <table className="table ">
             {/* head */}
             <thead>
               <tr className="">
@@ -60,9 +58,22 @@ function BookmarkPage() {
               {/* row 3 */}
               <tr className="hover cursor-pointer">
                 <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
+                <td>
+                  Hart Hagerty of the witch world that never designed to be
+                  ended in certain way
+                </td>
+                <td>Desktop Support Technician</td>
+                <td>Delete</td>
+              </tr>
+              {/* row 4 */}
+              <tr className="hover cursor-pointer">
+                <th>4</th>
+                <td>
+                  Hart Hagerty of the witch world that never designed to be
+                  ended in certain way
+                </td>
+                <td>Desktop Support Technician</td>
+                <td>Delete</td>
               </tr>
             </tbody>
           </table>
@@ -71,19 +82,21 @@ function BookmarkPage() {
 
       <div className="  w-[100%]  bg-white rounded-md border-b-4 border-black">
         <div
-          onClick={togglePDFDisplayState}
+          onClick={() => setDisplayPDF((prevState) => !prevState)}
           className="flex justify-between px-5 py-5 cursor-pointer border-b-1 "
         >
           <h1>PDFs</h1>
-          {displayPDF ? (
-            <XMarkIcon className="h-6 w-6 text-black" />
-          ) : (
-            <ChevronDownIcon className="h-6 w-6 text-black" />
-          )}
+
+          <ChevronDownIcon
+            className={`h-6 w-6 text-black rotate-180 transition-all ease-in-out duration-300 ${
+              displayPDF ? `rotate-180` : "rotate-0"
+            }`}
+          />
         </div>
         <div
-          className={`overflow-x-auto    ${displayPDF ? null : "hidden"} 
-          `}
+          className={`overflow-x-auto overflow-y-hidden transition-max-height ease-in-out duration-300 ${
+            displayPDF ? "max-h-[40rem] " : "max-h-0 "
+          }`}
         >
           <table className="table">
             {/* head */}
