@@ -26,7 +26,7 @@ function ChatSection() {
     },
   ];
   return (
-    <div className="min-h-[100%] lg:w-[50%] bg-white flex flex-col justify-evenly">
+    <div className="min-h-[100%] lg:w-[50%] bg-white flex flex-col justify-evenly ">
       <div className="flex justify-between px-2 py-2">
         <h1 className="font-semibold">Chat</h1>
         <div>
