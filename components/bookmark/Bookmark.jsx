@@ -17,7 +17,7 @@ function BookmarkPage() {
         >
           <h1>Books</h1>
           <ChevronDownIcon
-            className={`h-6 w-6 text-black rotate-180 transition-all ease-in-out duration-300 ${
+            className={`h-6 w-6 text-black transition-all ease-in-out duration-300 ${
               displayBooks ? `rotate-180` : "rotate-0"
             }`}
           />
@@ -88,7 +88,7 @@ function BookmarkPage() {
           <h1>PDFs</h1>
 
           <ChevronDownIcon
-            className={`h-6 w-6 text-black rotate-180 transition-all ease-in-out duration-300 ${
+            className={`h-6 w-6 text-black  transition-all ease-in-out duration-300 ${
               displayPDF ? `rotate-180` : "rotate-0"
             }`}
           />
