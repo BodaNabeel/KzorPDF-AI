@@ -27,7 +27,7 @@ function BookmarkPage() {
             displayBooks ? "max-h-[40rem] " : "max-h-0 "
           }`}
         >
-          <table className="table ">
+          <table className="table static">
             {/* head */}
             <thead>
               <tr className="">
@@ -98,7 +98,7 @@ function BookmarkPage() {
             displayPDF ? "max-h-[40rem] " : "max-h-0 "
           }`}
         >
-          <table className="table">
+          <table className="table static">
             {/* head */}
             <thead>
               <tr className="">
