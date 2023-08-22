@@ -49,7 +49,7 @@ function ChatSection() {
             return (
               <div
                 key={index}
-                className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 rounded-tr-none"
+                className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none"
               >
                 <h1>{data.text}</h1>
               </div>
