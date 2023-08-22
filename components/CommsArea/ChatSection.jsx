@@ -26,7 +26,7 @@ function ChatSection() {
     },
   ];
   return (
-    <div className="min-h-[100%] lg:w-[50%] bg-white flex flex-col justify-evenly ">
+    <div className="min-h-[100%] lg:w-[50%] w-[95vw] mx-auto bg-white flex flex-col justify-evenly ">
       <div className="flex justify-between px-2 py-2">
         <h1 className="font-semibold">Chat</h1>
         <div>
@@ -37,14 +37,20 @@ function ChatSection() {
         {DUMMY_DATA.map((data, index) => {
           if (!data.user) {
             return (
-              <div className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-2 rounded-tl-none">
+              <div
+                key={index}
+                className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-2 rounded-tl-none"
+              >
                 <h1>{data.text}</h1>
               </div>
             );
           }
           if (data.user) {
             return (
-              <div className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 rounded-tr-none">
+              <div
+                key={index}
+                className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 rounded-tr-none"
+              >
                 <h1>{data.text}</h1>
               </div>
             );

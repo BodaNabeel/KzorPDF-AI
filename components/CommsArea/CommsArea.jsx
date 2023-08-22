@@ -4,7 +4,7 @@ import ChatSection from "./ChatSection";
 
 function CommsArea() {
   return (
-    <section className="min-h-screen max-h-screen  w-[100%] flex flex-col lg:flex-row">
+    <section className="lg:min-h-screen lg:max-h-screen  w-[100%] flex flex-col lg:flex-row">
       <PreviewPDF />
       <ChatSection />
     </section>
