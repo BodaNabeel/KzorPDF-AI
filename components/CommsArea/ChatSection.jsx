@@ -26,7 +26,7 @@ function ChatSection() {
     },
   ];
   return (
-    <div className="min-h-[100%] lg:w-[50%] w-[95vw] mx-auto bg-white flex flex-col justify-evenly ">
+    <div className="min-h-[100%] lg:w-[50%] w-[95vw] mx-auto bg-white flex flex-col justify-evenly pb-4">
       <div className="flex justify-between px-2 py-2">
         <h1 className="font-semibold">Chat</h1>
         <div>
@@ -57,10 +57,10 @@ function ChatSection() {
           }
         })}
       </div>
-      <div className="flex w-[95%] mx-auto  rounded-md overflow-hidden ">
+      <div className="flex w-[95%] mx-auto  rounded-md overflow-hidden gap-2">
         <input
           type="text"
-          className="w-[95%] border-[2px] outline-none pl-3 border-r-gray-400"
+          className="w-[95%] border-[2px] outline-none pl-3 border-r-gray-400 bg-white"
           placeholder="Ask your question..."
         />
 
