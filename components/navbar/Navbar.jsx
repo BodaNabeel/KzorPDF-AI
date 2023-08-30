@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IconHome,
   IconBooks,
@@ -15,6 +15,7 @@ function Navbar() {
   const pathname = router.pathname;
   const formattedPathName = pathname.replace("/", "");
   const [selectedPath, setSelectedPath] = useState(formattedPathName);
+  const disposalSelectedPath = selectedPath
   const assignedRoutes = ["Home", "Library", "Summarize PDF", "Chat with PDF"];
   const iconMap = {
     home: IconHome,
@@ -22,6 +23,11 @@ function Navbar() {
     summarize: IconBolt,
     chat: IconMessage,
   };
+
+  useEffect(() => {
+    setSelectedPath(formattedPathName)
+  }, [pathname])
+  
 
   return (
     <div className="drawer lg:drawer-open w-min ">
