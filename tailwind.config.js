@@ -59,6 +59,10 @@ module.exports = {
           600: "hsl(0,0%,45%)",
         },
       },
+      fontFamily: {
+        montserrat: ["Montserrat"],
+        source_sans: ["Source Sans Pro"],
+      },
     },
   },
   plugins: [require("daisyui")],
