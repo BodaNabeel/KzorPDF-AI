@@ -1,5 +1,5 @@
 import { DUMMY_DATA } from "@/DUMMY_DATA";
-import HomePage from "../components/home/Home";
+import HomePage from "../../components/home/Home";
 export default function Home(props) {
   const { data } = props;
   return (

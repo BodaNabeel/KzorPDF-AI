@@ -14,13 +14,13 @@ function Navbar() {
   const router = useRouter();
   const pathname = router.pathname;
   const formattedPathName = pathname.replace("/", "");
-  const [selectdPath, setSelectedPath] = useState(formattedPathName);
+  const [selectedPath, setSelectedPath] = useState(formattedPathName);
   const assignedRoutes = ["Home", "Library", "Summarize PDF", "Chat with PDF"];
   const iconMap = {
     home: IconHome,
     library: IconBooks,
-    summarizepdf: IconBolt,
-    chatwithpdf: IconMessage,
+    summarize: IconBolt,
+    chat: IconMessage,
   };
 
   return (
@@ -40,19 +40,23 @@ function Navbar() {
         <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
           <header className="mb-10 font-source_sans">Logo of Company</header>
           <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
-            {assignedRoutes.map((route) => {
-              const formattedRoute = route.replace(/ /g, "").toLowerCase();
-              const formattedPath = selectdPath.replace(/ /g,"").toLowerCase()
-              const IconComponent = iconMap[formattedRoute];
+            {assignedRoutes.map((route, index) => {
+              const splitedRoute = route.split(" ")[0].toLowerCase();
+              // console.log(splitedRoute)
+              console.log(selectedPath)
+              // const formattedRoute = route.replace(/ /g, "").toLowerCase();
+              // const formattedPath = selectdPath.replace(/ /g, "").toLowerCase();
+              const IconComponent = iconMap[splitedRoute];
               return (
                 <Link
                   className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start ${
-                    formattedPath === formattedRoute
+                    splitedRoute === selectedPath
                       ? "bg-primary-50 text-primary-700 "
                       : null
                   }`}
-                  href={`/${formattedRoute}`}
-                  onClick={() => setSelectedPath(route)}
+                  href={`/${splitedRoute}`}
+                  onClick={() => setSelectedPath(splitedRoute)}
+                  key={index}
                 >
                   <IconComponent stroke={1.5} />
 
