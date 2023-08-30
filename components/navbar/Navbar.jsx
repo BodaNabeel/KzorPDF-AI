@@ -38,7 +38,7 @@ function Navbar() {
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
         <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
-          <header className="mb-10 font-montserrat">Logo of Company</header>
+          <header className="mb-10 font-source_sans">Logo of Company</header>
           <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
             {assignedRoutes.map((route) => {
               const formattedPath = route.replace(/ /g, "").toLowerCase();
@@ -46,7 +46,7 @@ function Navbar() {
 
               return (
                 <Link
-                  className={`flex gap-3  py-[5px] px-[10px] rounded-md  font-montserrat items-start ${
+                  className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start ${
                     selectdPath.toLowerCase() === formattedPath.toLowerCase()
                       ? "bg-primary-50 text-primary-700 "
                       : null
@@ -54,21 +54,21 @@ function Navbar() {
                   href={`/${formattedPath}`}
                   onClick={() => setSelectedPath(route)}
                 >
-                  <IconComponent />
+                  <IconComponent stroke={1.5} />
 
                   <p>{route}</p>
                 </Link>
               );
             })}
           </nav>
-          <div className="bg-gradient-to-r from-[#4865ff] to-[#ae48ff]  py-10 w-[90%] text-white rounded-md font-semibold h-max flex flex-col items-center mb-10">
+          <div className="bg-gradient-to-r from-primary-700 to-primary-300  py-10 w-[90%] text-white rounded-md  h-max flex flex-col items-center mb-10">
             <p className="w-[90%] mb-2">
               Elevate with Premium: Effortlessly import PDFs, plus get 1-month
               free trial. Simplify tasks and boost productivity – make the
               switch now!
             </p>
             <button className="bg-white mt-12 py-1 px-3 rounded-md w-[90%]">
-              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#4865ff] to-[#ae48ff]">
+              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-700 to-primary-300 font-source_sans">
                 Upgrade to Pro
               </h1>
             </button>
