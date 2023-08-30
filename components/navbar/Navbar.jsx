@@ -42,10 +42,7 @@ function Navbar() {
           <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
             {assignedRoutes.map((route, index) => {
               const splitedRoute = route.split(" ")[0].toLowerCase();
-              // console.log(splitedRoute)
               console.log(selectedPath)
-              // const formattedRoute = route.replace(/ /g, "").toLowerCase();
-              // const formattedPath = selectdPath.replace(/ /g, "").toLowerCase();
               const IconComponent = iconMap[splitedRoute];
               return (
                 <Link
