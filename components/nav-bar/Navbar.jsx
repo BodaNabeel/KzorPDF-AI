@@ -34,9 +34,9 @@ function Navbar() {
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
         <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
-          <header className="mb-10">Logo of Company</header>
-          <button className="mb-10 bg-[#4865ff]  rounded-md w-[90%] px-2 py-3 ">
-            <p className="text-white font-semibold w-full">+ Create New</p>
+          <header className="mb-10 font-montserrat">Logo of Company</header>
+          <button className="mb-10 bg-primary-600  rounded-md w-[90%] px-2 py-3 ">
+            <p className="text-white font-source_sans  w-full">+ Create New</p>
           </button>
           <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
             <Link
