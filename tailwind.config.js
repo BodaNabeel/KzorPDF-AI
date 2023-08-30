@@ -66,7 +66,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        montserrat: ["Montserrat"],
+        sans: ["Montserrat"],
         source_sans: ["Source Sans Pro"],
       },
     },
