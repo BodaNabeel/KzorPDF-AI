@@ -41,17 +41,17 @@ function Navbar() {
           <header className="mb-10 font-source_sans">Logo of Company</header>
           <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
             {assignedRoutes.map((route) => {
-              const formattedPath = route.replace(/ /g, "").toLowerCase();
-              const IconComponent = iconMap[formattedPath];
-
+              const formattedRoute = route.replace(/ /g, "").toLowerCase();
+              const formattedPath = selectdPath.replace(/ /g,"").toLowerCase()
+              const IconComponent = iconMap[formattedRoute];
               return (
                 <Link
                   className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start ${
-                    selectdPath.toLowerCase() === formattedPath.toLowerCase()
+                    formattedPath === formattedRoute
                       ? "bg-primary-50 text-primary-700 "
                       : null
                   }`}
-                  href={`/${formattedPath}`}
+                  href={`/${formattedRoute}`}
                   onClick={() => setSelectedPath(route)}
                 >
                   <IconComponent stroke={1.5} />
