@@ -6,7 +6,7 @@ function HomePage() {
   return (
     <>
       <div className='mb-5'>
-        <h1 className='font-bold'>Welcome, Nabeel</h1>
+        <h1 className='font-bold text-lg'>Welcome, Nabeel</h1>
       </div>
       <Import/>
       <Recent/>
