@@ -1,7 +1,7 @@
 import { IconPlus } from "@tabler/icons-react";
 import React, { useRef, useState } from "react";
 import { IconFolder, IconFolderFilled } from "@tabler/icons-react";
-function Library() {
+function Library({ overlay, setOverlay }) {
   const tempFolders = [
     "Untitled collection",
     "Physics",
@@ -14,16 +14,16 @@ function Library() {
   ];
   const [folders, setFolders] = useState(tempFolders);
   const [selectedFolder, setSelectedFolder] = useState(0);
-  const [folderName, setFolderName] = useState("");
-  const [displayPopup, setDisplayPopup] = useState(false);
+  const [folderName, setFolderName] = useState();
+  const [displayPopup, setDisplayPopup] = useState(true);
   const inputRef = useRef();
   function updateFolderName(name) {
     setFolderName(name);
   }
   function saveFolder(e) {
     e.preventDefault();
-
-    if (folderName === "") {
+    console.log(folderName);
+    if (!folderName) {
       console.log("You need to enter a name");
     } else {
       const arr = [...folders];
@@ -32,23 +32,25 @@ function Library() {
       inputRef.current.value = "";
       setFolderName("");
       setDisplayPopup(false);
+      setOverlay(false);
     }
   }
   function cancelFolder(e) {
     setDisplayPopup(false);
+    setOverlay(false);
     e.preventDefault();
   }
   return (
     <section className="border-[1px] flex h-[650px] ">
       <div
-        className={`left-[40%] top-[40%]  border-2 w-[30%] p-4 bg-white  ${
-          displayPopup ? "absolute" : "hidden"
+        className={`left-[40%] top-[40%]  border-2 border-s_grey-100 w-[30%] p-4 bg-white shadow-[0px_0px_40px_5px_#00000024]  z-50 ${
+          displayPopup && overlay ? "absolute" : "hidden"
         }`}
       >
         <h1 className="font-semibold mb-5">Create new collection</h1>
         <div className="">
           <p>Collection Name:</p>
-          <form action="">
+          <form>
             <input
               onChange={() => updateFolderName(inputRef.current.value)}
               ref={inputRef}
@@ -56,6 +58,11 @@ function Library() {
               type="text"
               id="folder-name"
               placeholder="E.g. Object Oriented Programming"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  saveFolder(e);
+                }
+              }}
             />
             <div className="flex justify-end gap-5">
               <button
@@ -65,9 +72,10 @@ function Library() {
                 Cancel
               </button>
               <button
+                type="submit"
                 onClick={(e) => saveFolder(e)}
                 className={` px-4 py-2 rounded-md ${
-                  folderName === ""
+                  !folderName
                     ? "bg-s_grey-100 text-s_grey-600 cursor-not-allowed "
                     : "bg-primary-800 text-primary-100  "
                 }`}
@@ -84,17 +92,19 @@ function Library() {
 
           <span className="flex justify-between items-center">
             <h1 className="text-lg font-semibold">COLLECTION</h1>
-            <div className="p-2 rounded-[100%] hover:bg-gray-100 cursor-pointer transition-all">
-              <IconPlus
-                onClick={() => setDisplayPopup(true)}
-                stroke={1.5}
-                className="text-gray-600 "
-              />
+            <div
+              onClick={() => {
+                setDisplayPopup(true);
+                setOverlay(true);
+              }}
+              className="p-2 rounded-[100%] hover:bg-gray-100 cursor-pointer transition-all"
+            >
+              <IconPlus stroke={1.5} className="text-gray-600 " />
             </div>
           </span>
         </div>
 
-        <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600 text-xl h-[80%] overflow-y-auto ">
+        <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
           {folders.map((folder, index) => {
             return (
               <li
