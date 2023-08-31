@@ -54,9 +54,8 @@ function Library({ overlay, setOverlay }) {
             <input
               onChange={() => updateFolderName(inputRef.current.value)}
               ref={inputRef}
-              className="w-[100%] border-[1px] mt-2 mb-5 p-2"
+              className="w-[100%] border-[1px] mt-2 mb-5 p-2 outline-1 outline-primary-100 bg-transparent"
               type="text"
-              id="folder-name"
               placeholder="E.g. Object Oriented Programming"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
