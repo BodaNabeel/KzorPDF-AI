@@ -1,6 +1,7 @@
-import { IconPlus } from "@tabler/icons-react";
+import { IconDots, IconPlus } from "@tabler/icons-react";
 import React, { useRef, useState } from "react";
 import { IconFolder, IconFolderFilled } from "@tabler/icons-react";
+import Image from "next/image";
 function Library({ overlay, setOverlay }) {
   const tempFolders = [
     "Untitled collection",
@@ -127,22 +128,59 @@ function Library({ overlay, setOverlay }) {
         </ul>
       </div>
 
-      <div>
-        <div>
+      <div className=" w-[75%]">
+        <div className="border-b-[1px] flex justify-between px-4 py-2 items-center">
           <span>
-            <p>NextJS</p>
-            <p>3 Items</p>
+            <p className="text-lg font-medium">Untitled collection</p>
+            <p className="text-s_grey-600 text-sm font-medium">3 Items</p>
           </span>
-          <span>. . .</span>
+          <span className="text-s_grey-600 cursor-pointer">
+            <IconDots className="" />
+          </span>
         </div>
-        <div>
-          <div>
-            <span>🔗</span>
-            <span>
-              <h1>NTCC Nabeel Boda A2305222027 Semester 2nd</h1>
-              <p>26 July, 2023</p>
+        <div className="py-2">
+          
+          <div className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300">
+            <div className="flex gap-4">
+              <Image src="/images/pdf-0.svg" height={24} width={24} />
+              <span>
+                <p className="font-semibold">
+                  NTCC Nabeel Boda A2305222027 Semester 2nd
+                </p>
+                <p className="text-sm text-gray-500">26 July, 2023</p>
+              </span>
+            </div>
+            <span className="text-s_grey-600 cursor-pointer self-center">
+              <IconDots className="" />
             </span>
-            <span>. . .</span>
+          </div>
+          <div className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300">
+            <div className="flex gap-4">
+              <Image src="/images/pdf.svg" height={24} width={24} />
+              <span>
+                <p className="font-semibold">
+                  NTCC Nabeel Boda A2305222027 Semester 2nd
+                </p>
+                <p className="text-sm text-gray-500">26 July, 2023</p>
+              </span>
+            </div>
+            <span className="text-s_grey-600 cursor-pointer self-center">
+              <IconDots className="" />
+            </span>
+          </div>
+          <div className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300">
+            <div className="flex gap-4">
+              <Image src="/images/pdf-0.svg" height={24} width={24} />
+              <span>
+                <p className="font-semibold">
+                  NTCC Nabeel Boda A2305222027 Semester 2nd
+                </p>
+                <p className="text-sm text-gray-500">26 July, 2023</p>
+              </span>
+            </div>
+            <span className="text-s_grey-600 cursor-pointer self-center">
+              <IconDots className="" />
+            </span>
           </div>
         </div>
       </div>
