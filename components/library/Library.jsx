@@ -43,6 +43,7 @@ function Library({ overlay, setOverlay }) {
         setOverlay={setOverlay}
         displayPopup={displayPopup}
         setDisplayPopup={setDisplayPopup}
+        setSelectedCollection={setSelectedCollection}
       />
 
       <Collection

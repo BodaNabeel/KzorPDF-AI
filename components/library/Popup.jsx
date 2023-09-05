@@ -8,6 +8,7 @@ function Popup(props) {
     setOverlay,
     displayPopup,
     setDisplayPopup,
+    setSelectedCollection,
   } = props;
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
@@ -25,6 +26,7 @@ function Popup(props) {
       setFolderName("");
       setDisplayPopup(false);
       setOverlay(false);
+      setSelectedCollection(collection.length);
     }
   }
   function cancelFolder(e) {
