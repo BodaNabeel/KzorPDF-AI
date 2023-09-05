@@ -6,7 +6,7 @@ function Summarize() {
   const [selectedOption, setSelectedOption] = useState(0);
   function Header({ children }) {
     return (
-      <div className="w-[50%] h-screen">
+      <div className="lg:w-[50%] h-screen">
         <div className="flex gap-5 px-2 py-2 h-[5%]">
           <span
             onClick={() => setSelectedOption(0)}
