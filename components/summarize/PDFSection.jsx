@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PreviewPDF() {
+export default function PDFSection() {
   const initialZoom = 50;
   return (
     <div className=" min-h-[100%] lg:w-[50%] border-r-4 lg:border-gray-600 ">

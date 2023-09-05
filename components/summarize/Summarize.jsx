@@ -1,14 +1,14 @@
 import React from "react";
-import PreviewPDF from "./PreviewPDF";
+import PDFSection from "./PDFSection";
 import ChatSection from "./ChatSection";
 
-function CommsArea() {
+function Summarize() {
   return (
     <section className="lg:min-h-screen lg:max-h-screen  w-[100%] flex flex-col lg:flex-row">
-      <PreviewPDF />
+      <PDFSection />
       <ChatSection />
     </section>
   );
 }
 
-export default CommsArea;
+export default Summarize;

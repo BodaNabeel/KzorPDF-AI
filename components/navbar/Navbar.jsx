@@ -4,7 +4,6 @@ import {
   IconHome,
   IconBooks,
   IconBolt,
-  IconMessage,
   IconMenu2,
   IconDotsCircleHorizontal,
 } from "@tabler/icons-react";
@@ -15,19 +14,16 @@ function Navbar() {
   const pathname = router.pathname;
   const formattedPathName = pathname.replace("/", "");
   const [selectedPath, setSelectedPath] = useState(formattedPathName);
-  const disposalSelectedPath = selectedPath
-  const assignedRoutes = ["Home", "Library", "Summarize PDF", "Chat with PDF"];
+  const assignedRoutes = ["Home", "Library", "Summarize PDF"];
   const iconMap = {
     home: IconHome,
     library: IconBooks,
     summarize: IconBolt,
-    chat: IconMessage,
   };
 
   useEffect(() => {
-    setSelectedPath(formattedPathName)
-  }, [pathname])
-  
+    setSelectedPath(formattedPathName);
+  }, [pathname]);
 
   return (
     <div className="drawer lg:drawer-open w-min ">
