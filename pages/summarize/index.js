@@ -3,7 +3,7 @@ import BookmarkPage from "@/components/bookmark/Bookmark";
 
 export default function Bookmark() {
   return (
-    <section className=" min-h-screen max-h-max   mx-auto ">
+    <section className=" h-screen   mx-auto ">
       <Summarize />
     </section>
   );

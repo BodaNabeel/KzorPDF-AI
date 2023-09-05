@@ -1,5 +1,5 @@
 import React from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
+
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 function ChatSection() {
@@ -26,14 +26,8 @@ function ChatSection() {
     },
   ];
   return (
-    <div className="min-h-[100%] lg:w-[50%] w-[95vw] mx-auto bg-white flex flex-col justify-evenly pb-4">
-      <div className="flex justify-between px-2 py-2">
-        <h1 className="font-semibold">Chat</h1>
-        <div>
-          <TrashIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
-        </div>
-      </div>
-      <div className="h-[88%] overflow-y-auto flex flex-col  px-4">
+    <div className=" bg-white flex flex-col justify-between h-full ">
+      <div className="overflow-y-auto flex flex-col  px-4 pt-2 h-[95%]">
         {DUMMY_DATA.map((data, index) => {
           if (!data.user) {
             return (
@@ -57,7 +51,7 @@ function ChatSection() {
           }
         })}
       </div>
-      <div className="flex w-[95%] mx-auto  rounded-md overflow-hidden gap-2">
+      <div className="flex h-[5%]  w-[95%] mx-auto  rounded-md overflow-hidden gap-2 pb-1">
         <input
           type="text"
           className="w-[95%] border-[2px] outline-none pl-3 border-r-gray-400 bg-white"
