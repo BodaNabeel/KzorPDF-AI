@@ -1,9 +1,11 @@
-import React from "react";
-import { IconDots } from "@tabler/icons-react";
+import React, { useState } from "react";
+import { IconDots, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
+import { IconCircleMinus } from "@tabler/icons-react";
 
 function Folder(props) {
   const { selectedCollection, collection } = props;
+  const [collectionMenu, setCollectionMenu] = useState(false);
   function DisplayCollectionItems() {
     if (collection[selectedCollection].collectionItems.length <= 0) {
       return <h1>No items have been found mate</h1>;
@@ -22,8 +24,9 @@ function Folder(props) {
                   <p className="text-sm text-gray-500">26 July, 2023</p>
                 </span>
               </div>
+
               <span className="text-s_grey-600 cursor-pointer self-center">
-                <IconDots className="" />
+              <IconCircleMinus/>
               </span>
             </div>
           );
@@ -34,8 +37,8 @@ function Folder(props) {
 
   return (
     <div className=" w-[75%]">
-      <div className="border-b-[1px] flex justify-between px-4 py-2 items-center">
-        <span>
+      <div className="border-b-[1px] flex px-4 py-2  items-center justify-between">
+        <span className=" ">
           <p className="text-lg font-medium">
             {collection[selectedCollection].collectionName}
           </p>
@@ -43,9 +46,13 @@ function Folder(props) {
             {collection[selectedCollection].collectionItems.length} items
           </p>
         </span>
-        <span className="text-s_grey-600 cursor-pointer">
-          <IconDots className="" />
-        </span>
+      
+          <span
+          onClick={()=> setCollectionMenu(true)}
+          className="text-s_grey-600 cursor-pointer">
+            <IconTrashX/>
+          </span>
+       
       </div>
       <div className="py-2">{<DisplayCollectionItems />}</div>
     </div>
