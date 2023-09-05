@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Collection from "./Collection";
 import Popup from "./Popup";
-import Folder from "./Folder";
+import Folder from "./CollectionItems";
 function Library({ overlay, setOverlay }) {
   const tempCollection = [
     {
