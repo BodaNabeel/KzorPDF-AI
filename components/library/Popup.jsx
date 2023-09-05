@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 function Popup(props) {
   const {
     collection,
-    setcollection,
+    setCollection,
     overlay,
     setOverlay,
     displayPopup,
@@ -19,7 +19,7 @@ function Popup(props) {
     } else {
       const arr = [...collection];
       arr.push({ collectionName: folderName, collectionItems: [] });
-      setcollection(arr);
+      setCollection(arr);
 
       inputRef.current.value = "";
       setFolderName("");

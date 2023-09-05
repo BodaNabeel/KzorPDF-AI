@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Collection from "./Collection";
 import Popup from "./Popup";
-import Folder from "./CollectionItems";
+import CollectionItems from "./CollectionItems";
 function Library({ overlay, setOverlay }) {
   const tempCollection = [
     {
@@ -30,14 +30,14 @@ function Library({ overlay, setOverlay }) {
       collectionItems: ["Google Apr 23", "Meta May 23", "X Jan 24"],
     },
   ];
-  const [collection, setcollection] = useState(tempCollection);
+  const [collection, setCollection] = useState(tempCollection);
   const [displayPopup, setDisplayPopup] = useState(true);
-  const [selectedCollection, setselectedCollection] = useState(0);
+  const [selectedCollection, setSelectedCollection] = useState(0);
 
   return (
     <section className="border-[1px] flex h-[650px] ">
       <Popup
-        setcollection={setcollection}
+        setCollection={setCollection}
         collection={collection}
         overlay={overlay}
         setOverlay={setOverlay}
@@ -51,10 +51,15 @@ function Library({ overlay, setOverlay }) {
         setDisplayPopup={setDisplayPopup}
         setOverlay={setOverlay}
         selectedCollection={selectedCollection}
-        setselectedCollection={setselectedCollection}
+        setSelectedCollection={setSelectedCollection}
       />
 
-      <Folder selectedCollection={selectedCollection} collection={collection} />
+      <CollectionItems
+        collection={collection}
+        setCollection={setCollection}
+        selectedCollection={selectedCollection}
+        setSelectedCollection={setSelectedCollection}
+      />
     </section>
   );
 }

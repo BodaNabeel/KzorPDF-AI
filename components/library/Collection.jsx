@@ -6,7 +6,7 @@ function Collection(props) {
     setDisplayPopup,
     setOverlay,
     selectedCollection,
-    setselectedCollection,
+    setSelectedCollection,
   } = props;
 
   return (
@@ -33,7 +33,7 @@ function Collection(props) {
           return (
             <li
               key={index}
-              onClick={() => setselectedCollection(index)}
+              onClick={() => setSelectedCollection(index)}
               className={`flex gap-2 transition-all ${
                 index === selectedCollection
                   ? `bg-primary-50 `
