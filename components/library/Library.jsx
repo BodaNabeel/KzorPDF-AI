@@ -3,7 +3,7 @@ import Collection from "./Collection";
 import Popup from "./Popup";
 import Folder from "./Folder";
 function Library({ overlay, setOverlay }) {
-  const collection = [
+  const tempCollection = [
     {
       collectionName: "Untitled collection",
       collectionItems: [
@@ -30,15 +30,15 @@ function Library({ overlay, setOverlay }) {
       collectionItems: ["Google Apr 23", "Meta May 23", "X Jan 24"],
     },
   ];
-  const [folders, setFolders] = useState(collection);
+  const [collection, setcollection] = useState(tempCollection);
   const [displayPopup, setDisplayPopup] = useState(true);
-  const [selectedFolder, setSelectedFolder] = useState(0);
+  const [selectedCollection, setselectedCollection] = useState(0);
 
   return (
     <section className="border-[1px] flex h-[650px] ">
       <Popup
-        setFolders={setFolders}
-        folders={folders}
+        setcollection={setcollection}
+        collection={collection}
         overlay={overlay}
         setOverlay={setOverlay}
         displayPopup={displayPopup}
@@ -46,15 +46,15 @@ function Library({ overlay, setOverlay }) {
       />
 
       <Collection
-        folders={folders}
+        collection={collection}
         displayPopup={displayPopup}
         setDisplayPopup={setDisplayPopup}
         setOverlay={setOverlay}
-        selectedFolder={selectedFolder}
-        setSelectedFolder={setSelectedFolder}
+        selectedCollection={selectedCollection}
+        setselectedCollection={setselectedCollection}
       />
 
-      <Folder selectedFolder={selectedFolder} folders={folders} />
+      <Folder selectedCollection={selectedCollection} collection={collection} />
     </section>
   );
 }

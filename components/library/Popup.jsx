@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 
 function Popup(props) {
   const {
-    folders,
-    setFolders,
+    collection,
+    setcollection,
     overlay,
     setOverlay,
     displayPopup,
@@ -17,12 +17,10 @@ function Popup(props) {
     if (!folderName) {
       console.log("You need to enter a name");
     } else {
-      const arr = [...folders];
+      const arr = [...collection];
       arr.push({ collectionName: folderName, collectionItems: [] });
-      setFolders(arr);
-      //   const arr = [...folders];
-      //   arr.push(folderName);
-      //   setFolders(arr);
+      setcollection(arr);
+
       inputRef.current.value = "";
       setFolderName("");
       setDisplayPopup(false);

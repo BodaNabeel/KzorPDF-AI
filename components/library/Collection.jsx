@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { IconFolder, IconFolderFilled, IconPlus } from "@tabler/icons-react";
 function Collection(props) {
   const {
-    folders,
+    collection,
     setDisplayPopup,
     setOverlay,
-    selectedFolder,
-    setSelectedFolder,
+    selectedCollection,
+    setselectedCollection,
   } = props;
 
   return (
@@ -29,18 +29,22 @@ function Collection(props) {
       </div>
 
       <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
-        {folders.map((folder, index) => {
+        {collection.map((folder, index) => {
           return (
             <li
               key={index}
-              onClick={() => setSelectedFolder(index)}
+              onClick={() => setselectedCollection(index)}
               className={`flex gap-2 transition-all ${
-                index === selectedFolder
+                index === selectedCollection
                   ? `bg-primary-50 `
                   : `hover:bg-gray-100 transition-all duration-300`
               } `}
             >
-              {index === selectedFolder ? <IconFolderFilled /> : <IconFolder />}
+              {index === selectedCollection ? (
+                <IconFolderFilled />
+              ) : (
+                <IconFolder />
+              )}
               <p>{folder.collectionName}</p>
             </li>
           );
