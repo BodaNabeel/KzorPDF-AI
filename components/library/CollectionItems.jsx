@@ -16,6 +16,12 @@ function Folder(props) {
     setCollection(arr);
     setSelectedCollection(0);
   }
+  function deleteCollectionItem(index) {
+    let arr = [...collection];
+    arr[selectedCollection].collectionItems.splice(index, 1);
+    setCollection(arr);
+    console.log(index);
+  }
   function DisplayCollectionItems() {
     if (collection[selectedCollection]?.collectionItems.length <= 0) {
       return <h1>No items have been found mate</h1>;
@@ -39,7 +45,10 @@ function Folder(props) {
                   <p className="text-sm text-gray-500">26 July, 2023</p>
                 </span>
               </div>
-              <span className="text-s_grey-600 cursor-pointer self-center">
+              <span
+                onClick={() => deleteCollectionItem(index)}
+                className="text-s_grey-600 cursor-pointer self-center"
+              >
                 <IconCircleMinus />
               </span>
             </div>
