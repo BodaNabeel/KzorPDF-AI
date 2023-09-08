@@ -2,14 +2,22 @@ import React, { useRef, useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
 function PageSelector() {
   const [pagesPopup, setPagesPopup] = useState(false);
+  const [error, setError] = useState(false);
   const [startPage, setStartPage] = useState();
   const [endPage, setEndPage] = useState();
+
   const startPageRef = useRef();
   const endPageRef = useRef();
   function setPageRange() {
-    setStartPage(startPageRef.current.value);
-    setEndPage(endPageRef.current.value);
-    setPagesPopup(false);
+    if (endPageRef.current.value < startPageRef.current.value) {
+      setError("start cannot be greater than end page.");
+    } else if (startPageRef.current.value <= 0) {
+      setError("start page cannot be less than or equal to zero.");
+    } else {
+      setStartPage(startPageRef.current.value);
+      setEndPage(endPageRef.current.value);
+      setPagesPopup(false);
+    }
   }
   function DisplayPageRange() {
     return (
@@ -57,7 +65,11 @@ function PageSelector() {
             ref={endPageRef}
           />
         </div>
-
+        {error ? (
+          <p className="mb-4 bg-s_red-100 text-s_red-700 p-2  rounded-md inline">
+            {error}
+          </p>
+        ) : null}
         <div className="self-end flex gap-2 ">
           <button
             className="bg-s_grey-100 text-s_grey-600 px-4 py-2 rounded-md"
