@@ -6,7 +6,7 @@ function Summarize() {
   const [selectedOption, setSelectedOption] = useState(0);
   function Header({ children }) {
     return (
-      <div className="lg:w-[50%] h-screen">
+      <div className="lg:w-[50%] lg:h-screen">
         <div className="flex gap-5 px-2 py-2 h-[5%]">
           <span
             onClick={() => setSelectedOption(0)}
@@ -36,7 +36,7 @@ function Summarize() {
     );
   }
   return (
-    <section className="lg:max-h-screen  w-[100%] flex flex-col lg:flex-row">
+    <section className="lg:h-screen h-max  w-[100%] flex flex-col lg:flex-row">
       <PDFSection />
       <Header>
         {selectedOption === 0 ? (

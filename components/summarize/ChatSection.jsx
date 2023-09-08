@@ -32,12 +32,10 @@ function ChatSection() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
   useEffect(() => {
-    // Scroll to the bottom of the chat container when it's initially rendered
     scrollToBottom();
   }, []);
 
   useEffect(() => {
-    // Scroll to the bottom of the chat container when the `chat` state is updated
     scrollToBottom();
   }, [chat]);
   return (
