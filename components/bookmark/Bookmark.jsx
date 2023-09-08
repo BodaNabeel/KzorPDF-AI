@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+// import { ChevronDownIcon } from "@heroicons/react/24/outline";
+// import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function BookmarkPage() {
   const [displayBooks, setDisplayBooks] = useState(true);
@@ -16,11 +16,11 @@ function BookmarkPage() {
           className="flex justify-between px-5 py-5 cursor-pointer border-b-1 "
         >
           <h1>Books</h1>
-          <ChevronDownIcon
+          {/* <ChevronDownIcon
             className={`h-6 w-6 text-black transition-all ease-in-out duration-300 ${
               displayBooks ? `-rotate-180` : "rotate-0"
             }`}
-          />
+          /> */}
         </div>
         <div
           className={`overflow-x-auto overflow-y-hidden transition-max-height ease-in-out duration-300 ${
@@ -87,11 +87,11 @@ function BookmarkPage() {
         >
           <h1>PDFs</h1>
 
-          <ChevronDownIcon
+          {/* <ChevronDownIcon
             className={`h-6 w-6 text-black  transition-all ease-in-out duration-300 ${
               displayPDF ? `-rotate-180` : "rotate-0"
             }`}
-          />
+          /> */}
         </div>
         <div
           className={`overflow-x-auto overflow-y-hidden transition-max-height ease-in-out duration-300 ${
