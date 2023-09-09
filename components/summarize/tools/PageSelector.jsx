@@ -9,14 +9,17 @@ function PageSelector() {
   const startPageRef = useRef();
   const endPageRef = useRef();
   function setPageRange() {
-    if (endPageRef.current.value < startPageRef.current.value) {
-      setError("start cannot be greater than end page.");
-    } else if (startPageRef.current.value <= 0) {
+    if (Number(startPageRef.current.value) <= 0) {
       setError("start page cannot be less than or equal to zero.");
+    } else if (
+      Number(startPageRef.current.value) > Number(endPageRef.current.value)
+    ) {
+      setError("start page cannot be greater than end page.");
     } else {
       setStartPage(startPageRef.current.value);
       setEndPage(endPageRef.current.value);
       setPagesPopup(false);
+      setError(false);
     }
   }
   function DisplayPageRange() {
@@ -54,6 +57,7 @@ function PageSelector() {
                  [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             type="number"
             ref={startPageRef}
+            min={1}
           />
           <p>to</p>
           <input
@@ -63,10 +67,11 @@ function PageSelector() {
                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             type="number"
             ref={endPageRef}
+            min={1}
           />
         </div>
         {error ? (
-          <p className="mb-4 bg-s_red-100 text-s_red-700 p-2  rounded-md inline">
+          <p className=" text-sm  mb-4 bg-s_red-100 text-s_red-700 p-2  rounded-md w-max">
             {error}
           </p>
         ) : null}

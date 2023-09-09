@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import PageSelector from "./PageSelector";
+import React from "react";
+import PageSelector from "./tools/PageSelector";
 export default function PDFSection() {
 
 
