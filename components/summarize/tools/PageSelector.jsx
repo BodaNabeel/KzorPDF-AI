@@ -1,6 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
+import { DataContext } from "../../../context/context";
 function PageSelector() {
+  const { overlay, setOverlay } = useContext(DataContext);
   const [pagesPopup, setPagesPopup] = useState(false);
   const [error, setError] = useState(false);
   const [startPage, setStartPage] = useState();
@@ -19,6 +21,7 @@ function PageSelector() {
       setStartPage(startPageRef.current.value);
       setEndPage(endPageRef.current.value);
       setPagesPopup(false);
+      setOverlay(false);
       setError(false);
     }
   }
@@ -39,14 +42,19 @@ function PageSelector() {
                 : "hover:bg-gray-100"
             }
             `}
-        onClick={() => setPagesPopup(!pagesPopup)}
+        onClick={() => {
+          setPagesPopup(true);
+          setOverlay("bg-transparent");
+        }}
       >
         {startPage && endPage ? <DisplayPageRange /> : <p>All Pages</p>}
         <IconChevronDown className="self-center" size={18} />
       </button>
       <div
         className={`${
-          pagesPopup ? " bg-white absolute border-[1px] mt-1 " : "hidden"
+          pagesPopup && typeof overlay === "string"
+            ? " bg-white absolute border-[1px] mt-1 z-50"
+            : "hidden"
         } px-2 py-4  flex flex-col`}
       >
         <h1 className="font-semibold"> Choose pages:</h1>
@@ -78,7 +86,10 @@ function PageSelector() {
         <div className="self-end flex gap-2 ">
           <button
             className="bg-s_grey-100 text-s_grey-600 px-4 py-2 rounded-md"
-            onClick={() => setPagesPopup(false)}
+            onClick={() => {
+              setPagesPopup(false);
+              setOverlay(false);
+            }}
           >
             Cancel
           </button>

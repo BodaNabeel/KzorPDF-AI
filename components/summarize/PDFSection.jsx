@@ -1,20 +1,12 @@
 import React from "react";
 import PageSelector from "./tools/PageSelector";
+import PDFMode from "./tools/PDFMode";
 export default function PDFSection() {
-
-
   return (
     <div className=" h-96 mb-5 lg:h-full lg:w-[50%] border-r-4 lg:border-gray-600 ">
       <div className="  flex justify-between px-2 py-2 h-[5%] items-center">
         <PageSelector />
-        
-        <div>
-          <select name="options" id="options">
-            <option value="summarize">Summarize</option>
-            <option value="critical-info">Critical Information</option>
-            <option value="misc">Misc</option>
-          </select>
-        </div>
+        <PDFMode />
         <button>Download PDF</button>
       </div>
       <div className="h-[95%] overflow-y-auto">

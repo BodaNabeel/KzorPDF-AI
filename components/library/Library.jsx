@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Collection from "./Collection";
 import Popup from "./Popup";
 import CollectionItems from "./CollectionItems";
-function Library({ overlay, setOverlay }) {
+function Library() {
   const tempCollection = [
     {
       collectionName: "Untitled collection",
@@ -39,8 +39,6 @@ function Library({ overlay, setOverlay }) {
       <Popup
         setCollection={setCollection}
         collection={collection}
-        overlay={overlay}
-        setOverlay={setOverlay}
         displayPopup={displayPopup}
         setDisplayPopup={setDisplayPopup}
         setSelectedCollection={setSelectedCollection}
@@ -50,7 +48,6 @@ function Library({ overlay, setOverlay }) {
         collection={collection}
         displayPopup={displayPopup}
         setDisplayPopup={setDisplayPopup}
-        setOverlay={setOverlay}
         selectedCollection={selectedCollection}
         setSelectedCollection={setSelectedCollection}
       />

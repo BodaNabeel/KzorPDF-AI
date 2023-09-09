@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IconFolder, IconFolderFilled, IconPlus } from "@tabler/icons-react";
+import { DataContext } from "../../context/context";
 function Collection(props) {
   const {
     collection,
     setDisplayPopup,
-    setOverlay,
     selectedCollection,
     setSelectedCollection,
   } = props;
-
+  const { setOverlay, overlay } = useContext(DataContext);
   return (
     <div className="border-r-[1px] w-[25%] h-full overflow-hidden">
       <div className="[&>*]:px-4 mb-5 h-max">
@@ -19,7 +19,7 @@ function Collection(props) {
           <div
             onClick={() => {
               setDisplayPopup(true);
-              setOverlay(true);
+              setOverlay("bg-[#81818165]");
             }}
             className="p-2 rounded-[100%] hover:bg-gray-100 cursor-pointer transition-all"
           >

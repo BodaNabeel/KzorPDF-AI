@@ -1,17 +1,16 @@
-import React, { useRef, useState } from "react";
-
+import React, { useContext, useRef, useState } from "react";
+import { DataContext } from "../../context/context";
 function Popup(props) {
   const {
     collection,
     setCollection,
-    overlay,
-    setOverlay,
     displayPopup,
     setDisplayPopup,
     setSelectedCollection,
   } = props;
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
+  const { setOverlay, overlay } = useContext(DataContext);
   function saveFolder(e) {
     e.preventDefault();
     console.log(folderName);
