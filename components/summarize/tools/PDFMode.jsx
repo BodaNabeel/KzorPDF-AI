@@ -9,6 +9,9 @@ function PDFMode() {
   const pdfModeTypes = ["Entire PDF", "Summarize", "Critical Points", "Misc"];
   const menuRef = useRef();
 
+  useEffect(() => {
+    if (!overlay) setPagesPopup(false);
+  }, [overlay]);
   return (
     <div>
       <button
