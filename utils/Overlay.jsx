@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { DataContext } from "../context/context";
 function Overlay() {
   const { overlay, setOverlay } = useContext(DataContext);
-  console.log(`bg-[${overlay}]`);
   return (
     <div
       onClick={() => setOverlay(false)}
