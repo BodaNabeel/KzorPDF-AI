@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
 import { DataContext } from "../../../context/context";
 function PageSelector() {
@@ -7,24 +7,41 @@ function PageSelector() {
   const [error, setError] = useState(false);
   const [startPage, setStartPage] = useState();
   const [endPage, setEndPage] = useState();
-
   const startPageRef = useRef();
   const endPageRef = useRef();
-  function setPageRange() {
+
+  const errorInformation = {
+    0: "The starting page must be greater than zero",
+    1: "The starting page cannot be greater than the ending page.",
+  };
+  function resetState() {
+    setPagesPopup(false);
+    setOverlay(false);
+    setError(false);
+    startPageRef.current.value = "";
+    endPageRef.current.value = "";
+  }
+  useEffect(() => {
+    if (!overlay) {
+      setPagesPopup(false);
+      resetState();
+    }
+  }, [overlay]);
+
+  function submitPageRange() {
     if (Number(startPageRef.current.value) <= 0) {
-      setError("start page cannot be less than or equal to zero.");
+      setError(errorInformation[0]);
     } else if (
       Number(startPageRef.current.value) > Number(endPageRef.current.value)
     ) {
-      setError("start page cannot be greater than end page.");
+      setError(errorInformation[1]);
     } else {
       setStartPage(startPageRef.current.value);
       setEndPage(endPageRef.current.value);
-      setPagesPopup(false);
-      setOverlay(false);
-      setError(false);
+      resetState();
     }
   }
+
   function DisplayPageRange() {
     return (
       <p className="font-medium">
@@ -86,16 +103,13 @@ function PageSelector() {
         <div className="self-end flex gap-2 ">
           <button
             className="bg-s_grey-100 text-s_grey-600 px-4 py-2 rounded-md"
-            onClick={() => {
-              setPagesPopup(false);
-              setOverlay(false);
-            }}
+            onClick={resetState}
           >
             Cancel
           </button>
           <button
             className="bg-primary-800 text-primary-100 px-4 py-2 rounded-md"
-            onClick={setPageRange}
+            onClick={submitPageRange}
           >
             Apply
           </button>
