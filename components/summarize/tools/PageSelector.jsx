@@ -27,14 +27,20 @@ function PageSelector() {
       resetState();
     }
   }, [overlay]);
+  function triggerError(errorNumber) {
+    setError(errorInformation[errorNumber]);
 
+    setTimeout(() => {
+      setError(false);
+    }, 1500);
+  }
   function submitPageRange() {
     if (Number(startPageRef.current.value) <= 0) {
-      setError(errorInformation[0]);
+      triggerError(0);
     } else if (
       Number(startPageRef.current.value) > Number(endPageRef.current.value)
     ) {
-      setError(errorInformation[1]);
+      triggerError(1);
     } else {
       setStartPage(startPageRef.current.value);
       setEndPage(endPageRef.current.value);
