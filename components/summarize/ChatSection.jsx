@@ -1,6 +1,6 @@
-import React from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import React, { useEffect, useRef, useState } from "react";
+
+import { IconSend } from "@tabler/icons-react";
 
 function ChatSection() {
   const DUMMY_DATA = [
@@ -25,21 +25,31 @@ function ChatSection() {
       user: true,
     },
   ];
+  const inputRef = useRef();
+  const chatContainerRef = useRef();
+  const [chat, setChat] = useState(DUMMY_DATA);
+  function scrollToBottom() {
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat]);
   return (
-    <div className="min-h-[100%] lg:w-[50%] w-[95vw] mx-auto bg-white flex flex-col justify-evenly pb-4">
-      <div className="flex justify-between px-2 py-2">
-        <h1 className="font-semibold">Chat</h1>
-        <div>
-          <TrashIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
-        </div>
-      </div>
-      <div className="h-[88%] overflow-y-auto flex flex-col  px-4">
-        {DUMMY_DATA.map((data, index) => {
+    <div className=" bg-white flex flex-col justify-between h-full ">
+      <div
+        ref={chatContainerRef}
+        className="overflow-y-auto flex flex-col  px-4 pt-2 h-[90%] scroll-smooth"
+      >
+        {chat.map((data, index) => {
           if (!data.user) {
             return (
               <div
                 key={index}
-                className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-2 rounded-tl-none"
+                className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-[1px] rounded-tl-none"
               >
                 <h1>{data.text}</h1>
               </div>
@@ -49,7 +59,7 @@ function ChatSection() {
             return (
               <div
                 key={index}
-                className="bg-[#4865ff] text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none"
+                className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
               >
                 <h1>{data.text}</h1>
               </div>
@@ -57,15 +67,24 @@ function ChatSection() {
           }
         })}
       </div>
-      <div className="flex w-[95%] mx-auto  rounded-md overflow-hidden gap-2">
+      <div className="flex h-[5%]  w-[95%] mx-auto  overflow-hidden gap-2 pb-1">
         <input
+          ref={inputRef}
           type="text"
           className="w-[95%] border-[2px] outline-none pl-3 border-r-gray-400 bg-white"
           placeholder="Ask your question..."
         />
 
-        <button className="bg-[#4865ff] py-1 px-4">
-          <PaperAirplaneIcon className="h-6 w-6 text-white" />
+        <button
+          onClick={() => {
+            let arr = [...chat];
+            arr.push({ text: inputRef.current.value, user: true });
+            setChat(arr);
+            console.log(chat);
+          }}
+          className="bg-primary-400 text-white py-1 px-4"
+        >
+          <IconSend />
         </button>
       </div>
     </div>
