@@ -1,24 +1,21 @@
-import OpenAI from "openai";
-export async function getStaticProps() {
-  const res = process.env.OPENAI_API_KEY;
+import { useEffect, useState } from "react";
 
-  return { props: { res } };
-}
+export default function Chat() {
+  const [reply, setReply] = useState(null);
+  useEffect(() => console.log(reply), [reply]);
 
-export default function ChatGPT({ res }) {
-  const openai = new OpenAI({
-    apiKey: res,
-    dangerouslyAllowBrowser: true,
-  });
-  async function getRes() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: "Say this is a test" }],
-      model: "gpt-3.5-turbo",
-    });
+  const getReply = async () => {
+    const options = {
+      method: "POST",
+      body: JSON.stringify("How is the weather right now in Kashmir?"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch("/api/chat", options);
+    const data = await res.json();
+    setReply(data);
+  };
 
-    console.log(completion.choices);
-  }
-  getRes();
-
-  return <h1> The secrect key: {res}</h1>;
+  return <button onClick={getReply}> Click to fetch the response!</button>;
 }
