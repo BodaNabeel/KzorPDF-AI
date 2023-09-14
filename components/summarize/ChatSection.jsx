@@ -4,31 +4,19 @@ function ChatSection() {
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
-  const [responseFromGPT, setResponseFromGPT] = useState(null);
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
   function updateChat(response, isUser) {
-    console.log(chat, chat.length);
-    let arr = [];
-    if (chat.length > 0) {
-      console.log("run");
-      setChat((currentState) => [
-        ...currentState,
-        {
-          text: response,
-          user: isUser,
-        },
-      ]);
-    } else {
-      console.log("sudo run");
-
-      setChat([{ text: response, user: isUser }]);
-    }
+    setChat((currentState) => [
+      ...currentState,
+      { text: response, user: isUser },
+    ]);
   }
   function updateClientMessage() {
     if (inputRef.current.value) {
       updateChat(inputRef.current.value, true);
+      fetchMessage();
     }
   }
   const fetchMessage = async () => {
@@ -89,7 +77,6 @@ function ChatSection() {
         <button
           onClick={() => {
             updateClientMessage();
-            fetchMessage();
           }}
           className="bg-primary-400 text-white py-1 px-4"
         >
