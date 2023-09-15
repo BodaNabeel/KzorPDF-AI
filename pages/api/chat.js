@@ -1,4 +1,4 @@
-import openai from "@/utils/Configuration";
+import openai from "@/utils/configuration";
 export default async function (req, res) {
   const { method, body } = req;
 
