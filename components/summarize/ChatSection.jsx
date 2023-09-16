@@ -3,6 +3,7 @@ import { IconSend } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
   const { document } = useContext(DataContext);
+  console.log(document);
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
@@ -15,18 +16,6 @@ function ChatSection() {
       { text: response, user: isUser },
     ]);
   }
-  useEffect(() => {
-    console.log(document);
-    if (document) {
-      fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: document }),
-      });
-    }
-  }, []);
 
   function updateClientMessage() {
     if (inputRef.current.value) {
@@ -42,7 +31,7 @@ function ChatSection() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: userMessage }),
+      body: JSON.stringify({ message: userMessage, doc: document }),
     });
 
     const data = await response.json();
