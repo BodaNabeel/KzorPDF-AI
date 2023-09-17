@@ -3,13 +3,13 @@ import { IconSend } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
   const { document } = useContext(DataContext);
-  console.log(document);
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
+
   function updateChat(response, isUser) {
     setChat((currentState) => [
       ...currentState,
@@ -35,7 +35,8 @@ function ChatSection() {
     });
 
     const data = await response.json();
-    updateChat(data.message.content, false);
+    const formattedText = data.message.content.split("\n");
+    updateChat(formattedText, false);
   };
   useEffect(() => {
     scrollToBottom();
@@ -54,7 +55,11 @@ function ChatSection() {
                   key={index}
                   className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-[1px] rounded-tl-none"
                 >
-                  <h1>{data.text}</h1>
+                  {data.text.map((element) => (
+                    <div>
+                      {element} <br />
+                    </div>
+                  ))}
                 </div>
               );
             }

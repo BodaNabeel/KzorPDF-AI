@@ -1,4 +1,4 @@
-import openai from "@/utils/configuration";
+import openai from "/utils/configuration";
 export default async function (req, res) {
   const { method, body } = req;
 
@@ -6,6 +6,7 @@ export default async function (req, res) {
     case "POST":
       const userMessage = body.message;
       const document = body.doc;
+      console.log(document);
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
@@ -20,8 +21,7 @@ export default async function (req, res) {
       });
 
       const response = completion.choices[0];
-      console.log(document);
-      // console.log(response);
+      console.log(response);
       return res.status(200).json(response);
 
     default:
