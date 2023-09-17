@@ -2,10 +2,23 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconSend } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
+  function Loading() {
+    return (
+      <div class="chat-bubble">
+        <div class="typing">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    );
+  }
   const { document } = useContext(DataContext);
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
+  const [responding, setResponding] = useState(false);
+
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
@@ -23,6 +36,7 @@ function ChatSection() {
       fetchMessage();
     }
   }
+
   const fetchMessage = async () => {
     const userMessage = inputRef.current.value;
 
@@ -36,11 +50,14 @@ function ChatSection() {
 
     const data = await response.json();
     const formattedText = data.message.content.split("\n");
+    setResponding(false);
     updateChat(formattedText, false);
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
+
   return (
     <div className=" bg-white flex flex-col justify-between h-full ">
       <div
@@ -55,15 +72,14 @@ function ChatSection() {
                   key={index}
                   className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-[1px] rounded-tl-none"
                 >
-                  {data.text.map((element) => (
-                    <div>
+                  {data.text.map((element, index) => (
+                    <div key={index}>
                       {element} <br />
                     </div>
                   ))}
                 </div>
               );
-            }
-            if (data.user) {
+            } else if (data.user) {
               return (
                 <div
                   key={index}
@@ -74,6 +90,7 @@ function ChatSection() {
               );
             }
           })}
+        {responding ? <Loading /> : null}
       </div>
       <div className="flex h-[5%]  w-[95%] mx-auto  overflow-hidden gap-2 pb-1">
         <input
@@ -86,6 +103,7 @@ function ChatSection() {
         <button
           onClick={() => {
             updateClientMessage();
+            setResponding(true);
           }}
           className="bg-primary-400 text-white py-1 px-4"
         >
