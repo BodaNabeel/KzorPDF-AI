@@ -15,14 +15,14 @@ export default function PDFSection() {
       </div>
       <div className="h-[95%] overflow-y-auto">
         <object
-          data="/research.pdf"
+          data="/final_report.pdf"
           type="application/pdf"
           width="100%"
           height="100%"
         >
           <p>
             Alternative text - include a link{" "}
-            <a href="/research.pdf">to the PDF!</a>
+            <a href="/final_report.pdf">to the PDF!</a>
           </p>
         </object>
       </div>

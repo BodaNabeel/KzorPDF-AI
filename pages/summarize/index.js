@@ -18,7 +18,7 @@ export default function SummarizePage({ document_text }) {
 }
 
 export async function getServerSideProps() {
-  const filePath = path.join(process.cwd(), "public", "research.pdf");
+  const filePath = path.join(process.cwd(), "public", "final_report.pdf");
   const dataBuffer = fs.readFileSync(filePath);
   const document_text = await pdf(dataBuffer).then((data) => {
     return data.text;
