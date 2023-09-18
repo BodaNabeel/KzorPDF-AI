@@ -106,7 +106,7 @@ function ChatSection() {
 
       <div className="flex items-center overflow-hidden  border-2  border-s_grey-50 px-2 py-2 mb-2 rounded-lg shadow-[0px_48px_100px_10px_#110c2e26] mx-5 gap-2 max-h-[20%]">
         <textarea
-          value={value}
+          // value={value}
           onChange={(event) => setValue(event.target.value)}
           ref={inputRef}
           onKeyDown={(event) => {
