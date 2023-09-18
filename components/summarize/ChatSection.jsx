@@ -1,7 +1,72 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { IconSend } from "@tabler/icons-react";
+import {
+  IconBookmark,
+  IconBookmarkFilled,
+  IconSend,
+} from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
+  const { document, notes, setNotes } = useContext(DataContext);
+  const chatContainerRef = useRef(null);
+  const [chat, setChat] = useState([]);
+  const [responding, setResponding] = useState(false);
+  const [value, setValue] = useState(undefined);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    console.log(chat);
+  }, [chat]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat]);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = "0px";
+      const scrollHeight = inputRef.current.scrollHeight;
+
+      inputRef.current.style.height = scrollHeight + "px";
+    }
+  }, [inputRef.current, value]);
+
+  function saveNote(data) {
+    setNotes((currentState) => [
+      ...currentState,
+      { data, id: new Date().getTime() },
+    ]);
+  }
+  function scrollToBottom() {
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }
+  function updateChat(response, isUser, id) {
+    setChat((currentState) => [
+      ...currentState,
+      { text: response, user: isUser, id: id },
+    ]);
+  }
+  function updateClientMessage() {
+    if (value) {
+      setValue(null);
+      setResponding(true);
+      const message = inputRef.current.value;
+      updateChat(message, true, null);
+      fetchMessage(message);
+      inputRef.current.value = "";
+    }
+  }
+  const fetchMessage = async (value) => {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: value, doc: document }),
+    });
+    const data = await response.json();
+    const formattedReply = data.reply.message.content.split("\n");
+    const id = data.uid;
+    setResponding(false);
+    updateChat(formattedReply, false, id);
+  };
   function Loading() {
     return (
       <div className="chat-bubble">
@@ -13,61 +78,6 @@ function ChatSection() {
       </div>
     );
   }
-  const { document } = useContext(DataContext);
-  const chatContainerRef = useRef(null);
-  const [chat, setChat] = useState([]);
-  const [responding, setResponding] = useState(false);
-  const [value, setValue] = useState(undefined);
-  const inputRef = useRef(null);
-  function scrollToBottom() {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }
-
-  function updateChat(response, isUser) {
-    setChat((currentState) => [
-      ...currentState,
-      { text: response, user: isUser },
-    ]);
-  }
-
-  function updateClientMessage() {
-    if (value) {
-      setValue(null);
-      setResponding(true);
-      const message = inputRef.current.value;
-      updateChat(message, true);
-      fetchMessage(message);
-      inputRef.current.value = "";
-    }
-  }
-
-  const fetchMessage = async (value) => {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: value, doc: document }),
-    });
-
-    const data = await response.json();
-    const formattedText = data.message.content.split("\n");
-    setResponding(false);
-    updateChat(formattedText, false);
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat]);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.style.height = "0px";
-      const scrollHeight = inputRef.current.scrollHeight;
-
-      inputRef.current.style.height = scrollHeight + "px";
-    }
-  }, [inputRef.current, value]);
 
   return (
     <div className=" bg-white flex flex-col justify-between h-full ">
@@ -79,15 +89,18 @@ function ChatSection() {
           chat.map((data, index) => {
             if (!data.user) {
               return (
-                <div
-                  key={index}
-                  className="bg-[#f9f9fe] mb-5 w-[77%] self-start rounded-md px-4 py-2 border-[1px] rounded-tl-none"
-                >
-                  {data.text.map((element, index) => (
-                    <div key={index}>
-                      {element} <br />
-                    </div>
-                  ))}
+                <div key={index} className=" mb-5 w-[77%] self-start flex">
+                  <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
+                    {data.text.map((element, index) => (
+                      <div key={index}>
+                        {element} <br />
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={() => saveNote(data.text)}>
+                    <IconBookmark className="hover:bg-primary-50 " />
+                    <IconBookmarkFilled className="text-primary-200 " />
+                  </button>
                 </div>
               );
             } else if (data.user) {
@@ -97,6 +110,9 @@ function ChatSection() {
                   className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
                 >
                   <h1>{data.text}</h1>
+                  <button onClick={() => console.log(data)}>
+                    click me mate!!
+                  </button>
                 </div>
               );
             }
@@ -106,7 +122,6 @@ function ChatSection() {
 
       <div className="flex items-center overflow-hidden  border-2  border-s_grey-50 px-2 py-2 mb-2 rounded-lg shadow-[0px_48px_100px_10px_#110c2e26] mx-5 gap-2 max-h-[20%]">
         <textarea
-          // value={value}
           onChange={(event) => setValue(event.target.value)}
           ref={inputRef}
           onKeyDown={(event) => {
