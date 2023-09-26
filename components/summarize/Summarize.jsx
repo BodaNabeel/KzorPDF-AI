@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PDFSection from "./PDFSection";
 import ChatSection from "./ChatSection";
-import TestChat from "./TestChat";
 import Header from "@/utils/Header";
 function Summarize() {
   const [selectedOption, setSelectedOption] = useState(0);

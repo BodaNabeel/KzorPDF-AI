@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [overlay, setOverlay] = useState(false);
-  const [document, setDocument] = useState(null);
+  const [document, setDocument] = useState([]);
   const [notes, setNotes] = useState([]);
   return (
     <DataContext.Provider

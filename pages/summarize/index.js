@@ -4,10 +4,23 @@ import { useContext, useEffect } from "react";
 import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
+import { v4 as uuidv4 } from "uuid";
 export default function SummarizePage({ document_text }) {
   const { document, setDocument } = useContext(DataContext);
+
+  const UID = uuidv4();
   useEffect(() => {
-    setDocument(document_text);
+    if (document_text) {
+      const dataObject = {
+        [UID]: {
+          document_text,
+          type: "OpenAI",
+        },
+      };
+      setDocument(dataObject);
+      // setDocument((currentState) => [...currentState, dataObject]);
+      console.log(document);
+    }
   }, []);
 
   return (
