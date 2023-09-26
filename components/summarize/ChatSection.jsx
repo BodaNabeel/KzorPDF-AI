@@ -51,7 +51,7 @@ function ChatSection() {
       },
       body: JSON.stringify({
         message: value,
-        doc: document,
+        doc: document.abc.document_text,
       }),
     });
     const data = await response.json();

@@ -9,17 +9,18 @@ export default function SummarizePage({ document_text }) {
   const { document, setDocument } = useContext(DataContext);
 
   const UID = uuidv4();
+  const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
       const dataObject = {
-        [UID]: {
+        [temporaryID]: {
           document_text,
           type: "OpenAI",
         },
       };
       setDocument(dataObject);
+      console.log(document.abc);
       // setDocument((currentState) => [...currentState, dataObject]);
-      console.log(document);
     }
   }, []);
 
