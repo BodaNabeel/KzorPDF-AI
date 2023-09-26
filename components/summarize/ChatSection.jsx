@@ -6,16 +6,12 @@ import {
 } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
-  const { document, notes, setNotes } = useContext(DataContext);
+  const { setNotes, document } = useContext(DataContext);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    console.log(chat);
-  }, [chat]);
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
@@ -28,12 +24,6 @@ function ChatSection() {
     }
   }, [inputRef.current, value]);
 
-  function saveNote(data) {
-    setNotes((currentState) => [
-      ...currentState,
-      { data, id: new Date().getTime() },
-    ]);
-  }
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
@@ -59,7 +49,10 @@ function ChatSection() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: value, doc: document }),
+      body: JSON.stringify({
+        message: value,
+        doc: document,
+      }),
     });
     const data = await response.json();
     const formattedReply = data.reply.message.content.split("\n");
@@ -97,9 +90,12 @@ function ChatSection() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => saveNote(data.text)}>
+                  <button
+                    onClick={() =>
+                      setNotes((currentState) => [...currentState, { data }])
+                    }
+                  >
                     <IconBookmark className="hover:bg-primary-50 " />
-                    <IconBookmarkFilled className="text-primary-200 " />
                   </button>
                 </div>
               );
