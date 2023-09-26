@@ -6,7 +6,7 @@ import {
 } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
-  const { setNotes, document } = useContext(DataContext);
+  const { setNotes, documentData, setDocumentData } = useContext(DataContext);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
   const [responding, setResponding] = useState(false);
@@ -32,6 +32,10 @@ function ChatSection() {
       ...currentState,
       { text: response, user: isUser, id: id },
     ]);
+    const temporaryData = [...documentData];
+    temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
+    console.log(temporaryData);
+    setDocumentData(temporaryData);
   }
   function updateClientMessage() {
     if (value) {
@@ -51,7 +55,7 @@ function ChatSection() {
       },
       body: JSON.stringify({
         message: value,
-        doc: document.abc.document_text,
+        doc: documentData[0].abc.document_text,
       }),
     });
     const data = await response.json();

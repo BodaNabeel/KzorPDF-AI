@@ -6,7 +6,7 @@ import path from "path";
 import pdf from "pdf-parse";
 import { v4 as uuidv4 } from "uuid";
 export default function SummarizePage({ document_text }) {
-  const { document, setDocument } = useContext(DataContext);
+  const { setDocumentData } = useContext(DataContext);
 
   const UID = uuidv4();
   const temporaryID = "abc";
@@ -16,11 +16,19 @@ export default function SummarizePage({ document_text }) {
         [temporaryID]: {
           document_text,
           type: "OpenAI",
+          chat: [],
         },
       };
-      setDocument(dataObject);
-      console.log(document.abc);
-      // setDocument((currentState) => [...currentState, dataObject]);
+      const arr = [
+        {
+          [temporaryID]: {
+            document_text,
+            chat: [],
+          },
+        },
+      ];
+      setDocumentData(arr);
+      // setDocumentData((currentState) => [...currentState, dataObject]);
     }
   }, []);
 
