@@ -8,7 +8,14 @@ export const DataProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
   return (
     <DataContext.Provider
-      value={{ overlay, setOverlay, document, setDocument, notes, setNotes }}
+      value={{
+        overlay,
+        setOverlay,
+        document,
+        setDocument,
+        notes,
+        setNotes,
+      }}
     >
       {children}
     </DataContext.Provider>
