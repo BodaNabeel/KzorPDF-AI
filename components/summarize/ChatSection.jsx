@@ -12,6 +12,9 @@ function ChatSection() {
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
   const inputRef = useRef(null);
+
+  const temporaryData = [...documentData];
+
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
@@ -32,9 +35,20 @@ function ChatSection() {
       ...currentState,
       { text: response, user: isUser, id: id },
     ]);
-    const temporaryData = [...documentData];
     temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
-    console.log(temporaryData);
+    setDocumentData(temporaryData);
+  }
+  function updateNotes(noteData) {
+    const temporaryNotes = [...documentData[0].abc.notes];
+    const existing = temporaryNotes.findIndex(
+      (note) => note.id === noteData.id
+    );
+    if (existing !== -1) {
+      temporaryNotes.splice(existing, 1);
+    } else {
+      temporaryNotes.push({ id: noteData.id, note: noteData.text });
+    }
+    temporaryData[0].abc.notes = temporaryNotes;
     setDocumentData(temporaryData);
   }
   function updateClientMessage() {
@@ -96,7 +110,8 @@ function ChatSection() {
                   </div>
                   <button
                     onClick={() =>
-                      setNotes((currentState) => [...currentState, { data }])
+                      // setNotes((currentState) => [...currentState, { data }])
+                      updateNotes(data)
                     }
                   >
                     <IconBookmark className="hover:bg-primary-50 " />
