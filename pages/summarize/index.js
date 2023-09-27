@@ -12,23 +12,16 @@ export default function SummarizePage({ document_text }) {
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
-      const dataObject = {
-        [temporaryID]: {
-          document_text,
-          type: "OpenAI",
-          chat: [],
-        },
-      };
-      const arr = [
+      const documentInformation = [
         {
           [temporaryID]: {
             document_text,
             chat: [],
+            notes: [{ id: 3 }],
           },
         },
       ];
-      setDocumentData(arr);
-      // setDocumentData((currentState) => [...currentState, dataObject]);
+      setDocumentData(documentInformation);
     }
   }, []);
 
