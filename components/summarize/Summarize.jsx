@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PDFSection from "./PDFSection";
 import ChatSection from "./ChatSection";
 import Header from "@/utils/Header";
+import NoteSection from "./NoteSection";
 function Summarize() {
   const [selectedOption, setSelectedOption] = useState(0);
 
@@ -12,11 +13,7 @@ function Summarize() {
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
       >
-        {selectedOption === 0 ? (
-          <ChatSection />
-        ) : (
-          <h1>This is notes section</h1>
-        )}
+        {selectedOption === 0 ? <ChatSection /> : <NoteSection />}
       </Header>
     </section>
   );
