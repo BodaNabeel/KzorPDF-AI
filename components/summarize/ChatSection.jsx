@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-  IconBookmark,
-  IconBookmarkFilled,
-  IconSend,
-} from "@tabler/icons-react";
+import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "@/context/context";
 function ChatSection() {
-  const { setNotes, documentData, setDocumentData } = useContext(DataContext);
+  const { documentData, setDocumentData } = useContext(DataContext);
   const chatContainerRef = useRef(null);
   const [chat, setChat] = useState([]);
   const [responding, setResponding] = useState(false);
@@ -61,6 +57,13 @@ function ChatSection() {
       inputRef.current.value = "";
     }
   }
+  function DynamicRenderBookmarkIcon({ noteID }) {
+    const isNote = documentData[0].abc.notes.findIndex(
+      (chat) => chat.id === noteID
+    );
+    if (isNote !== -1) return <IconBookmarkOff />;
+    else return <IconBookmark />;
+  }
   const fetchMessage = async (value) => {
     const response = await fetch("/api/chat", {
       method: "POST",
@@ -96,8 +99,8 @@ function ChatSection() {
         ref={chatContainerRef}
         className="overflow-y-auto flex flex-col  px-4 pt-2 h-[90%] scroll-smooth"
       >
-        {chat.length > 0 &&
-          chat.map((data, index) => {
+        {documentData[0]?.abc.chat.length > 0 &&
+          documentData[0]?.abc.chat.map((data, index) => {
             if (!data.user) {
               return (
                 <div key={index} className=" mb-5 w-[77%] self-start flex">
@@ -108,13 +111,8 @@ function ChatSection() {
                       </div>
                     ))}
                   </div>
-                  <button
-                    onClick={() =>
-                      // setNotes((currentState) => [...currentState, { data }])
-                      updateNotes(data)
-                    }
-                  >
-                    <IconBookmark className="hover:bg-primary-50 " />
+                  <button onClick={() => updateNotes(data)}>
+                    <DynamicRenderBookmarkIcon noteID={data.id} />
                   </button>
                 </div>
               );
@@ -125,9 +123,6 @@ function ChatSection() {
                   className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
                 >
                   <h1>{data.text}</h1>
-                  <button onClick={() => console.log(data)}>
-                    click me mate!!
-                  </button>
                 </div>
               );
             }

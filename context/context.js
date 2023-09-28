@@ -5,7 +5,6 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [overlay, setOverlay] = useState(false);
   const [documentData, setDocumentData] = useState([]);
-  const [notes, setNotes] = useState([]);
   return (
     <DataContext.Provider
       value={{
@@ -13,8 +12,6 @@ export const DataProvider = ({ children }) => {
         setOverlay,
         documentData,
         setDocumentData,
-        notes,
-        setNotes,
       }}
     >
       {children}

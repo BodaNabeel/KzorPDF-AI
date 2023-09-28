@@ -17,7 +17,7 @@ export default function SummarizePage({ document_text }) {
           [temporaryID]: {
             document_text,
             chat: [],
-            notes: [{ id: 3 }],
+            notes: [],
           },
         },
       ];
