@@ -14,8 +14,7 @@ function NoteSection() {
     temporaryNotes.splice(noteIndex, 1);
     temporaryData[0].abc.notes = temporaryNotes;
     setDocumentData(temporaryData);
-  }
-  console.log(notes);
+  }     
   if (notes.length > 0) {
     return (
       <div className="overflow-y-auto flex flex-col  px-4 pt-2 h-[100%] ">
