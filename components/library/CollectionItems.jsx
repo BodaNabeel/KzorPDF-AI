@@ -20,7 +20,6 @@ function Folder(props) {
     let arr = [...collection];
     arr[selectedCollection].collectionItems.splice(index, 1);
     setCollection(arr);
-    console.log(index);
   }
   function DisplayCollectionItems() {
     if (collection[selectedCollection]?.collectionItems.length <= 0) {

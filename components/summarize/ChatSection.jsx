@@ -65,23 +65,6 @@ function ChatSection() {
     else return <IconBookmark />;
   }
   const fetchMessage = async (value) => {
-    // const response = await fetch("/api/chat", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     message: value,
-    //     doc: documentData[0].abc.document_text,
-    //   }),
-    // });
-    // const data = await response.json();
-
-    // console.log(data);
-    // const formattedReply = data.reply.message.content.split("\n");
-    // const id = data.uid;
-    // setResponding(false);
-    // updateChat(formattedReply, false, id);
     fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -105,7 +88,6 @@ function ChatSection() {
         updateChat(formattedReply, false, id);
       })
       .catch((error) => {
-        console.log("Error: ", { errorMSG: error });
         setResponding(false);
       });
   };

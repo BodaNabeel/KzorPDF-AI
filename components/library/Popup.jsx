@@ -13,9 +13,7 @@ function Popup(props) {
   const { setOverlay, overlay } = useContext(DataContext);
   function saveFolder(e) {
     e.preventDefault();
-    console.log(folderName);
     if (!folderName) {
-      console.log("You need to enter a name");
     } else {
       const arr = [...collection];
       arr.push({ collectionName: folderName, collectionItems: [] });
