@@ -16,22 +16,29 @@ function NoteSection() {
   }
   console.log(notes);
   if (notes.length > 0) {
-    return notes.map((element, index) => {
-      return (
-        <div key={index} className=" mb-5 w-[77%] self-start flex px-4 pt-2">
-          <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
-            {element.note.map((text, index) => (
-              <div key={index}>
-                {text} <br />
+    return (
+      <div className="overflow-y-auto flex flex-col  px-4 pt-2 h-[100%] ">
+        {notes.map((element, index) => {
+          return (
+            <div
+              key={index}
+              className=" mb-5 w-[90%] self-start flex px-4 pt-2"
+            >
+              <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
+                {element.note.map((text, index) => (
+                  <div key={index}>
+                    {text} <br />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <button onClick={() => removeNote(element.id)}>
-            <IconBookmarkOff />
-          </button>
-        </div>
-      );
-    });
+              <button onClick={() => removeNote(element.id)}>
+                <IconBookmarkOff />
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    );
   } else {
     return <h1>No notes mate</h1>;
   }
