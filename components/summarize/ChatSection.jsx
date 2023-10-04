@@ -65,7 +65,24 @@ function ChatSection() {
     else return <IconBookmark />;
   }
   const fetchMessage = async (value) => {
-    const response = await fetch("/api/chat", {
+    // const response = await fetch("/api/chat", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     message: value,
+    //     doc: documentData[0].abc.document_text,
+    //   }),
+    // });
+    // const data = await response.json();
+
+    // console.log(data);
+    // const formattedReply = data.reply.message.content.split("\n");
+    // const id = data.uid;
+    // setResponding(false);
+    // updateChat(formattedReply, false, id);
+    fetch("/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,12 +91,23 @@ function ChatSection() {
         message: value,
         doc: documentData[0].abc.document_text,
       }),
-    });
-    const data = await response.json();
-    const formattedReply = data.reply.message.content.split("\n");
-    const id = data.uid;
-    setResponding(false);
-    updateChat(formattedReply, false, id);
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const formattedReply = data.reply.message.content.split("\n");
+        const id = data.uid;
+        setResponding(false);
+        updateChat(formattedReply, false, id);
+      })
+      .catch((error) => {
+        console.log("Error: ", { errorMSG: error });
+        setResponding(false);
+      });
   };
   function Loading() {
     return (
@@ -101,7 +129,7 @@ function ChatSection() {
       >
         {documentData[0]?.abc.chat.length > 0 &&
           documentData[0]?.abc.chat.map((data, index) => {
-            if (!data.user) {
+            if (!data?.user) {
               return (
                 <div key={index} className=" mb-5 w-[77%] self-start flex">
                   <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
@@ -118,7 +146,7 @@ function ChatSection() {
                   </div>
                 </div>
               );
-            } else if (data.user) {
+            } else if (data?.user) {
               return (
                 <div
                   key={index}

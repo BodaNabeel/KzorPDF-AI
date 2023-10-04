@@ -19,18 +19,23 @@ export default async function (req, res) {
         { role: "assistant", content: document },
       ];
 
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: messages,
-      });
-      const UID = completion.id;
-      const reply = completion.choices;
-      const response = {
-        uid: UID,
-        reply: reply[0],
-      };
-
-      return res.status(200).json(response);
+      try {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: messages,
+        });
+        const UID = completion.id;
+        const reply = completion.choices;
+        const response = {
+          uid: UID,
+          reply: reply[0],
+        };
+        console.log(response);
+        return res.status(200).json(response);
+      } catch (error) {
+        console.log(error);
+        return res.status(500).send("Internal Server Error.");
+      }
 
     default:
       return res.status(400).json({ error: "Method not Allowed" });
