@@ -94,10 +94,10 @@ function ChatSection() {
   }
 
   return (
-    <div className=" bg-white flex flex-col justify-between h-full ">
+    <>
       <div
         ref={chatContainerRef}
-        className="overflow-y-auto flex flex-col  px-4 pt-2 h-[90%] scroll-smooth"
+        className="overflow-y-auto flex flex-col  px-4 pt-2 h-[90%] "
       >
         {documentData[0]?.abc.chat.length > 0 &&
           documentData[0]?.abc.chat.map((data, index) => {
@@ -152,7 +152,7 @@ function ChatSection() {
           <IconSend />
         </button>
       </div>
-    </div>
+    </>
   );
 }
 
