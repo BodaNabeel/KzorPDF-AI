@@ -111,9 +111,11 @@ function ChatSection() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => updateNotes(data)}>
-                    <DynamicRenderBookmarkIcon noteID={data.id} />
-                  </button>
+                  <div className="flex items-center">
+                    <button onClick={() => updateNotes(data)}>
+                      <DynamicRenderBookmarkIcon noteID={data.id} />
+                    </button>
+                  </div>
                 </div>
               );
             } else if (data.user) {

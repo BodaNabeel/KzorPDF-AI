@@ -29,7 +29,7 @@ export default function Header({
           }`}
         >
           <IconNotes height={20} />
-          <h1>Notes</h1>
+          <h1>Bookmarks</h1>
         </span>
       </div>
       <div className="h-[95%] ">{children}</div>

@@ -1,5 +1,6 @@
 import { DataContext } from "@/context/context";
 import { IconBookmarkOff } from "@tabler/icons-react";
+import Image from "next/image";
 import React, { useContext } from "react";
 
 function NoteSection() {
@@ -31,16 +32,30 @@ function NoteSection() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => removeNote(element.id)}>
-                <IconBookmarkOff />
-              </button>
+              <div className="flex items-center">
+                <button onClick={() => removeNote(element.id)}>
+                  <IconBookmarkOff />
+                </button>
+              </div>
             </div>
           );
         })}
       </div>
     );
   } else {
-    return <h1>No notes mate</h1>;
+    return (
+      <div className="flex items-center flex-col justify-center  h-full">
+        <Image
+          src="/images/empty.svg"
+          height={150}
+          width={150}
+          alt="image of pdf"
+        />
+        <h1 className="mt-4 font-medium">
+          Don't leave this space blank. Add your first bookmark now!
+        </h1>
+      </div>
+    );
   }
 }
 
