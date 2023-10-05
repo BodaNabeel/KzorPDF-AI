@@ -77,7 +77,8 @@ function ChatSection() {
     if (inputRef.current.value !== "") {
       setResponding(true);
       const message = inputRef.current.value;
-      embedding(true, message);
+      console.log(message);
+      embedding(message, true);
       updateChat(message, true, null);
       fetchMessage(message);
       inputRef.current.value = "";
@@ -117,7 +118,7 @@ function ChatSection() {
         setResponding(false);
       });
   };
-  embedding(false, documentData[0]?.abc?.document_text);
+  // embedding(documentData[0]?.abc?.document_text, false);
   function Loading() {
     return (
       <div className="chat-bubble">
