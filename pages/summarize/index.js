@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 export default function SummarizePage({ document_text }) {
   const { setDocumentData } = useContext(DataContext);
 
-  const UID = uuidv4();
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
