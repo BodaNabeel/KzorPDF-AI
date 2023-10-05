@@ -16,6 +16,13 @@ function ChatSection() {
     scrollToBottom();
   }, [chat]);
   useEffect(() => {
+    console.log(EmbeddedQuery);
+  }, [EmbeddedQuery]);
+  useEffect(() => {
+    embedding(documentData[0]?.abc?.document_text, false);
+    console.log(EmbeddedDocument);
+  }, [documentData]);
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "0px";
       const scrollHeight = inputRef.current.scrollHeight;
@@ -28,14 +35,14 @@ function ChatSection() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
   const embedding = async (doc, isQuery) => {
-    const response = await fetch("api/embedding", {
+    const response = await fetch("/api/embedding", {
       method: "POST",
       headers: {
-        "Content-type": "application/json",
-        body: JSON.stringify({
-          input: doc,
-        }),
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        input: doc,
+      }),
     });
     const data = await response.json();
     if (data.error) {
@@ -118,7 +125,7 @@ function ChatSection() {
         setResponding(false);
       });
   };
-  // embedding(documentData[0]?.abc?.document_text, false);
+
   function Loading() {
     return (
       <div className="chat-bubble">
