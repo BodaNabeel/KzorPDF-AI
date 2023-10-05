@@ -8,7 +8,8 @@ function ChatSection() {
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
   const inputRef = useRef(null);
-
+  const [EmbeddedDocument, setEmbeddedDocument] = useState([]);
+  const [EmbeddedQuery, setEmbeddedQuery] = useState([]);
   const temporaryData = [...documentData];
 
   useEffect(() => {
@@ -26,6 +27,31 @@ function ChatSection() {
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
+  const embedding = async (doc, isQuery) => {
+    const response = await fetch("api/embedding", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        body: JSON.stringify({
+          input: doc,
+        }),
+      },
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log("error detected: ", data.error);
+    } else {
+      if (isQuery) {
+        const tempEmbed = [...EmbeddedQuery];
+        tempEmbed.push(data.data[0].embedding);
+        setEmbeddedQuery(tempEmbed);
+      } else {
+        const tempEmbed = [...EmbeddedDocument];
+        tempEmbed.push(data.data[0].embedding);
+        setEmbeddedDocument(tempEmbed);
+      }
+    }
+  };
   function updateChat(response, isUser, id) {
     setChat((currentState) => [
       ...currentState,
@@ -48,10 +74,10 @@ function ChatSection() {
     setDocumentData(temporaryData);
   }
   function updateClientMessage() {
-    if (value) {
-      setValue(null);
+    if (inputRef.current.value !== "") {
       setResponding(true);
       const message = inputRef.current.value;
+      embedding(true, message);
       updateChat(message, true, null);
       fetchMessage(message);
       inputRef.current.value = "";
@@ -91,6 +117,7 @@ function ChatSection() {
         setResponding(false);
       });
   };
+  embedding(false, documentData[0]?.abc?.document_text);
   function Loading() {
     return (
       <div className="chat-bubble">
@@ -102,6 +129,9 @@ function ChatSection() {
       </div>
     );
   }
+
+  // Checking similarity
+  const similarityScore = [];
 
   return (
     <>
