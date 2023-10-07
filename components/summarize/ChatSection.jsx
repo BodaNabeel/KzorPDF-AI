@@ -19,9 +19,11 @@ function ChatSection() {
     console.log(EmbeddedQuery);
   }, [EmbeddedQuery]);
   useEffect(() => {
-    embedding(documentData[0]?.abc?.document_text, false);
-    console.log(EmbeddedDocument);
-  }, [documentData]);
+    if (documentData[0]?.abc?.document_text) {
+      embedding(documentData[0]?.abc?.document_text, false);
+      console.log(EmbeddedDocument);
+    }
+  }, [documentData[0]?.abc.document_text]);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "0px";
@@ -35,6 +37,7 @@ function ChatSection() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
   const embedding = async (doc, isQuery) => {
+    console.log(isQuery);
     const response = await fetch("/api/embedding", {
       method: "POST",
       headers: {
@@ -48,14 +51,14 @@ function ChatSection() {
     if (data.error) {
       console.log("error detected: ", data.error);
     } else {
-      if (isQuery) {
-        const tempEmbed = [...EmbeddedQuery];
-        tempEmbed.push(data.data[0].embedding);
-        setEmbeddedQuery(tempEmbed);
+      if (isQuery === true) {
+        const tempEmbedQuery = [...EmbeddedQuery];
+        tempEmbedQuery.push(data.data[0].embedding);
+        setEmbeddedQuery(tempEmbedQuery);
       } else {
-        const tempEmbed = [...EmbeddedDocument];
-        tempEmbed.push(data.data[0].embedding);
-        setEmbeddedDocument(tempEmbed);
+        const tempEmbedDocument = [...EmbeddedDocument];
+        tempEmbedDocument.push(data.data[0].embedding);
+        setEmbeddedDocument(tempEmbedDocument);
       }
     }
   };
@@ -84,7 +87,6 @@ function ChatSection() {
     if (inputRef.current.value !== "") {
       setResponding(true);
       const message = inputRef.current.value;
-      console.log(message);
       embedding(message, true);
       updateChat(message, true, null);
       fetchMessage(message);
