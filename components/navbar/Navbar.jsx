@@ -14,10 +14,12 @@ function Navbar() {
   const pathname = router.pathname;
   const formattedPathName = pathname.replace("/", "");
   const [selectedPath, setSelectedPath] = useState(formattedPathName);
-  const assignedRoutes = ["Home", "Test", "Summarize PDF"];
+  const assignedRoutes = ["Home", "Library", "Summarize PDF"];
+  // const assignedRoutes = ["Home", "Test", "Summarize PDF"];
   const iconMap = {
     home: IconHome,
-    test: IconBooks,
+    // test: IconBooks,
+    library: IconBooks,
     summarize: IconBolt,
   };
 
