@@ -6,7 +6,6 @@ export default async function (req, res) {
     switch (method) {
       case "POST":
         const toEmbedText = body.input;
-        console.log("logged from server", toEmbedText);
         const embedding = await openai.embeddings.create({
           model: "text-embedding-ada-002",
           input: toEmbedText,
