@@ -16,12 +16,8 @@ function ChatSection() {
     scrollToBottom();
   }, [chat]);
   useEffect(() => {
-    console.log(EmbeddedQuery);
-  }, [EmbeddedQuery]);
-  useEffect(() => {
     if (documentData[0]?.abc?.document_text) {
       embedding(documentData[0]?.abc?.document_text, false);
-      console.log(EmbeddedDocument);
     }
   }, [documentData[0]?.abc.document_text]);
   useEffect(() => {
@@ -37,7 +33,6 @@ function ChatSection() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
   const embedding = async (doc, isQuery) => {
-    console.log(isQuery);
     const response = await fetch("/api/embedding", {
       method: "POST",
       headers: {
@@ -52,13 +47,11 @@ function ChatSection() {
       console.log("error detected: ", data.error);
     } else {
       if (isQuery === true) {
-        const tempEmbedQuery = [...EmbeddedQuery];
-        tempEmbedQuery.push(data.data[0].embedding);
-        setEmbeddedQuery(tempEmbedQuery);
+        setEmbeddedQuery(data.data[0].embedding);
       } else {
-        const tempEmbedDocument = [...EmbeddedDocument];
-        tempEmbedDocument.push(data.data[0].embedding);
-        setEmbeddedDocument(tempEmbedDocument);
+        const temporaryDocEmbedding = [...EmbeddedDocument];
+        temporaryDocEmbedding.push(data.data[0].embedding);
+        setEmbeddedDocument(temporaryDocEmbedding);
       }
     }
   };
@@ -139,9 +132,6 @@ function ChatSection() {
       </div>
     );
   }
-
-  // Checking similarity
-  const similarityScore = [];
 
   return (
     <>
