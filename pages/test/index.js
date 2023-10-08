@@ -1,5 +1,5 @@
-import Counter from "@/components/Counter";
+import TestPage from "@/components/TestPage";
 
-export default function TestPage() {
-  return <h1>Test Route</h1>;
+export default function Foo() {
+  return <TestPage />;
 }
