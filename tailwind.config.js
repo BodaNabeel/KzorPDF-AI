@@ -4,6 +4,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./layout/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -14,7 +15,7 @@ module.exports = {
       },
     },
     screens: {
-      'lg': "800px",
+      lg: "800px",
     },
     extend: {
       colors: {
