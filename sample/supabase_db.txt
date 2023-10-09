@@ -1,0 +1,52 @@
+const [fetchError, setFetchError] = useState(null);
+const [documents, setDocuments] = useState(null);
+useEffect(() => {
+  const fetchDocuments = async () => {
+    const { data, error } = await supabase.from("document").select("chat");
+    if (error) {
+      setFetchError("Could not fetch documents.");
+      setDocuments(null);
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+      setDocuments(data);
+      setFetchError(null);
+    }
+  };
+  const insertDocument = async () => {
+    const { data, error } = await supabase.from("document").insert({
+      document_text: "A quick brown fox....",
+      document_note: "....jumped over a lazy dog",
+      chat: [
+        {
+          isUser: false,
+          text: "Hey there! I am here to help you.",
+        },
+        {
+          isUser: true,
+          text: "What is the capital of Malaysia?",
+        },
+      ],
+    });
+  };
+  const updateDocument = async () => {
+    const { data, error } = await supabase
+      .from("document")
+      .update({ document_chat: null })
+      .eq("document_text", "Community work")
+      .select();
+    console.log(data);
+  };
+  const deleteDocument = async () => {
+    const text = "Community work";
+    const { error } = await supabase
+      .from("document")
+      .delete()
+      .eq("document_note", "abc");
+  };
+  updateDocument();
+  // insertDocument();
+  deleteDocument();
+  fetchDocuments();
+}, []);
