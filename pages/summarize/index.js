@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
 import { v4 as uuidv4 } from "uuid";
+import NavbarLayout from "@/layout/NavbarLayout";
 export default function SummarizePage({ document_text }) {
   const { setDocumentData } = useContext(DataContext);
 
@@ -25,9 +26,14 @@ export default function SummarizePage({ document_text }) {
   }, []);
 
   return (
-    <section className=" h-screen   mx-auto ">
+    // <section className=" h-screen   mx-auto ">
+    //   <Summarize />
+    // </section>
+    <NavbarLayout>
+      {/* <section className="   w-[90%] mt-20  mx-auto"> */}
       <Summarize />
-    </section>
+      {/* </section> */}
+    </NavbarLayout>
   );
 }
 

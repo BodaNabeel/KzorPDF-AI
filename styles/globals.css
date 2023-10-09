@@ -12,12 +12,15 @@ body {
 .text-area::-webkit-scrollbar {
   width: 8px;
 }
+body {
+  background: white;
+}
 .text-area::-webkit-scrollbar-track {
   background-color: #e4e4e4;
   border-radius: 100px;
 }
 .text-area::-webkit-scrollbar-thumb {
-  background-color: 	#C0C0C0;
+  background-color: #c0c0c0;
   border-radius: 100px;
 }
 /* button */
