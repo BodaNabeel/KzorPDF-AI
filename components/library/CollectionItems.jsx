@@ -40,7 +40,7 @@ function Folder(props) {
                   alt="image of pdf"
                 />
                 <span>
-                  <p className="font-medium">{element}</p>
+                  <p className="font-medium ">{element}</p>
                   <p className="text-sm text-gray-500">26 July, 2023</p>
                 </span>
               </div>
@@ -58,7 +58,7 @@ function Folder(props) {
   }
 
   return (
-    <div className=" w-[75%]">
+    <div className=" lg:w-[75%] ">
       <div className="border-b-[1px] flex px-4 py-2  items-center justify-between">
         <span className=" ">
           <p className="text-lg font-medium">

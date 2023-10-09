@@ -35,7 +35,7 @@ function Library() {
   const [selectedCollection, setSelectedCollection] = useState(0);
 
   return (
-    <section className="border-[1px] flex h-[650px] ">
+    <section className="lg:border-[1px] lg:flex lg:h-[650px] ">
       <Popup
         setCollection={setCollection}
         collection={collection}

@@ -134,10 +134,10 @@ function ChatSection() {
   }
 
   return (
-    <>
+    <div className="flex justify-around flex-col h-full">
       <div
         ref={chatContainerRef}
-        className="overflow-y-auto flex flex-col  px-4 pt-2 h-[90%] "
+        className="overflow-y-auto flex flex-col  px-4 pt-2 min-h-[35vh] lg:h-full "
       >
         {documentData[0]?.abc.chat.length > 0 &&
           documentData[0]?.abc.chat.map((data, index) => {
@@ -172,7 +172,7 @@ function ChatSection() {
         {responding ? <Loading /> : null}
       </div>
 
-      <div className="flex items-center overflow-hidden  border-2  border-s_grey-50 px-2 py-2 mb-2 rounded-lg shadow-[0px_48px_100px_10px_#110c2e26] mx-5 gap-2 max-h-[20%]">
+      <div className="flex items-center overflow-hidden  border-2  border-s_grey-50 px-2 py-2 mb-2 rounded-lg shadow-[0px_48px_100px_10px_#110c2e26] mx-5 gap-2 h-[10%]">
         <textarea
           onChange={(event) => setValue(event.target.value)}
           ref={inputRef}
@@ -194,7 +194,7 @@ function ChatSection() {
           <IconSend />
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
