@@ -23,7 +23,7 @@ function PDFMode() {
           setOverlay("bg-transparent");
         }}
       >
-        <p>{pdfModeTypes[modeType]}</p>
+        <p className="text-sm md:text-base">{pdfModeTypes[modeType]}</p>
         <IconChevronDown className="self-center" size={18} />
       </button>
       <div

@@ -8,8 +8,8 @@ export default function PDFSection() {
       <div className="  flex justify-between px-2 py-2 h-[10%] lg:h-[5%] items-center">
         <PageSelector />
         <PDFMode />
-        <button className="flex   text-accent-400 border-[2px] border-accent-400  font-medium px-2 py-1 rounded-md">
-          <IconDownload />
+        <button className="flex text-sm md:text-base   text-accent-400 border-[2px] border-accent-400  font-medium px-2 py-1 rounded-md">
+          <IconDownload className="h-5 md:h-full" />
           <p>Download</p>
         </button>
       </div>
