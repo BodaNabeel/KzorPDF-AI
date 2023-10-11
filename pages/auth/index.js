@@ -1,33 +1,29 @@
-import supabase from "@/config/supabaseClient";
-import { useEffect } from "react";
+// import supabase from "@/config/supabaseClient";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 
 export default function Auth() {
+  const supabase = createClientComponentClient();
+
   const createUser = async () => {
-    const { data, error } = await supabase.auth.signUp({
-      email: "bodanabeel001@gmail.com",
+    await supabase.auth.signUp({
+      email: "nabeelboda0@gmail.com",
       password: "ProductionTest123",
+      options: {
+        emailRedirectTo: `${location.origin}/auth/callback`,
+      },
     });
-    error ? console.log(error) : console.log(data);
   };
   const signInUser = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: "bodanabeel001@gmail.com",
+    await supabase.auth.signInWithPassword({
+      email: "nabeelboda0@gmail.com",
       password: "ProductionTest123",
     });
-    error ? console.log(error) : console.log(data);
   };
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log(user);
-  };
+
   const signOutUser = async () => {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut();
   };
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <>

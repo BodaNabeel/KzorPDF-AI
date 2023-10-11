@@ -1,21 +1,20 @@
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
-import supabase from "./config/supabaseClient";
 
-export async function middleware(request) {
-  try {
-    const isUser = await supabase.auth.getUser();
-    const session = await supabase.auth.getSession();
+export async function middleware(req) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
 
-    if (session === null) {
-      return NextResponse.redirect(new URL("/auth", request.url));
-    }
-  } catch (error) {
-    // Handle any errors that occur during session retrieval or redirection here.
-    console.error("Error in middleware:", error);
-    // Optionally, you can redirect to an error page or take other actions.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.redirect(new URL("/auth", req.url));
   }
+
+  return res;
 }
 
 export const config = {
-  matcher: "/summarize",
+  matcher: ["/summarize", "/library"],
 };
