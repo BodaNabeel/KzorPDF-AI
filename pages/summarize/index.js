@@ -11,11 +11,22 @@ import supabase from "@/config/supabaseClient";
 
 export default function SummarizePage({ document_text }) {
   const { setDocumentData } = useContext(DataContext);
+  const getUser = async () => {
+    const user = await supabase.auth.getSession();
+    console.log(user);
+  };
   const fetchData = async () => {
-    const { data, error } = await supabase.from("demo").select("doc_data");
+    // const { error } = await supabase
+    //   .from("demo")
+    //   .insert({ id: 15, person: "Bazilla Shabir" });
+    // if (error) {
+    //   console.error("Error fetching data:", error.message, error.details);
+    // }
+    const { data, error } = await supabase.from("demo").select();
     console.log(data);
   };
   fetchData();
+  // getUser();
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
