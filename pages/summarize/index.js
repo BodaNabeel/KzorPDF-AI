@@ -16,17 +16,12 @@ export default function SummarizePage({ document_text }) {
     console.log(user);
   };
   const fetchData = async () => {
-    // const { error } = await supabase
-    //   .from("demo")
-    //   .insert({ id: 15, person: "Bazilla Shabir" });
-    // if (error) {
-    //   console.error("Error fetching data:", error.message, error.details);
-    // }
-    const { data, error } = await supabase.from("demo").select();
-    console.log(data);
+    const { error } = await supabase
+      .from("demo")
+      .insert({ id: 1526, person: "Nabeel Boda" });
   };
   fetchData();
-  // getUser();
+
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
