@@ -1,10 +1,9 @@
 // import supabase from "@/config/supabaseClient";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import supabase from "@/config/supabaseClient";
 import { useRouter } from "next/router";
 
 export default function Auth() {
-  // const supabase1 = createClientComponentClient();
+  const supabase = createClientComponentClient();
 
   const createUser = async () => {
     await supabase.auth.signUp({
@@ -26,13 +25,6 @@ export default function Auth() {
     await supabase.auth.signOut();
   };
 
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log(user);
-  };
-
   return (
     <>
       <div>
@@ -52,7 +44,6 @@ export default function Auth() {
         <button onClick={signOutUser} className="border-2 border-black">
           Logout
         </button>
-        <button onClick={getUser}>Show user</button>
       </div>
     </>
   );
