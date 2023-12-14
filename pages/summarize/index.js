@@ -11,16 +11,6 @@ import supabase from "@/config/supabaseClient";
 
 export default function SummarizePage({ document_text }) {
   const { setDocumentData } = useContext(DataContext);
-  const getUser = async () => {
-    const user = await supabase.auth.getSession();
-    console.log(user);
-  };
-  const fetchData = async () => {
-    const { error } = await supabase
-      .from("demo")
-      .insert({ id: 1526, person: "Nabeel Boda" });
-  };
-  fetchData();
 
   const temporaryID = "abc";
   useEffect(() => {
