@@ -17,6 +17,7 @@
     "autoprefixer": "10.4.15",
     "cheerio": "^1.0.0-rc.12",
     "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
     "langchain": "^0.0.162",
     "natural": "^6.7.2",
     "next": "13.4.18",
