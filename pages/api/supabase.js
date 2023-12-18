@@ -17,7 +17,6 @@ export default async function (req, res) {
         });
         return res.status(200).json(error);
       case "GET":
-        // const { data, error } = await supabase.from("demo").select();
         const refreshToken = req.cookies["my-refresh-token"];
         const accessToken = req.cookies["my-access-token"];
         return res.status(200).json(accessToken);
