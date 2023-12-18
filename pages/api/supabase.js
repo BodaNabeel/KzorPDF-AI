@@ -1,5 +1,5 @@
-import supabase from "@/config/supabaseClient";
-import openai from "/config/openai";
+import supabase from "../../config/supabaseClient";
+import openai from "../../config/openai";
 
 export default async function (req, res) {
   const {

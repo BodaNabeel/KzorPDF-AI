@@ -1,13 +1,15 @@
 // import supabase from "@/config/supabaseClient";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
+import supabase from "../../config/supabaseClient";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export default function Auth() {
-  const supabase = createClientComponentClient();
+  const supabaseClient = useSupabaseClient();
 
   const createUser = async () => {
     await supabase.auth.signUp({
-      email: "nabeelboda0@gmail.com",
+      email: "bodanabeel001@gmail.com",
       password: "ProductionTest123",
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
@@ -15,32 +17,81 @@ export default function Auth() {
     });
   };
   const signInUser = async () => {
-    await supabase.auth.signInWithPassword({
+    await supabaseClient.auth.signInWithPassword({
       email: "nabeelboda0@gmail.com",
       password: "ProductionTest123",
     });
   };
 
   const signOutUser = async () => {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
   };
   const getUser = async () => {
-    const user = await supabase.auth.getUser();
+    const user = await supabaseClient.auth.getUser();
     console.log(user);
   };
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "SIGNED_OUT" || event === "USER_DELETED") {
-      // delete cookies on sign out
-      const expires = new Date(0).toUTCString();
-      document.cookie = `my-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
-      document.cookie = `my-refresh-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
-    } else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-      const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-      document.cookie = `my-access-token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-      document.cookie = `my-refresh-token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
-    }
-  });
 
+  const read_and_write_data = async () => {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient
+      .from("folder")
+      .select()
+      .eq("user_id", user.id);
+    const { eror } = await supabaseClient
+      .from("folder")
+      .insert({ folder_name: "Mathematics" });
+    console.log(data);
+  };
+  const create_folder = async () => {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { error } = await supabaseClient
+      .from("folder")
+      .insert({ folder_name: "Chemistry II" });
+  };
+  const create_document = async () => {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient
+      .from("folder")
+      .select("folder_id")
+      .eq("user_id", user.id);
+    const { error } = await supabaseClient.from("document").insert({
+      document_name: "Lecture 01",
+      reference_folder: data[0].folder_id,
+    });
+  };
+  const create_chat = async () => {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient
+      .from("document")
+      .select()
+      .eq("user_id", user.id);
+    const { error } = await supabaseClient.from("chat").insert({
+      message: "Hey there! I am testing my supabase backend.",
+      is_user: true,
+      document_id: data[0].document_id,
+    });
+  };
+  const create_bookmark = async () => {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient
+      .from("document")
+      .select()
+      .eq("user_id", user.id);
+    const { error } = await supabaseClient.from("bookmark").insert({
+      bookmark_text: "Testing the bookmark?!",
+      document_id: data[0].document_id,
+    });
+  };
   return (
     <>
       <div>
@@ -61,6 +112,14 @@ export default function Auth() {
           Logout
         </button>
         <button onClick={getUser}>Show user</button>
+      </div>
+      <div className="flex flex-col">
+        <h2>Testing Database</h2>
+        <button onClick={read_and_write_data}>read_and_write_data</button>
+        <button onClick={create_folder}>Create a folder</button>
+        <button onClick={create_document}>Create a document</button>
+        <button onClick={create_chat}>Create chat</button>
+        <button onClick={create_bookmark}>Create bookmark</button>
       </div>
     </>
   );
