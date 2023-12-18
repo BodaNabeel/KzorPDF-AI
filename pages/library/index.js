@@ -1,5 +1,5 @@
-import Library from "@/components/library/Library";
-import NavbarLayout from "@/layout/NavbarLayout";
+import Library from "../../components/library/Library";
+import NavbarLayout from "../../layout/NavbarLayout";
 export default function Books({ overlay, setOverlay }) {
   return (
     <NavbarLayout>

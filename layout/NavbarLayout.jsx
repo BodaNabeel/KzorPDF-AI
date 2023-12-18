@@ -8,7 +8,7 @@ import {
   IconDotsCircleHorizontal,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import Overlay from "@/utils/Overlay";
+import Overlay from "../utils/Overlay";
 
 function NavbarLayout({ children }) {
   const router = useRouter();

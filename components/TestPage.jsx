@@ -1,4 +1,4 @@
-import { DataContext } from "@/context/context";
+import { DataContext } from "../../context/context";
 import { Document } from "langchain/document";
 import { CheerioWebBaseLoader } from "langchain/document_loaders/web/cheerio";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";

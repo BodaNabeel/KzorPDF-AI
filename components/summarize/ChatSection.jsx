@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
-import { DataContext } from "@/context/context";
+import { DataContext } from "../../context/context";
+import {} from "../../utils/Header";
 function ChatSection() {
   const { documentData, setDocumentData } = useContext(DataContext);
   const chatContainerRef = useRef(null);
