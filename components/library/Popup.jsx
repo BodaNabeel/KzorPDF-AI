@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../../context/context";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 function Popup(props) {
   const {
     collection,
@@ -11,6 +12,23 @@ function Popup(props) {
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
   const { setOverlay, overlay } = useContext(DataContext);
+  const supabaseClient = useSupabaseClient();
+  const createFolder_db = async (folder) => {
+    // const { error } = await supabaseClient
+    //   .from("folder")
+    //   .insert({ folder_name: folder });
+    // console.log(error);
+    const response = await fetch("/api/create_folder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        input: folder,
+      }),
+    });
+    console.log(response);
+  };
   function saveFolder(e) {
     e.preventDefault();
     if (!folderName) {
@@ -24,6 +42,7 @@ function Popup(props) {
       setDisplayPopup(false);
       setOverlay(false);
       setSelectedCollection(collection.length);
+      createFolder_db(folderName);
     }
   }
   function cancelFolder(e) {
@@ -37,7 +56,7 @@ function Popup(props) {
 
   return (
     <div
-      className={`left-[40%] top-[40%]  border-2 border-s_grey-100 w-[30%] p-4 bg-white shadow-[0px_0px_40px_5px_#00000024]  z-50 ${
+      className={`lg:left-[40%] lg:top-[40%] w-full top-[20%] border-2 border-s_grey-100 lg:w-[30%] p-4 bg-white shadow-[0px_0px_40px_5px_#00000024]  z-50 ${
         displayPopup && overlay ? "absolute" : "hidden"
       }`}
     >

@@ -1,10 +1,11 @@
-import Summarize from "@/components/summarize/Summarize";
-import { DataContext } from "@/context/context";
-import { useContext, useEffect } from "react";
+import Summarize from "../../components/summarize/Summarize";
+import { DataContext } from "../../context/context";
+import { useContext, useEffect, useState } from "react";
 import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
-import { v4 as uuidv4 } from "uuid";
+import NavbarLayout from "../../layout/NavbarLayout";
+
 export default function SummarizePage({ document_text }) {
   const { setDocumentData } = useContext(DataContext);
 
@@ -25,9 +26,9 @@ export default function SummarizePage({ document_text }) {
   }, []);
 
   return (
-    <section className=" h-screen   mx-auto ">
+    <NavbarLayout>
       <Summarize />
-    </section>
+    </NavbarLayout>
   );
 }
 

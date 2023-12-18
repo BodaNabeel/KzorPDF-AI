@@ -70,7 +70,11 @@ function PageSelector() {
           setOverlay("bg-transparent");
         }}
       >
-        {startPage && endPage ? <DisplayPageRange /> : <p>All Pages</p>}
+        {startPage && endPage ? (
+          <DisplayPageRange />
+        ) : (
+          <p className="text-sm md:text-base">All Pages</p>
+        )}
         <IconChevronDown className="self-center" size={18} />
       </button>
       <div
@@ -85,7 +89,7 @@ function PageSelector() {
           <input
             className="w-[40%] border-[1px] rounded-md border-gray-300 outline-primary-200 px-2 py-2
 
-                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-transparent"
             type="number"
             ref={startPageRef}
             min={1}
@@ -95,7 +99,7 @@ function PageSelector() {
             className="w-[40%]  border-[1px] rounded-md border-gray-300 outline-primary-200 px-2 py-2
 
 
-                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-transparent"
             type="number"
             ref={endPageRef}
             min={1}
