@@ -3,6 +3,10 @@ import PDFSection from "./PDFSection";
 import ChatSection from "./ChatSection";
 import Header from "../../utils/Header";
 import NoteSection from "./NoteSection";
+import { getSession, useSession } from "next-auth/react";
+import supabase from "@/config/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
+
 function Summarize() {
   const [selectedOption, setSelectedOption] = useState(0);
 
