@@ -4,6 +4,7 @@ import supabase from "../config/supabaseClient";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function MyApp({ Component, pageProps }) {
   // const [supabaseClient] = useState(() => createPagesBrowserClient());
@@ -18,6 +19,9 @@ export default function MyApp({ Component, pageProps }) {
     >
       <DataProvider>
         <main>
+          <div>
+            <Toaster position="top-right" reverseOrder={false} />
+          </div>
           <Component {...pageProps} />
         </main>
       </DataProvider>

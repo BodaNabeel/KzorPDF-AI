@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../../context/context";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import toast from "react-hot-toast";
 function Popup(props) {
   const {
     collection,
@@ -12,12 +13,7 @@ function Popup(props) {
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
   const { setOverlay, overlay } = useContext(DataContext);
-  const supabaseClient = useSupabaseClient();
   const createFolder_db = async (folder) => {
-    // const { error } = await supabaseClient
-    //   .from("folder")
-    //   .insert({ folder_name: folder });
-    // console.log(error);
     const response = await fetch("/api/create_folder", {
       method: "POST",
       headers: {
@@ -27,7 +23,8 @@ function Popup(props) {
         input: folder,
       }),
     });
-    console.log(response);
+
+    if (response.status === 400) toast.error("Folder name already exist");
   };
   function saveFolder(e) {
     e.preventDefault();
@@ -50,8 +47,11 @@ function Popup(props) {
     setOverlay(false);
     e.preventDefault();
   }
-  function updateFolderName(name) {
-    setFolderName(name);
+  function handleInputChange() {
+    const inputValue = inputRef.current.value.trim();
+    if (inputValue !== null || inputValue !== "") {
+      setFolderName(inputValue);
+    }
   }
 
   return (
@@ -65,7 +65,7 @@ function Popup(props) {
         <p>Collection Name:</p>
         <form>
           <input
-            onChange={() => updateFolderName(inputRef.current.value)}
+            onChange={() => handleInputChange()}
             ref={inputRef}
             className="w-[100%] border-[1px] mt-2 mb-5 p-2 outline-1 outline-primary-100 bg-transparent"
             type="text"
