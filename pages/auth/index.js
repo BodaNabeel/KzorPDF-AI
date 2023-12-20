@@ -18,7 +18,8 @@ export default function Auth() {
   };
   const signInUser = async () => {
     await supabaseClient.auth.signInWithPassword({
-      email: "nabeelboda0@gmail.com",
+      email: "bodanabeel001@gmail.com",
+      // email: "nabeelboda0@gmail.com",
       password: "ProductionTest123",
     });
   };
@@ -50,7 +51,8 @@ export default function Auth() {
     } = await supabaseClient.auth.getUser();
     const { error } = await supabaseClient
       .from("folder")
-      .insert({ folder_name: "Chemistry II" });
+      .insert({ folder_name: "Chemistry 28898" });
+    console.log(error);
   };
   const create_document = async () => {
     const {
