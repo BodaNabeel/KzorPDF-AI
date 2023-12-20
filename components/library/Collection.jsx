@@ -7,6 +7,7 @@ function Collection(props) {
     setDisplayPopup,
     selectedCollection,
     setSelectedCollection,
+    folderData,
   } = props;
   const { setOverlay, overlay } = useContext(DataContext);
   return (
@@ -29,10 +30,11 @@ function Collection(props) {
       </div>
 
       <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
-        {collection.map((folder, index) => {
+        {folderData.map((folder, index) => {
           return (
             <li
               key={index}
+              id={folder.folder_id}
               onClick={() => setSelectedCollection(index)}
               className={`flex gap-2 transition-all ${
                 index === selectedCollection
@@ -45,7 +47,7 @@ function Collection(props) {
               ) : (
                 <IconFolder />
               )}
-              <p>{folder.collectionName}</p>
+              <p>{folder.folder_name}</p>
             </li>
           );
         })}

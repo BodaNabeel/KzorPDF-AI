@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Collection from "./Collection";
 import Popup from "./Popup";
 import CollectionItems from "./CollectionItems";
-function Library() {
+function Library(props) {
+  const { folderData } = props;
   const tempCollection = [
     {
       collectionName: "Untitled collection",
@@ -50,6 +51,7 @@ function Library() {
         setDisplayPopup={setDisplayPopup}
         selectedCollection={selectedCollection}
         setSelectedCollection={setSelectedCollection}
+        folderData={folderData}
       />
 
       <CollectionItems
