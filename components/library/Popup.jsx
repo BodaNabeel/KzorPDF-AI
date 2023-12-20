@@ -2,6 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../../context/context";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
+import { ClipLoader, FadeLoader } from "react-spinners";
+import { useRouter } from "next/router";
 function Popup(props) {
   const {
     collection,
@@ -10,9 +12,16 @@ function Popup(props) {
     setDisplayPopup,
     setSelectedCollection,
   } = props;
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
   const { setOverlay, overlay } = useContext(DataContext);
+  const [setsuccessResponse, setSetsuccessResponse] = useState(false);
+  const [sendingReq, setSendingReq] = useState(false);
   const createFolder_db = async (folder) => {
     const response = await fetch("/api/create_folder", {
       method: "POST",
@@ -23,8 +32,19 @@ function Popup(props) {
         input: folder,
       }),
     });
+    if (response.status === 200) {
+      setFolderName("");
 
-    if (response.status === 400) toast.error("Folder name already exist");
+      refreshData();
+      setSendingReq(false);
+      setOverlay(false);
+      setDisplayPopup(false);
+      inputRef.current.value = "";
+    }
+    if (response.status === 400) {
+      toast.error("Folder name already exist");
+      setSendingReq(false);
+    }
   };
   function saveFolder(e) {
     e.preventDefault();
@@ -34,12 +54,11 @@ function Popup(props) {
       arr.push({ collectionName: folderName, collectionItems: [] });
       setCollection(arr);
 
-      inputRef.current.value = "";
-      setFolderName("");
-      setDisplayPopup(false);
-      setOverlay(false);
+      // setDisplayPopup(false);
+      // setOverlay(false);
       setSelectedCollection(collection.length);
       createFolder_db(folderName);
+      setSendingReq(true);
     }
   }
   function cancelFolder(e) {
@@ -76,23 +95,27 @@ function Popup(props) {
               }
             }}
           />
-          <div className="flex justify-end gap-5">
+          <div className="flex justify-end gap-5 border-red-800">
             <button
               onClick={(e) => cancelFolder(e)}
               className="bg-primary-100 text-primary-700 px-4 py-2 rounded-md"
             >
               Cancel
             </button>
+
             <button
               type="submit"
               onClick={(e) => saveFolder(e)}
-              className={` px-4 py-2 rounded-md ${
-                !folderName
+              className={` flex gap-2 items-center px-4 py-2 rounded-md ${
+                !folderName || sendingReq
                   ? "bg-s_grey-100 text-s_grey-600 cursor-not-allowed "
                   : "bg-primary-800 text-primary-100  "
               }`}
             >
-              Save
+              <p>Save</p>
+              {sendingReq ? (
+                <ClipLoader size={20} color="hsl(221,84%,70%)" />
+              ) : null}
             </button>
           </div>
         </form>
