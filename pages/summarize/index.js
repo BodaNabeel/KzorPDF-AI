@@ -5,9 +5,10 @@ import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
 import NavbarLayout from "../../layout/NavbarLayout";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-export default function SummarizePage({ document_text }) {
-  const { setDocumentData } = useContext(DataContext);
+export default function SummarizePage({ document_text, data }) {
+  const { setDocumentData, setChatData } = useContext(DataContext);
 
   const temporaryID = "abc";
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function SummarizePage({ document_text }) {
       ];
       setDocumentData(documentInformation);
     }
+    if (data) setChatData(data);
   }, []);
 
   return (
@@ -32,11 +34,20 @@ export default function SummarizePage({ document_text }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  // File
   const filePath = path.join(process.cwd(), "public", "final_report.pdf");
   const dataBuffer = fs.readFileSync(filePath);
   const document_text = await pdf(dataBuffer).then((data) => {
     return data.text;
   });
-  return { props: { document_text } };
+  // Chat
+  const supabase = createPagesServerClient(context);
+  const user = await supabase.auth.getUser();
+  const user_id = user.data.user.id;
+  const { data, error } = await supabase
+    .from("chat")
+    .select()
+    .eq("user_id", user_id);
+  return { props: { document_text, data } };
 }

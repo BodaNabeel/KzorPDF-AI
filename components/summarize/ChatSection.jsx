@@ -3,16 +3,16 @@ import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
 function ChatSection() {
-  const { documentData, setDocumentData } = useContext(DataContext);
+  const { documentData, setDocumentData, chatData } = useContext(DataContext);
   const chatContainerRef = useRef(null);
-  const [chat, setChat] = useState([]);
+  const [chat, setChat] = useState(chatData);
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
   const inputRef = useRef(null);
   const [EmbeddedDocument, setEmbeddedDocument] = useState([]);
   const [EmbeddedQuery, setEmbeddedQuery] = useState([]);
   const temporaryData = [...documentData];
-
+  console.log(chat);
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
@@ -59,10 +59,10 @@ function ChatSection() {
   function updateChat(response, isUser, id) {
     setChat((currentState) => [
       ...currentState,
-      { text: response, user: isUser, id: id },
+      { content: response, is_user: isUser, id: id },
     ]);
-    temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
-    setDocumentData(temporaryData);
+    // temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
+    // setDocumentData(temporaryData);
   }
   function updateNotes(noteData) {
     const temporaryNotes = [...documentData[0].abc.notes];
@@ -77,7 +77,20 @@ function ChatSection() {
     temporaryData[0].abc.notes = temporaryNotes;
     setDocumentData(temporaryData);
   }
-  function updateClientMessage() {
+  async function updateChatDB(content, isUser) {
+    const response = await fetch("/api/chat_db", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_content: content,
+        is_user: isUser,
+      }),
+    });
+    console.log(response);
+  }
+  async function updateClientMessage() {
     if (inputRef.current.value !== "") {
       setResponding(true);
       const message = inputRef.current.value;
@@ -85,6 +98,7 @@ function ChatSection() {
       updateChat(message, true, null);
       fetchMessage(message);
       inputRef.current.value = "";
+      updateChatDB(message, true);
     }
   }
   function DynamicRenderBookmarkIcon({ noteID }) {
@@ -116,6 +130,7 @@ function ChatSection() {
         const id = data.uid;
         setResponding(false);
         updateChat(formattedReply, false, id);
+        updateChatDB(data.reply.message.content, false);
       })
       .catch((error) => {
         setResponding(false);
@@ -140,7 +155,37 @@ function ChatSection() {
         ref={chatContainerRef}
         className="overflow-y-auto flex flex-col  px-4 pt-2 min-h-[35vh] lg:h-full "
       >
-        {documentData[0]?.abc.chat.length > 0 &&
+        {chat.length > 0 &&
+          chat.map((data, index) => {
+            if (!data?.is_user) {
+              return (
+                <div
+                  key={index}
+                  id={data.chat_id}
+                  className=" mb-5 w-[77%] self-start flex"
+                >
+                  <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
+                    <h1>{data.content}</h1>
+                  </div>
+                  <div className="flex items-center">
+                    <button onClick={() => updateNotes(data)}>
+                      <DynamicRenderBookmarkIcon noteID={data.id} />
+                    </button>
+                  </div>
+                </div>
+              );
+            } else if (data?.is_user) {
+              return (
+                <div
+                  key={index}
+                  className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
+                >
+                  <h1>{data.content}</h1>
+                </div>
+              );
+            }
+          })}
+        {/* {documentData[0]?.abc.chat.length > 0 &&
           documentData[0]?.abc.chat.map((data, index) => {
             if (!data?.user) {
               return (
@@ -169,7 +214,7 @@ function ChatSection() {
                 </div>
               );
             }
-          })}
+          })} */}
         {responding ? <Loading /> : null}
       </div>
 
