@@ -13,16 +13,7 @@ export default function SummarizePage({ document_text, data }) {
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
-      const documentInformation = [
-        {
-          [temporaryID]: {
-            document_text,
-            chat: [],
-            notes: [],
-          },
-        },
-      ];
-      setDocumentData(documentInformation);
+      setDocumentData(document_text);
     }
     if (data) setChatData(data);
   }, []);

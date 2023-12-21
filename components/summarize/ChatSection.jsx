@@ -3,24 +3,22 @@ import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
 function ChatSection() {
-  const { documentData, setDocumentData, chatData } = useContext(DataContext);
+  const { documentData, setDocumentData, chatData, setChatData } =
+    useContext(DataContext);
   const chatContainerRef = useRef(null);
-  const [chat, setChat] = useState(chatData);
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
   const inputRef = useRef(null);
   const [EmbeddedDocument, setEmbeddedDocument] = useState([]);
   const [EmbeddedQuery, setEmbeddedQuery] = useState([]);
-  const temporaryData = [...documentData];
-  console.log(chat);
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, [chatData]);
   useEffect(() => {
-    if (documentData[0]?.abc?.document_text) {
-      embedding(documentData[0]?.abc?.document_text, false);
+    if (documentData) {
+      embedding(documentData, false);
     }
-  }, [documentData[0]?.abc.document_text]);
+  }, [documentData]);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "0px";
@@ -56,27 +54,27 @@ function ChatSection() {
       }
     }
   };
-  function updateChat(response, isUser, id) {
-    setChat((currentState) => [
+  function updateChat(response, isUser) {
+    setChatData((currentState) => [
       ...currentState,
-      { content: response, is_user: isUser, id: id },
+      { content: response, is_user: isUser },
     ]);
     // temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
     // setDocumentData(temporaryData);
   }
-  function updateNotes(noteData) {
-    const temporaryNotes = [...documentData[0].abc.notes];
-    const existing = temporaryNotes.findIndex(
-      (note) => note.id === noteData.id
-    );
-    if (existing !== -1) {
-      temporaryNotes.splice(existing, 1);
-    } else {
-      temporaryNotes.push({ id: noteData.id, note: noteData.text });
-    }
-    temporaryData[0].abc.notes = temporaryNotes;
-    setDocumentData(temporaryData);
-  }
+  // function updateNotes(noteData) {
+  //   const temporaryNotes = [...documentData[0].abc.notes];
+  //   const existing = temporaryNotes.findIndex(
+  //     (note) => note.id === noteData.id
+  //   );
+  //   if (existing !== -1) {
+  //     temporaryNotes.splice(existing, 1);
+  //   } else {
+  //     temporaryNotes.push({ id: noteData.id, note: noteData.text });
+  //   }
+  //   temporaryData[0].abc.notes = temporaryNotes;
+  //   setDocumentData(temporaryData);
+  // }
   async function updateChatDB(content, isUser) {
     const response = await fetch("/api/chat_db", {
       method: "POST",
@@ -88,27 +86,31 @@ function ChatSection() {
         is_user: isUser,
       }),
     });
-    console.log(response);
   }
-  async function updateClientMessage() {
+  async function handleClientMessage() {
     if (inputRef.current.value !== "") {
       setResponding(true);
       const message = inputRef.current.value;
+
       embedding(message, true);
-      updateChat(message, true, null);
-      fetchMessage(message);
-      inputRef.current.value = "";
+      updateChat(message, true);
+      fetchOpenaiResponse(message);
       updateChatDB(message, true);
+
+      inputRef.current.value = "";
     }
   }
-  function DynamicRenderBookmarkIcon({ noteID }) {
-    const isNote = documentData[0].abc.notes.findIndex(
-      (chat) => chat.id === noteID
-    );
-    if (isNote !== -1) return <IconBookmarkOff />;
-    else return <IconBookmark />;
-  }
-  const fetchMessage = async (value) => {
+  // function DynamicRenderBookmarkIcon({ noteID }) {
+  //   const isNote = documentData[0].abc.notes.findIndex(
+  //     (chat) => chat.id === noteID
+  //   );
+  //   if (isNote !== -1) return <IconBookmarkOff />;
+  //   else return <IconBookmark />;
+  // }
+  // function DynamicBookmarkIcon() {
+  //   const isBookmarked =
+  // }
+  const fetchOpenaiResponse = async (value) => {
     fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -116,7 +118,7 @@ function ChatSection() {
       },
       body: JSON.stringify({
         message: value,
-        doc: documentData[0].abc.document_text,
+        doc: documentData,
       }),
     })
       .then((response) => {
@@ -129,7 +131,7 @@ function ChatSection() {
         const formattedReply = data.reply.message.content.split("\n");
         const id = data.uid;
         setResponding(false);
-        updateChat(formattedReply, false, id);
+        updateChat(formattedReply, false);
         updateChatDB(data.reply.message.content, false);
       })
       .catch((error) => {
@@ -155,8 +157,8 @@ function ChatSection() {
         ref={chatContainerRef}
         className="overflow-y-auto flex flex-col  px-4 pt-2 min-h-[35vh] lg:h-full "
       >
-        {chat.length > 0 &&
-          chat.map((data, index) => {
+        {chatData?.length > 0 &&
+          chatData?.map((data, index) => {
             if (!data?.is_user) {
               return (
                 <div
@@ -169,7 +171,7 @@ function ChatSection() {
                   </div>
                   <div className="flex items-center">
                     <button onClick={() => updateNotes(data)}>
-                      <DynamicRenderBookmarkIcon noteID={data.id} />
+                      {/* <DynamicRenderBookmarkIcon noteID={data.id} /> */}
                     </button>
                   </div>
                 </div>
@@ -224,7 +226,7 @@ function ChatSection() {
           ref={inputRef}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              updateClientMessage();
+              handleClientMessage();
               event.preventDefault();
             }
           }}
@@ -233,7 +235,7 @@ function ChatSection() {
 
         <button
           onClick={() => {
-            updateClientMessage();
+            handleClientMessage();
           }}
           className="bg-primary-400 rounded-md text-white py-2 px-2 self-end"
         >
