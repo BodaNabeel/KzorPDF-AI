@@ -22,8 +22,8 @@ function Popup(props) {
   const { setOverlay, overlay } = useContext(DataContext);
   const [setsuccessResponse, setSetsuccessResponse] = useState(false);
   const [sendingReq, setSendingReq] = useState(false);
-  const createFolder_db = async (folder) => {
-    const response = await fetch("/api/create_folder", {
+  const createCollection = async (folder) => {
+    const response = await fetch("/api/folder", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,14 +32,25 @@ function Popup(props) {
         input: folder,
       }),
     });
+    const responseGetData = await fetch("/api/folder", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await responseGetData.json();
     if (response.status === 200) {
+      refreshData();
       setFolderName("");
 
-      refreshData();
       setSendingReq(false);
       setOverlay(false);
       setDisplayPopup(false);
       inputRef.current.value = "";
+
+      const len = data.length - 1;
+      setCollection(data);
+      setSelectedCollection(data[len].folder_id);
     }
     if (response.status === 400) {
       toast.error("Folder name already exist");
@@ -50,14 +61,8 @@ function Popup(props) {
     e.preventDefault();
     if (!folderName) {
     } else {
-      const arr = [...collection];
-      arr.push({ collectionName: folderName, collectionItems: [] });
-      setCollection(arr);
-
-      // setDisplayPopup(false);
-      // setOverlay(false);
-      setSelectedCollection(collection.length);
-      createFolder_db(folderName);
+      // arr.push({ collectionName: folderName, collectionItems: [] });
+      createCollection(folderName);
       setSendingReq(true);
     }
   }
@@ -95,7 +100,7 @@ function Popup(props) {
               }
             }}
           />
-          <div className="flex justify-end gap-5 border-red-800">
+          <div className="flex justify-end gap-5">
             <button
               onClick={(e) => cancelFolder(e)}
               className="bg-primary-100 text-primary-700 px-4 py-2 rounded-md"
