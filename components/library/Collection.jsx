@@ -30,19 +30,19 @@ function Collection(props) {
       </div>
 
       <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
-        {folderData.map((folder, index) => {
+        {collection.map((folder, index) => {
           return (
             <li
               key={index}
               id={folder.folder_id}
-              onClick={() => setSelectedCollection(index)}
+              onClick={() => setSelectedCollection(folder.folder_id)}
               className={`flex gap-2 transition-all ${
-                index === selectedCollection
+                folder.folder_id === selectedCollection
                   ? `bg-primary-50 `
                   : `hover:bg-gray-100 transition-all duration-300`
               } `}
             >
-              {index === selectedCollection ? (
+              {collection.folder_id === selectedCollection ? (
                 <IconFolderFilled />
               ) : (
                 <IconFolder />
