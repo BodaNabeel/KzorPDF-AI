@@ -10,22 +10,33 @@ function Folder(props) {
     selectedCollection,
     setSelectedCollection,
   } = props;
-  function deleteCollection() {
-    let arr = [...collection];
-    arr.splice(selectedCollection, 1);
-    setCollection(arr);
-    setSelectedCollection(0);
-  }
-  function deleteCollectionItem(index) {
-    let arr = [...collection];
-    arr[selectedCollection].collectionItems.splice(index, 1);
-    setCollection(arr);
-  }
+  const deleteCollection = async () => {
+    const response = await fetch("/api/folder", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        input: selectedCollection,
+      }),
+    });
+    if (response.status === 200) {
+      const tempCollection = [...collection];
+      tempCollection.map((element, index) => {
+        if (element.folder_id === selectedCollection) {
+          const newFolderId = tempCollection[index - 1]?.folder_id;
+          setSelectedCollection(newFolderId);
+          tempCollection.splice(index, 1);
+          setCollection(tempCollection);
+        }
+      });
+    }
+  };
   function DisplayCollectionItems() {
-    if (collection[selectedCollection]?.collectionItems.length <= 0) {
+    if (collection[selectedCollection]?.collectionItems?.length <= 0) {
       return <h1>No items have been found mate</h1>;
     } else {
-      return collection[selectedCollection]?.collectionItems.map(
+      return collection[selectedCollection]?.collectionItems?.map(
         (element, index) => {
           return (
             <div
@@ -65,7 +76,7 @@ function Folder(props) {
             {collection[selectedCollection]?.collectionName}
           </p>
           <p className="text-s_grey-600 text-sm font-medium">
-            {collection[selectedCollection]?.collectionItems.length} items
+            {collection[selectedCollection]?.collectionItems?.length} items
           </p>
         </span>
 
