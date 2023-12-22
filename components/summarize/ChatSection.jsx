@@ -93,6 +93,16 @@ function ChatSection() {
     }
   }
   async function createBookmark(chatID, index) {
+    // 1. create bookmark state
+
+    // 2. Set state true even before api call
+
+    // 3. If API call fails set false, or else keep it as it is "true"
+
+    const tempChatData = [...chatData];
+    tempChatData[index].is_bookmarked = true;
+    setChatData(tempChatData);
+
     const response = await fetch("/api/chat_db", {
       method: "PUT",
       headers: {
@@ -103,13 +113,16 @@ function ChatSection() {
         creatingBookmark: true,
       }),
     });
-    if (response.status === 200) {
+    if (response.status === 400) {
       const tempChatData = [...chatData];
-      tempChatData[index].is_bookmarked = true;
+      tempChatData[index].is_bookmarked = false;
       setChatData(tempChatData);
     }
   }
   async function deleteBookmark(chatID, index) {
+    const tempChatData = [...chatData];
+    tempChatData[index].is_bookmarked = false;
+    setChatData(tempChatData);
     const response = await fetch("/api/chat_db", {
       method: "PUT",
       headers: {
@@ -120,9 +133,9 @@ function ChatSection() {
         creatingBookmark: false,
       }),
     });
-    if (response.status === 200) {
+    if (response.status === 400) {
       const tempChatData = [...chatData];
-      tempChatData[index].is_bookmarked = false;
+      tempChatData[index].is_bookmarked = true;
       setChatData(tempChatData);
     }
   }

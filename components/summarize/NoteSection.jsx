@@ -1,11 +1,18 @@
 import { DataContext } from "../../context/context";
 import { IconBookmarkOff } from "@tabler/icons-react";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 function NoteSection() {
   const { chatData, setChatData } = useContext(DataContext);
+  const [hasBookmarks, setHasBookmarks] = useState(false);
+  //
+  // console.log(bookmarkedChat);
+
   async function deleteBookmark(chatID, index) {
+    const tempChatData = [...chatData];
+    tempChatData[index].is_bookmarked = false;
+    setChatData(tempChatData);
     const response = await fetch("/api/chat_db", {
       method: "PUT",
       headers: {
@@ -16,16 +23,16 @@ function NoteSection() {
         creatingBookmark: false,
       }),
     });
-    if (response.status === 200) {
+    if (response.status === 400) {
       const tempChatData = [...chatData];
-      tempChatData[index].is_bookmarked = false;
+      tempChatData[index].is_bookmarked = true;
       setChatData(tempChatData);
     }
   }
-
   function Note({ element, index }) {
     if (chatData.length > 0) {
       if (element.is_bookmarked) {
+        setHasBookmarks(true);
         return (
           <div key={index} className=" mb-5 w-[90%] self-start flex px-4 pt-2">
             <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
@@ -39,8 +46,30 @@ function NoteSection() {
           </div>
         );
       }
-    } else {
-      return (
+    }
+    // } else {
+    //   return (
+    //     <div className="flex items-center flex-col justify-center  h-full">
+    //       <Image
+    //         src="/images/empty.svg"
+    //         height={150}
+    //         width={150}
+    //         alt="image of pdf"
+    //       />
+    //       <h1 className="mt-4 font-medium">
+    //         Don't leave this space blank. Add your first bookmark now!
+    //       </h1>
+    //     </div>
+    //   );
+    // }
+  }
+
+  return (
+    <>
+      {chatData.map((element, index) => {
+        return <Note element={element} index={index} />;
+      })}
+      {!hasBookmarks && (
         <div className="flex items-center flex-col justify-center  h-full">
           <Image
             src="/images/empty.svg"
@@ -52,15 +81,7 @@ function NoteSection() {
             Don't leave this space blank. Add your first bookmark now!
           </h1>
         </div>
-      );
-    }
-  }
-
-  return (
-    <>
-      {chatData.map((element, index) => {
-        return <Note element={element} index={index} />;
-      })}
+      )}
     </>
   );
   // function Note(element, index) {

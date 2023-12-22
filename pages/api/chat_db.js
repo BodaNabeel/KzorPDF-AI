@@ -24,9 +24,6 @@ export default async (req, res) => {
           .from("chat")
           .update({ is_bookmarked: body.creatingBookmark })
           .eq("chat_id", body.chat_id);
-
-        console.log("working");
-
         if (error) {
           throw new Error("Supabase error");
         }
@@ -35,7 +32,7 @@ export default async (req, res) => {
           .status(200)
           .json({ message: "Bookmark updated successfully" });
       } catch (err) {
-        console.error("Error:", err.message);
+        return res.status(400);
       }
 
       break;

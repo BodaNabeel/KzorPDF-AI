@@ -11,6 +11,15 @@ function Folder(props) {
     setSelectedCollection,
   } = props;
   const deleteCollection = async () => {
+    const tempCollection = [...collection];
+    tempCollection.map((element, index) => {
+      if (element.folder_id === selectedCollection) {
+        const newFolderId = tempCollection[index - 1]?.folder_id;
+        setSelectedCollection(newFolderId);
+        tempCollection.splice(index, 1);
+        setCollection(tempCollection);
+      }
+    });
     const response = await fetch("/api/folder", {
       method: "DELETE",
       headers: {
@@ -20,16 +29,16 @@ function Folder(props) {
         input: selectedCollection,
       }),
     });
-    if (response.status === 200) {
-      const tempCollection = [...collection];
-      tempCollection.map((element, index) => {
-        if (element.folder_id === selectedCollection) {
-          const newFolderId = tempCollection[index - 1]?.folder_id;
-          setSelectedCollection(newFolderId);
-          tempCollection.splice(index, 1);
-          setCollection(tempCollection);
-        }
-      });
+    if (response.status === 400) {
+      // const tempCollection = [...collection];
+      // tempCollection.map((element, index) => {
+      //   if (element.folder_id === selectedCollection) {
+      //     const newFolderId = tempCollection[index - 1]?.folder_id;
+      //     setSelectedCollection(newFolderId);
+      //     tempCollection.splice(index, 1);
+      //     setCollection(tempCollection);
+      //   }
+      // });
     }
   };
   function DisplayCollectionItems() {
