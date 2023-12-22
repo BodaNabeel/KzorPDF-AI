@@ -14,7 +14,7 @@ function Summarize() {
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
       >
-        <div className=" bg-white flex flex-col justify-between h-full ">
+        <div className=" bg-white flex flex-col  h-full ">
           {selectedOption === 0 ? <ChatSection /> : <NoteSection />}
         </div>
       </Header>

@@ -7,15 +7,21 @@ import pdf from "pdf-parse";
 import NavbarLayout from "../../layout/NavbarLayout";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-export default function SummarizePage({ document_text, data }) {
-  const { setDocumentData, setChatData } = useContext(DataContext);
+export default function SummarizePage({
+  document_text,
+  chatData,
+  bookmarkData,
+}) {
+  const { setDocumentData, setChatData, setBookmarkData } =
+    useContext(DataContext);
 
   const temporaryID = "abc";
   useEffect(() => {
     if (document_text) {
       setDocumentData(document_text);
     }
-    if (data) setChatData(data);
+    if (chatData) setChatData(chatData);
+    if (bookmarkData) setBookmarkData(bookmarkData);
   }, []);
 
   return (
@@ -36,9 +42,14 @@ export async function getServerSideProps(context) {
   const supabase = createPagesServerClient(context);
   const user = await supabase.auth.getUser();
   const user_id = user.data.user.id;
-  const { data, error } = await supabase
+  const { data: chatData, error: chatDataError } = await supabase
     .from("chat")
     .select()
     .eq("user_id", user_id);
-  return { props: { document_text, data } };
+  // Bookmark
+  const { data: bookmarkData, error: bookmarkDataError } = await supabase
+    .from("bookmark")
+    .select()
+    .eq("user_id", user_id);
+  return { props: { document_text, chatData, bookmarkData } };
 }
