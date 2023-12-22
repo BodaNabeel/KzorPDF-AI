@@ -3,8 +3,14 @@ import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
 function ChatSection() {
-  const { documentData, setDocumentData, chatData, setChatData } =
-    useContext(DataContext);
+  const {
+    documentData,
+    setDocumentData,
+    chatData,
+    setChatData,
+    bookmarkData,
+    setBookmarkData,
+  } = useContext(DataContext);
   const chatContainerRef = useRef(null);
   const [responding, setResponding] = useState(false);
   const [value, setValue] = useState(undefined);
@@ -43,7 +49,7 @@ function ChatSection() {
     });
     const data = await response.json();
     if (data.error) {
-      console.log("error detected: ", data.error);
+      // console.log("error detected: ", data.error);
     } else {
       if (isQuery === true) {
         setEmbeddedQuery(data.data[0].embedding);
@@ -59,22 +65,8 @@ function ChatSection() {
       ...currentState,
       { content: response, is_user: isUser },
     ]);
-    // temporaryData[0].abc.chat.push({ id: id, user: isUser, text: response });
-    // setDocumentData(temporaryData);
   }
-  // function updateNotes(noteData) {
-  //   const temporaryNotes = [...documentData[0].abc.notes];
-  //   const existing = temporaryNotes.findIndex(
-  //     (note) => note.id === noteData.id
-  //   );
-  //   if (existing !== -1) {
-  //     temporaryNotes.splice(existing, 1);
-  //   } else {
-  //     temporaryNotes.push({ id: noteData.id, note: noteData.text });
-  //   }
-  //   temporaryData[0].abc.notes = temporaryNotes;
-  //   setDocumentData(temporaryData);
-  // }
+
   async function updateChatDB(content, isUser) {
     const response = await fetch("/api/chat_db", {
       method: "POST",
@@ -100,17 +92,41 @@ function ChatSection() {
       inputRef.current.value = "";
     }
   }
-  // function DynamicRenderBookmarkIcon({ noteID }) {
-  //   const isNote = documentData[0].abc.notes.findIndex(
-  //     (chat) => chat.id === noteID
-  //   );
-  //   if (isNote !== -1) return <IconBookmarkOff />;
-  //   else return <IconBookmark />;
-  // }
-  // function DynamicBookmarkIcon() {
-  //   const isBookmarked =
-  // }
-  const fetchOpenaiResponse = async (value) => {
+  async function createBookmark(chatID, index) {
+    const response = await fetch("/api/chat_db", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: chatID,
+        creatingBookmark: true,
+      }),
+    });
+    if (response.status === 200) {
+      const tempChatData = [...chatData];
+      tempChatData[index].is_bookmarked = true;
+      setChatData(tempChatData);
+    }
+  }
+  async function deleteBookmark(chatID, index) {
+    const response = await fetch("/api/chat_db", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: chatID,
+        creatingBookmark: false,
+      }),
+    });
+    if (response.status === 200) {
+      const tempChatData = [...chatData];
+      tempChatData[index].is_bookmarked = false;
+      setChatData(tempChatData);
+    }
+  }
+  async function fetchOpenaiResponse(value) {
     fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -137,7 +153,7 @@ function ChatSection() {
       .catch((error) => {
         setResponding(false);
       });
-  };
+  }
 
   function Loading() {
     return (
@@ -170,9 +186,19 @@ function ChatSection() {
                     <h1>{data.content}</h1>
                   </div>
                   <div className="flex items-center">
-                    <button onClick={() => updateNotes(data)}>
-                      {/* <DynamicRenderBookmarkIcon noteID={data.id} /> */}
-                    </button>
+                    {data.is_bookmarked ? (
+                      <button
+                        onClick={() => deleteBookmark(data.chat_id, index)}
+                      >
+                        <IconBookmarkOff />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => createBookmark(data.chat_id, index)}
+                      >
+                        <IconBookmark />
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -187,36 +213,6 @@ function ChatSection() {
               );
             }
           })}
-        {/* {documentData[0]?.abc.chat.length > 0 &&
-          documentData[0]?.abc.chat.map((data, index) => {
-            if (!data?.user) {
-              return (
-                <div key={index} className=" mb-5 w-[77%] self-start flex">
-                  <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
-                    {data.text.map((element, index) => (
-                      <div key={index}>
-                        {element} <br />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center">
-                    <button onClick={() => updateNotes(data)}>
-                      <DynamicRenderBookmarkIcon noteID={data.id} />
-                    </button>
-                  </div>
-                </div>
-              );
-            } else if (data?.user) {
-              return (
-                <div
-                  key={index}
-                  className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
-                >
-                  <h1>{data.text}</h1>
-                </div>
-              );
-            }
-          })} */}
         {responding ? <Loading /> : null}
       </div>
 

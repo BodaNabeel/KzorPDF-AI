@@ -7,7 +7,6 @@ export default async (req, res) => {
     res,
   });
   const user = await supabaseServerClient.auth.getUser();
-  const user_id = user.data.user.id;
   switch (method) {
     case "POST":
       try {
@@ -18,7 +17,28 @@ export default async (req, res) => {
       } catch (error) {
         res.status(500).json({ error: error });
       }
+      break;
+    case "PUT":
+      try {
+        const { error } = await supabaseServerClient
+          .from("chat")
+          .update({ is_bookmarked: body.creatingBookmark })
+          .eq("chat_id", body.chat_id);
 
+        console.log("working");
+
+        if (error) {
+          throw new Error("Supabase error");
+        }
+
+        return res
+          .status(200)
+          .json({ message: "Bookmark updated successfully" });
+      } catch (err) {
+        console.error("Error:", err.message);
+      }
+
+      break;
     default:
       return res.status(400).json({ error: "Method not allowed." });
   }
