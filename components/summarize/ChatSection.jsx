@@ -9,7 +9,8 @@ function ChatSection() {
     chatData,
     setChatData,
     bookmarkData,
-    setBookmarkData,
+    setBookmark,
+    bookmark,
   } = useContext(DataContext);
   const chatContainerRef = useRef(null);
   const [responding, setResponding] = useState(false);
@@ -17,6 +18,7 @@ function ChatSection() {
   const inputRef = useRef(null);
   const [EmbeddedDocument, setEmbeddedDocument] = useState([]);
   const [EmbeddedQuery, setEmbeddedQuery] = useState([]);
+  // const [bookmark, setBookmark] = useState([]);
   useEffect(() => {
     scrollToBottom();
   }, [chatData]);
@@ -92,16 +94,17 @@ function ChatSection() {
       inputRef.current.value = "";
     }
   }
+
+  let tempBookmark = [...bookmark];
+  let disposalBookmark = [...bookmark];
+
   async function createBookmark(chatID, index) {
-    // 1. create bookmark state
-
-    // 2. Set state true even before api call
-
-    // 3. If API call fails set false, or else keep it as it is "true"
-
     const tempChatData = [...chatData];
     tempChatData[index].is_bookmarked = true;
+    tempBookmark.push(tempChatData[index]);
+
     setChatData(tempChatData);
+    setBookmark(tempBookmark);
 
     const response = await fetch("/api/chat_db", {
       method: "PUT",
@@ -114,12 +117,18 @@ function ChatSection() {
       }),
     });
     if (response.status === 400) {
-      const tempChatData = [...chatData];
       tempChatData[index].is_bookmarked = false;
       setChatData(tempChatData);
     }
   }
   async function deleteBookmark(chatID, index) {
+    tempBookmark.map((element, index) => {
+      if (element.chat_id === chatID) {
+        tempBookmark.splice(index, 1);
+        setBookmark(tempBookmark);
+      }
+    });
+
     const tempChatData = [...chatData];
     tempChatData[index].is_bookmarked = false;
     setChatData(tempChatData);
@@ -134,9 +143,9 @@ function ChatSection() {
       }),
     });
     if (response.status === 400) {
-      const tempChatData = [...chatData];
       tempChatData[index].is_bookmarked = true;
       setChatData(tempChatData);
+      setBookmark(disposalBookmark);
     }
   }
   async function fetchOpenaiResponse(value) {

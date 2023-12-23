@@ -12,8 +12,7 @@ export default function SummarizePage({
   chatData,
   bookmarkData,
 }) {
-  const { setDocumentData, setChatData, setBookmarkData } =
-    useContext(DataContext);
+  const { setDocumentData, setChatData, setBookmark } = useContext(DataContext);
 
   const temporaryID = "abc";
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function SummarizePage({
       setDocumentData(document_text);
     }
     if (chatData) setChatData(chatData);
-    if (bookmarkData) setBookmarkData(bookmarkData);
+    if (bookmarkData) setBookmark(bookmarkData);
   }, []);
 
   return (
@@ -38,18 +37,25 @@ export async function getServerSideProps(context) {
   const document_text = await pdf(dataBuffer).then((data) => {
     return data.text;
   });
-  // Chat
+
+  // Supabase Configs
   const supabase = createPagesServerClient(context);
   const user = await supabase.auth.getUser();
   const user_id = user.data.user.id;
+
+  // Chat
   const { data: chatData, error: chatDataError } = await supabase
     .from("chat")
     .select()
     .eq("user_id", user_id);
+
   // Bookmark
+
   const { data: bookmarkData, error: bookmarkDataError } = await supabase
-    .from("bookmark")
+    .from("chat")
     .select()
-    .eq("user_id", user_id);
+    .eq("user_id", user_id)
+    .eq("is_bookmarked", true);
+
   return { props: { document_text, chatData, bookmarkData } };
 }

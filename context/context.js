@@ -6,7 +6,7 @@ export const DataProvider = ({ children }) => {
   const [overlay, setOverlay] = useState(false);
   const [documentData, setDocumentData] = useState([]);
   const [chatData, setChatData] = useState([]);
-  const [bookmarkData, setBookmarkData] = useState([]);
+  const [bookmark, setBookmark] = useState([]);
   return (
     <DataContext.Provider
       value={{
@@ -16,8 +16,8 @@ export const DataProvider = ({ children }) => {
         setDocumentData,
         chatData,
         setChatData,
-        bookmarkData,
-        setBookmarkData,
+        bookmark,
+        setBookmark,
       }}
     >
       {children}
