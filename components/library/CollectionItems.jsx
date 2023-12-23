@@ -23,15 +23,6 @@ function Folder(props) {
         setCollection(updateCollection);
       }
     });
-    // const tempCollection = [...collection];
-    // tempCollection.map((element, index) => {
-    // if (element.folder_id === selectedCollection) {
-    //   const newFolderId = tempCollection[index - 1]?.folder_id;
-    //   setSelectedCollection(newFolderId);
-    //   tempCollection.splice(index, 1);
-    //   setCollection(tempCollection);
-    // }
-    // });
     const response = await fetch("/api/folder", {
       method: "DELETE",
       headers: {
@@ -48,13 +39,6 @@ function Folder(props) {
       toast.error(
         "An error occurred while deleting the folder. Please try again."
       );
-
-      // tempCollection.map((element, index) => {
-      //   if (element.folder_id === selectedCollection) {
-      //     setSelectedCollection(tempSelectedCollection);
-      //     setCollection(tempCollection);
-      //   }
-      // });
     }
   };
   function DisplayCollectionItems() {
