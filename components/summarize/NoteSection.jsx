@@ -12,7 +12,7 @@ function NoteSection() {
   let tempChat = [...chatData];
   let disposalChat = [...chatData];
 
-  async function deleteBookmark(chatID, index) {
+  async function deleteBookmark(chatID) {
     tempBookmark.map((element, index) => {
       if (element.chat_id === chatID) {
         tempBookmark.splice(index, 1);
@@ -26,10 +26,6 @@ function NoteSection() {
         console.log("working");
       }
     });
-
-    // const tempChatData = [...chatData];
-    // tempChatData[index].is_bookmarked = false;
-    // setChatData(tempChatData);
     const response = await fetch("/api/chat_db", {
       method: "PUT",
       headers: {
