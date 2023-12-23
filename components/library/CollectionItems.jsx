@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IconDots, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
 import { IconCircleMinus } from "@tabler/icons-react";
+import toast from "react-hot-toast";
 
 function Folder(props) {
   const {
@@ -12,14 +13,25 @@ function Folder(props) {
   } = props;
   const deleteCollection = async () => {
     const tempCollection = [...collection];
-    tempCollection.map((element, index) => {
+    const tempSelectedCollection = selectedCollection;
+    const updateCollection = [...collection];
+    updateCollection.map((element, index) => {
       if (element.folder_id === selectedCollection) {
-        const newFolderId = tempCollection[index - 1]?.folder_id;
+        const newFolderId = updateCollection[index - 1]?.folder_id;
         setSelectedCollection(newFolderId);
-        tempCollection.splice(index, 1);
-        setCollection(tempCollection);
+        updateCollection.splice(index, 1);
+        setCollection(updateCollection);
       }
     });
+    // const tempCollection = [...collection];
+    // tempCollection.map((element, index) => {
+    // if (element.folder_id === selectedCollection) {
+    //   const newFolderId = tempCollection[index - 1]?.folder_id;
+    //   setSelectedCollection(newFolderId);
+    //   tempCollection.splice(index, 1);
+    //   setCollection(tempCollection);
+    // }
+    // });
     const response = await fetch("/api/folder", {
       method: "DELETE",
       headers: {
@@ -29,13 +41,17 @@ function Folder(props) {
         input: selectedCollection,
       }),
     });
+
     if (response.status === 400) {
-      // const tempCollection = [...collection];
+      setSelectedCollection(tempSelectedCollection);
+      setCollection(tempCollection);
+      toast.error(
+        "An error occurred while deleting the folder. Please try again."
+      );
+
       // tempCollection.map((element, index) => {
       //   if (element.folder_id === selectedCollection) {
-      //     const newFolderId = tempCollection[index - 1]?.folder_id;
-      //     setSelectedCollection(newFolderId);
-      //     tempCollection.splice(index, 1);
+      //     setSelectedCollection(tempSelectedCollection);
       //     setCollection(tempCollection);
       //   }
       // });

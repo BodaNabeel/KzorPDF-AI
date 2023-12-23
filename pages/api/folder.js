@@ -67,15 +67,18 @@ export default async (req, res) => {
         // };
       }
     case "DELETE":
-      console.log(body.input);
       try {
         const { error } = await supabaseServerClient
           .from("folder")
           .delete()
           .eq("folder_id", body.input);
+        if (error) {
+          console.log(error);
+          throw new Error("Supabase error");
+        }
         return res.status(200).json({ message: "Folder deleted." });
       } catch (error) {
-        console.log(error);
+        return res.status(400).json({ error: "Error found!" });
       }
     default:
       return res.status(400).json({ error: "Method not allowed." });
