@@ -23,7 +23,7 @@ export default async (req, res) => {
         const { error } = await supabaseServerClient
           .from("chat")
           .update({ is_bookmarked: body.creatingBookmark })
-          .eq("chat_id", body.chat_id);
+          .eq("chat_i-sd", body.chat_id);
         if (error) {
           throw new Error("Supabase error");
         }
@@ -32,10 +32,9 @@ export default async (req, res) => {
           .status(200)
           .json({ message: "Bookmark updated successfully" });
       } catch (err) {
-        return res.status(400);
+        return res.status(400).json({ error: "Failed to perform the action." });
       }
 
-      break;
     default:
       return res.status(400).json({ error: "Method not allowed." });
   }
