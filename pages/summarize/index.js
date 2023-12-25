@@ -38,39 +38,48 @@ export default function SummarizePage({
   const uploadFile = async (event) => {
     const file = event.target.files[0];
     const fileName = processString(file.name);
-    const bucket = "files";
+    const bucket = "kzor";
     const {
       data: { user },
     } = await supabaseClient.auth.getUser();
-    const timestamp = Date.now();
 
-    const uniqueFilename = `${user.id}_${timestamp}_${fileName}`;
+    // const uniqueFilename = `${timestamp}_${fileName}`;
 
     // Call Storage API to upload file
     const { data, error } = await supabaseClient.storage
       .from(bucket)
-      .upload(`public/${uniqueFilename}`, file);
+      .upload(`${user.id}/${fileName}`, file);
 
     if (data) {
-      const { error } = await supabaseClient
+      const { error: db_error } = await supabaseClient
         .from("document")
-        .insert({ document_name: "Lecture 01", document_path: uniqueFilename });
-      console.log(error);
+        .insert({ document_name: "Lecture 01", document_path: fileName });
+      console.log(data);
       alert("File uploaded successfully!");
     }
     if (error) console.log(error);
   };
   const getFile = async () => {
-    const { data, error } = await supabaseClient.from("document").select();
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const { data, error } = await supabaseClient
+      .from("document")
+      .select()
+      .eq("user_id", user.id);
 
-    // console.log(user);
     if (data) {
-      const publicUrl = supabaseClient.storage
-        .from("files/public")
-        .getPublicUrl(data[6].document_path);
+      const { data: storageData, error: storageDataError } =
+        await supabaseClient.storage
+          .from(`kzor/${user.id}`)
+          .createSignedUrl(data[0].document_path, 3600);
+      // console.log(storageData);
+      // console.log(data[0].document_path);
 
-      setPdfLink(publicUrl.data.publicUrl);
+      setPdfLink(storageData.signedUrl);
     }
+
+    if (error) console.log(error);
   };
   useEffect(() => {
     if (document_text) {
@@ -108,7 +117,7 @@ export async function getServerSideProps(context) {
   // Supabase Configs
   const supabase = createPagesServerClient(context);
   const user = await supabase.auth.getUser();
-  const user_id = user.data.user.id;
+  const user_id = user?.data?.user?.id;
 
   // Chat
   const { data: chatData, error: chatDataError } = await supabase
