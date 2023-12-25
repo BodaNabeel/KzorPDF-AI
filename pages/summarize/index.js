@@ -18,45 +18,59 @@ export default function SummarizePage({
 }) {
   const { setDocumentData, setChatData, setBookmark } = useContext(DataContext);
   const [pdfLink, setPdfLink] = useState();
-  // async function uploadDoc() {
-  //   const { data, error } = await supabase.storage
-  //     .from("files")
-  //     .upload("document69.pdf", "/final_report.pdf", {
-  //       cacheControl: "3600",
-  //       upsert: false,
-  //     });
-  //   console.log(data);
-  //   console.log(error);
-  // }
-  // useEffect(() => {
-  //   uploadDoc();
-  // }, []);
+
   const supabaseClient = useSupabaseClient();
+  function processString(inputString) {
+    // Convert to lowercase
+    let lowercaseString = inputString.toLowerCase();
+
+    // Replace spaces with underscores
+    let stringWithUnderscores = lowercaseString.replace(/ /g, "_");
+
+    // Remove special characters using a regular expression
+    let stringWithoutSpecialChars = stringWithUnderscores.replace(
+      /[^a-z0-9_.]/g,
+      ""
+    );
+
+    return stringWithoutSpecialChars;
+  }
   const uploadFile = async (event) => {
     const file = event.target.files[0];
+    const fileName = processString(file.name);
     const bucket = "files";
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+    const timestamp = Date.now();
+
+    const uniqueFilename = `${user.id}_${timestamp}_${fileName}`;
 
     // Call Storage API to upload file
     const { data, error } = await supabaseClient.storage
       .from(bucket)
-      // .upload(file.name, file);
-      .upload(`public/${file.name}`, file);
+      .upload(`public/${uniqueFilename}`, file);
 
-    // Handle error if upload failed
-    if (error) {
-      // alert("Error uploading file.");
+    if (data) {
+      const { error } = await supabaseClient
+        .from("document")
+        .insert({ document_name: "Lecture 01", document_path: uniqueFilename });
       console.log(error);
-      return;
+      alert("File uploaded successfully!");
     }
-
-    alert("File uploaded successfully!");
+    if (error) console.log(error);
   };
   const getFile = async () => {
-    const publicUrl = supabaseClient.storage
-      .from("files/public")
-      .getPublicUrl("nabeel_resume.pdf");
-    console.log(publicUrl);
-    setPdfLink(publicUrl.data.publicUrl);
+    const { data, error } = await supabaseClient.from("document").select();
+
+    // console.log(user);
+    if (data) {
+      const publicUrl = supabaseClient.storage
+        .from("files/public")
+        .getPublicUrl(data[6].document_path);
+
+      setPdfLink(publicUrl.data.publicUrl);
+    }
   };
   useEffect(() => {
     if (document_text) {
