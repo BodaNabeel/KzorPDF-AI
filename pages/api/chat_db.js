@@ -23,16 +23,16 @@ export default async (req, res) => {
         const { error } = await supabaseServerClient
           .from("chat")
           .update({ is_bookmarked: body.creatingBookmark })
-          .eq("chat_i-sd", body.chat_id);
+          .eq("chat_id", body.chat_id);
         if (error) {
-          throw new Error("Supabase error");
+          throw new Error(error);
         }
 
         return res
           .status(200)
           .json({ message: "Bookmark updated successfully" });
       } catch (err) {
-        return res.status(400).json({ error: "Failed to perform the action." });
+        return res.status(400).json({ error: err });
       }
 
     default:
