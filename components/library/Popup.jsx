@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../../context/context";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
@@ -94,6 +94,7 @@ function Popup(props) {
             className="w-[100%] border-[1px] mt-2 mb-5 p-2 outline-1 outline-primary-100 bg-transparent"
             type="text"
             placeholder="E.g. Object Oriented Programming"
+            autoFocus
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 saveFolder(e);

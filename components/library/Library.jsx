@@ -5,18 +5,20 @@ import CollectionItems from "./CollectionItems";
 function Library(props) {
   const { folderData } = props;
   const [collection, setCollection] = useState(folderData);
-  const [displayPopup, setDisplayPopup] = useState(true);
+  const [displayPopup, setDisplayPopup] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState(0);
 
   return (
     <section className="lg:border-[1px] lg:flex lg:h-[650px] ">
-      <Popup
-        setCollection={setCollection}
-        collection={collection}
-        displayPopup={displayPopup}
-        setDisplayPopup={setDisplayPopup}
-        setSelectedCollection={setSelectedCollection}
-      />
+      {displayPopup ? (
+        <Popup
+          setCollection={setCollection}
+          collection={collection}
+          displayPopup={displayPopup}
+          setDisplayPopup={setDisplayPopup}
+          setSelectedCollection={setSelectedCollection}
+        />
+      ) : null}
 
       <Collection
         collection={collection}
