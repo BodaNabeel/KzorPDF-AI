@@ -42,7 +42,7 @@ function Folder(props) {
     }
   };
   function DisplayCollectionItems() {
-    if (collection[selectedCollection]?.collectionItems?.length <= 0) {
+    if (collection) {
       return <h1>No items have been found mate</h1>;
     } else {
       return collection[selectedCollection]?.collectionItems?.map(
@@ -79,7 +79,7 @@ function Folder(props) {
 
   return (
     <div className=" lg:w-[75%] ">
-      <div className="border-b-[1px] flex px-4 py-2  items-center justify-between">
+      {/* <div className="border-b-[1px] flex px-4 py-2  items-center justify-between">
         <span className=" ">
           <p className="text-lg font-medium">
             {collection[selectedCollection]?.collectionName}
@@ -95,8 +95,8 @@ function Folder(props) {
         >
           <IconTrashX />
         </span>
-      </div>
-      <div className="py-2">{<DisplayCollectionItems />}</div>
+      </div> */}
+      {/* <div className="py-2">{<DisplayCollectionItems />}</div> */}
     </div>
   );
 }
