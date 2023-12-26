@@ -18,7 +18,6 @@ function ChatSection() {
   const inputRef = useRef(null);
   const [EmbeddedDocument, setEmbeddedDocument] = useState([]);
   const [EmbeddedQuery, setEmbeddedQuery] = useState([]);
-  // const [bookmark, setBookmark] = useState([]);
   useEffect(() => {
     scrollToBottom();
   }, [chatData]);
@@ -119,6 +118,7 @@ function ChatSection() {
     if (response.status === 400) {
       tempChatData[index].is_bookmarked = false;
       setChatData(tempChatData);
+      setBookmark(disposalBookmark);
     }
   }
   async function deleteBookmark(chatID, index) {
@@ -170,6 +170,7 @@ function ChatSection() {
         const id = data.uid;
         setResponding(false);
         updateChat(formattedReply, false);
+
         updateChatDB(data.reply.message.content, false);
       })
       .catch((error) => {
