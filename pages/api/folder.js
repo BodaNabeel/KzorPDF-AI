@@ -43,28 +43,12 @@ export default async (req, res) => {
             .select()
             .eq("user_id", user_id);
         if (folderData.length === 0) {
-          // return {
-          //   props: {
-          //     error: "No folder found.",
-          //   },
-          // };
           console.log("Folder data not found");
         } else {
-          // console.log(folderData);
           return res.status(200).json(folderData);
-          // return {
-          //   props: {
-          //     folderData,
-          //   },
-          // };
         }
       } catch (error) {
         console.log(error);
-        // return {
-        //   props: {
-        //     error,
-        //   },
-        // };
       }
     case "DELETE":
       try {

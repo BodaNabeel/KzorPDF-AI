@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../../context/context";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
 import { ClipLoader, FadeLoader } from "react-spinners";
 import { useRouter } from "next/router";
@@ -118,7 +117,7 @@ function Popup(props) {
                   : "bg-primary-800 text-primary-100  "
               }`}
             >
-              <p>Save</p>
+              Save
               {sendingReq ? (
                 <ClipLoader size={20} color="hsl(221,84%,70%)" />
               ) : null}
