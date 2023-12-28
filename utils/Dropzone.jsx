@@ -23,21 +23,27 @@ export default function Dropzone({ file, setFile }) {
       <input {...getInputProps()} />
       {file ? (
         <>
-          <div>
+          <div className="hidden lg:block">
             <IconFileInvoice size={120} stroke={0.5} color="grey" />
           </div>
-          <p className="text-s_grey-400 font-semibold text-lg">{file.name}*</p>
+          <p className="text-s_grey-400 lg:font-semibold font-medium lg:text-lg">
+            {file.name}*
+          </p>
         </>
       ) : (
         <>
-          <div>
+          <div className="hidden lg:block">
             <IconUpload size={120} stroke={0.5} color="grey" />
           </div>
-          <div className="">
+          <div className="lg:block hidden">
             <p className="font-semibold text-lg">Drag and drop your file</p>
             <p className="text-base font-medium text-s_grey-500 text-center">
-              or click to <span className="text-primary-600">browser</span>{" "}
-              files
+              or click to <span className="text-primary-600">browse</span> files
+            </p>
+          </div>
+          <div className="lg:hidden block">
+            <p className="font-medium">
+              Click to <span className="text-primary-600">browse</span> file
             </p>
           </div>
         </>

@@ -13,7 +13,7 @@ function HomePage() {
         <h1 className="font-bold text-lg">Welcome, Nabeel</h1>
       </div>
       <Import />
-      <Recent />
+      {/* <Recent /> */}
     </>
   );
 }
