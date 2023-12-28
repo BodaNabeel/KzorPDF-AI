@@ -20,16 +20,16 @@ export default function ImportFile() {
         UPLOAD FILE
       </h1>
       <div className="m-10 p-10 border-2 border-dashed border-s_grey-200">
-        <Dropzone setFile={setFile} />
+        <Dropzone setFile={setFile} file={file} />
       </div>
       <div className="m-10">
         <div>
           <p>SELECT COLLECTION:</p>
 
-          <select className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md">
+          <select className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md cursor-pointer">
             {folders?.map((element, index) => {
               return (
-                <option className="" key={index}>
+                <option className="cursor-pointer" key={index}>
                   {element.folder_name}
                 </option>
               );
