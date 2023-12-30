@@ -13,7 +13,7 @@ function Import() {
       <div className="flex justify-between items-center mb-10">
         <h2 className="">Import new PDF</h2>
         <button
-          onClick={() => setOverlay("bg-[#81818165]")}
+          onClick={() => setOverlay("bg-[#000000]")}
           className="flex bg-primary-700 px-4 py-2 rounded-md items-start text-white cursor-pointer justify-between w-32 shadow-[0px_6px_14px_-6px_#08235e] "
         >
           {<IconUpload stroke={1.5} height={20} />}

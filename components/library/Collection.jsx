@@ -20,7 +20,7 @@ function Collection(props) {
           <div
             onClick={() => {
               setDisplayPopup(true);
-              setOverlay("bg-[#81818165]");
+              setOverlay("bg-[#000000]");
             }}
             className="p-2 rounded-[100%] hover:bg-gray-100 cursor-pointer transition-all"
           >

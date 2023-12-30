@@ -5,7 +5,7 @@ function Overlay() {
   return (
     <div
       onClick={() => setOverlay(false)}
-      className={`h-full w-full ${overlay}  z-50 ${
+      className={`h-full w-full ${overlay}  z-50  opacity-50 ${
         typeof overlay === "string" ? "absolute" : "hidden"
       }`}
     ></div>
