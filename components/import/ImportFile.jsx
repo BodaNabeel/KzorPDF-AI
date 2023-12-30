@@ -16,6 +16,7 @@ export default function ImportFile() {
     const fetchData = async () => {
       const folderDataFromAPI = await fetchFolderData();
       setFolders(folderDataFromAPI);
+      setSelectedFolder(folderDataFromAPI[0].folder_id);
     };
 
     fetchData();
@@ -23,7 +24,7 @@ export default function ImportFile() {
 
   const uploadFile = async () => {
     setIsUploading(true);
-    const res = await storeFileToStorage(file, supabaseClient);
+    const res = await storeFileToStorage(file, supabaseClient, selectedFolder);
     if (res || !res) {
       setIsUploading(false);
     }
