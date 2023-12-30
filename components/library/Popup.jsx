@@ -111,7 +111,7 @@ function Popup(props) {
             <button
               type="submit"
               onClick={(e) => saveFolder(e)}
-              className={` flex gap-2 items-center px-4 py-2 rounded-md ${
+              className={` flex gap-2 items-center px-4 py-2 rounded-md  transition-all duration-300 ${
                 !folderName || sendingReq
                   ? "bg-s_grey-100 text-s_grey-600 cursor-not-allowed "
                   : "bg-primary-800 text-primary-100  "

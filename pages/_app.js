@@ -19,9 +19,8 @@ export default function MyApp({ Component, pageProps }) {
     >
       <DataProvider>
         <main>
-          <div>
-            <Toaster position="top-right" reverseOrder={false} />
-          </div>
+          <Toaster position="bottom-right" reverseOrder={false} />
+
           <Component {...pageProps} />
         </main>
       </DataProvider>

@@ -27,7 +27,7 @@ export default function Dropzone({ file, setFile }) {
             <IconFileInvoice size={120} stroke={0.5} color="grey" />
           </div>
           <p className="text-s_grey-400 lg:font-semibold font-medium lg:text-lg">
-            {file.name}*
+            {file.name}
           </p>
         </>
       ) : (
