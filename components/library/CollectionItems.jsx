@@ -3,6 +3,7 @@ import { IconDots, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
 import { IconCircleMinus } from "@tabler/icons-react";
 import toast from "react-hot-toast";
+import formattedDate from "../../utils/formattedDate";
 
 function Folder(props) {
   const {
@@ -10,7 +11,11 @@ function Folder(props) {
     setCollection,
     selectedCollection,
     setSelectedCollection,
+    documentData,
   } = props;
+  const toDisplayDocument = documentData?.filter(
+    (el) => el.folder_id === selectedCollection
+  );
   const deleteCollection = async () => {
     const tempCollection = [...collection];
     const tempSelectedCollection = selectedCollection;
@@ -42,38 +47,38 @@ function Folder(props) {
     }
   };
   function DisplayCollectionItems() {
-    if (collection) {
+    if (!toDisplayDocument) {
       return <h1>No items have been found mate</h1>;
     } else {
-      return collection[selectedCollection]?.collectionItems?.map(
-        (element, index) => {
-          return (
-            <div
-              key={index}
-              className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300"
-            >
-              <div className="flex gap-4">
-                <Image
-                  src="/images/pdf.svg"
-                  height={24}
-                  width={24}
-                  alt="image of pdf"
-                />
-                <span>
-                  <p className="font-medium ">{element}</p>
-                  <p className="text-sm text-gray-500">26 July, 2023</p>
-                </span>
-              </div>
-              <span
-                onClick={() => deleteCollectionItem(index)}
-                className="text-s_grey-600 cursor-pointer self-center"
-              >
-                <IconCircleMinus />
+      return toDisplayDocument.map((element, index) => {
+        return (
+          <div
+            key={index}
+            className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300"
+          >
+            <div className="flex gap-4">
+              <Image
+                src="/images/pdf.svg"
+                height={24}
+                width={24}
+                alt="image of pdf"
+              />
+              <span>
+                <p className="font-medium ">{element.document_name}</p>
+                <p className="text-sm text-gray-500">
+                  {formattedDate(element.created_at)}
+                </p>
               </span>
             </div>
-          );
-        }
-      );
+            <span
+              // onClick={() => deleteCollectionItem(index)}
+              className="text-s_grey-600 cursor-pointer self-center"
+            >
+              <IconCircleMinus />
+            </span>
+          </div>
+        );
+      });
     }
   }
 
@@ -96,7 +101,7 @@ function Folder(props) {
           <IconTrashX />
         </span>
       </div> */}
-      {/* <div className="py-2">{<DisplayCollectionItems />}</div> */}
+      <div className="py-2">{<DisplayCollectionItems />}</div>
     </div>
   );
 }

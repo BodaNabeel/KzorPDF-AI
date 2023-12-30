@@ -117,10 +117,10 @@ function Popup(props) {
                   : "bg-primary-800 text-primary-100  "
               }`}
             >
-              Save
               {sendingReq ? (
                 <ClipLoader size={20} color="hsl(221,84%,70%)" />
               ) : null}
+              Save
             </button>
           </div>
         </form>

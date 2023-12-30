@@ -3,7 +3,7 @@ import Collection from "./Collection";
 import Popup from "./Popup";
 import CollectionItems from "./CollectionItems";
 function Library(props) {
-  const { folderData } = props;
+  const { folderData, documentData } = props;
   const [collection, setCollection] = useState(folderData);
   const [displayPopup, setDisplayPopup] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState(0);
@@ -34,6 +34,7 @@ function Library(props) {
         setCollection={setCollection}
         selectedCollection={selectedCollection}
         setSelectedCollection={setSelectedCollection}
+        documentData={documentData}
       />
     </section>
   );
