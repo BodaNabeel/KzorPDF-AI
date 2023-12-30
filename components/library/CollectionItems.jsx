@@ -13,6 +13,7 @@ function Folder(props) {
     setSelectedCollection,
     documentData,
   } = props;
+  console.log(collection);
   const toDisplayDocument = documentData?.filter(
     (el) => el.folder_id === selectedCollection
   );
@@ -84,13 +85,14 @@ function Folder(props) {
 
   return (
     <div className=" lg:w-[75%] ">
-      {/* <div className="border-b-[1px] flex px-4 py-2  items-center justify-between">
+      <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
         <span className=" ">
           <p className="text-lg font-medium">
             {collection[selectedCollection]?.collectionName}
           </p>
-          <p className="text-s_grey-600 text-sm font-medium">
-            {collection[selectedCollection]?.collectionItems?.length} items
+          <p className="text-s_grey-600 font-semibold ">
+            {toDisplayDocument.length}{" "}
+            {toDisplayDocument.length > 1 ? "itmes" : "item"}
           </p>
         </span>
 
@@ -100,7 +102,7 @@ function Folder(props) {
         >
           <IconTrashX />
         </span>
-      </div> */}
+      </div>
       <div className="py-2">{<DisplayCollectionItems />}</div>
     </div>
   );
