@@ -6,22 +6,15 @@ import SubmitButton from "../../utils/SubmitButton";
 import toast from "react-hot-toast";
 import { DataContext } from "../../context/context";
 
-export default function ImportFile() {
+export default function ImportFile({ folders }) {
   const { setOverlay } = useContext(DataContext);
   const [file, setFile] = useState();
-  const [folders, setFolders] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const folderDataFromAPI = await fetchFolderData();
-      setFolders(folderDataFromAPI);
-      setSelectedFolder(folderDataFromAPI[0].folder_id);
-    };
-
-    fetchData();
+    setSelectedFolder(folders[0].folder_id);
   }, []);
 
   const uploadFile = async () => {
@@ -35,6 +28,7 @@ export default function ImportFile() {
     }
     if (res) {
       toast.success("File uploaded successfully.");
+      setOverlay(false);
     }
   };
   return (
