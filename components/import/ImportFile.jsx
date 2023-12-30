@@ -1,11 +1,13 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Dropzone from "../../utils/Dropzone";
 import { fetchFolderData, storeFileToStorage } from "../../utils/apiUtils";
 import SubmitButton from "../../utils/SubmitButton";
 import toast from "react-hot-toast";
+import { DataContext } from "../../context/context";
 
 export default function ImportFile() {
+  const { setOverlay } = useContext(DataContext);
   const [file, setFile] = useState();
   const [folders, setFolders] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState();
@@ -54,7 +56,6 @@ export default function ImportFile() {
             {folders?.map((element, index) => {
               return (
                 <option
-                  // onClick={() => console.log(element)}
                   value={element.folder_id}
                   className="cursor-pointer"
                   key={index}
@@ -67,7 +68,10 @@ export default function ImportFile() {
         </div>
       </div>
       <div className="self-end lg:mr-10 mr-2 flex lg:gap-3 gap-1 pb-3">
-        <button className="bg-primary-100 text-primary-700 px-2 py-1 lg:px-4 lg:py-2 rounded-md">
+        <button
+          onClick={() => setOverlay(false)}
+          className="bg-primary-100 text-primary-700 px-2 py-1 lg:px-4 lg:py-2 rounded-md"
+        >
           Cancel
         </button>
 

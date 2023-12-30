@@ -8,12 +8,11 @@ function HomePage() {
   const { overlay } = useContext(DataContext);
   return (
     <>
-      {true ? <ImportFile /> : null}
+      {overlay ? <ImportFile /> : null}
       <div className="mb-5">
         <h1 className="font-bold text-lg">Welcome, Nabeel</h1>
       </div>
       <Import />
-      {/* <Recent /> */}
     </>
   );
 }
