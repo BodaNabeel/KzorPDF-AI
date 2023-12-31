@@ -46,7 +46,10 @@ export default async (req, res) => {
         } else {
           return res.status(200).json(folderData);
         }
-      } catch (error) {}
+      } catch (error) {
+        return res.select(400).json({ error: "Failed to perform action." });
+      }
+
     case "DELETE":
       try {
         const { error } = await supabaseServerClient
@@ -54,11 +57,12 @@ export default async (req, res) => {
           .delete()
           .eq("folder_id", body.input);
         if (error) {
-          error;
+          console.log(error);
           throw new Error("Supabase error");
         }
         return res.status(200).json({ message: "Folder deleted." });
       } catch (error) {
+        console.log(error);
         return res.status(400).json({ error: "Error found!" });
       }
     default:

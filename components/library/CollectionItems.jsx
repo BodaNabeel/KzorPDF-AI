@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { IconDots, IconTrashX } from "@tabler/icons-react";
+import { IconDots, IconSquareRoundedX, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
 import { IconCircleMinus } from "@tabler/icons-react";
 import toast from "react-hot-toast";
 import formattedDate from "../../utils/formattedDate";
+import { IconTrash } from "@tabler/icons-react";
+import { deleteFileFromStorageDB } from "../../utils/apiUtils";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 function Folder(props) {
   const {
@@ -13,10 +17,33 @@ function Folder(props) {
     setSelectedCollection,
     documentData,
   } = props;
-
-  const toDisplayDocument = documentData?.filter(
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+  let toDisplayDocument = documentData?.filter(
     (el) => el.folder_id === selectedCollection
   );
+  const [displayFilesList, setDisplayFilesList] = useState();
+  useEffect(() => {
+    setDisplayFilesList(toDisplayDocument);
+  }, [selectedCollection]);
+
+  const deleteFile = async (documentID, documentPath) => {
+    const tempArr = [...displayFilesList];
+    const newList = tempArr.filter(
+      (element) => element.document_id !== documentID
+    );
+    setDisplayFilesList(newList);
+
+    const res = await deleteFileFromStorageDB(documentID, documentPath);
+    refreshData();
+
+    if (res.status === 200) {
+      // setDisplayFilesList(tempArr);
+      // refreshData();
+    }
+  };
   const deleteCollection = async () => {
     const tempCollection = [...collection];
     const tempSelectedCollection = selectedCollection;
@@ -47,11 +74,12 @@ function Folder(props) {
       );
     }
   };
+
   function DisplayCollectionItems() {
-    if (!toDisplayDocument) {
+    if (!displayFilesList) {
       return <h1>No items have been found mate</h1>;
     } else {
-      return toDisplayDocument.map((element, index) => {
+      return displayFilesList?.map((element, index) => {
         return (
           <div
             key={index}
@@ -72,10 +100,12 @@ function Folder(props) {
               </span>
             </div>
             <span
-              // onClick={() => deleteCollectionItem(index)}
-              className="text-s_grey-600 cursor-pointer self-center"
+              onClick={() =>
+                deleteFile(element.document_id, element.document_path)
+              }
+              className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
             >
-              <IconCircleMinus />
+              <IconSquareRoundedX />
             </span>
           </div>
         );
@@ -91,16 +121,17 @@ function Folder(props) {
             {collection[selectedCollection]?.collectionName}
           </p>
           <p className="text-s_grey-600 font-semibold ">
-            {toDisplayDocument.length}{" "}
-            {toDisplayDocument.length > 1 ? "itmes" : "item"}
+            {displayFilesList?.length}{" "}
+            {displayFilesList?.length > 1 ? "itmes" : "item"}
           </p>
         </span>
 
         <span
           onClick={deleteCollection}
-          className="text-s_grey-600 cursor-pointer"
+          className="cursor-pointer flex border border-s_red-400 text-s_red-400 px-3 py-1 gap-2 rounded-md"
         >
-          <IconTrashX />
+          <IconTrash stroke={1.3} />
+          <p className="font-medium">Delete Collection</p>
         </span>
       </div>
       <div className="py-2">{<DisplayCollectionItems />}</div>

@@ -14,7 +14,7 @@ export default function ImportFile({ folders }) {
   const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
-    setSelectedFolder(folders[0].folder_id);
+    folders ? setSelectedFolder(folders[0]?.folder_id) : null;
   }, []);
 
   const uploadFile = async () => {

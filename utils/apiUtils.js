@@ -36,3 +36,17 @@ export const storeFileToStorage = async (
   }
   if (error) return false;
 };
+
+export const deleteFileFromStorageDB = async (documentID, documentPath) => {
+  const res = await fetch("/api/document", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      document_id: documentID,
+      document_path: documentPath,
+    }),
+  });
+  return res;
+};
