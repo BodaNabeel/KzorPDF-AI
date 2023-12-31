@@ -50,7 +50,6 @@ function ChatSection() {
     });
     const data = await response.json();
     if (data.error) {
-      // console.log("error detected: ", data.error);
     } else {
       if (isQuery === true) {
         setEmbeddedQuery(data.data[0].embedding);
@@ -161,7 +160,7 @@ function ChatSection() {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response.statusText);
+          response.statusText;
         }
         return response.json();
       })

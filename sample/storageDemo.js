@@ -17,10 +17,8 @@ const uploadFile = async (event) => {
     const { error: db_error } = await supabaseClient
       .from("document")
       .insert({ document_name: "Lecture 01", document_path: fileName });
-    console.log(data);
     alert("File uploaded successfully!");
   }
-  if (error) console.log(error);
 };
 const getFile = async () => {
   const {
@@ -36,13 +34,13 @@ const getFile = async () => {
       await supabaseClient.storage
         .from(`kzor/${user.id}`)
         .createSignedUrl(data[0].document_path, 3600);
-    // console.log(storageData);
-    // console.log(data[0].document_path);
+    // (storageData);
+    // (data[0].document_path);
 
     setPdfLink(storageData.signedUrl);
   }
 
-  if (error) console.log(error);
+  if (error) error;
 };
 
 function processString(inputString) {

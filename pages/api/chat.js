@@ -30,10 +30,8 @@ export default async function (req, res) {
           uid: UID,
           reply: reply[0],
         };
-        // console.log(response);
         return res.status(200).json(response);
       } catch (error) {
-        // console.log(error);
         return res.status(500).send({ error: "Internal Server Error." });
       }
 

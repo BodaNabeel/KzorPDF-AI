@@ -6,10 +6,10 @@ useEffect(() => {
     if (error) {
       setFetchError("Could not fetch documents.");
       setDocuments(null);
-      console.log(error);
+      (error);
     }
     if (data) {
-      console.log(data);
+      (data);
       setDocuments(data);
       setFetchError(null);
     }
@@ -36,7 +36,7 @@ useEffect(() => {
       .update({ document_chat: null })
       .eq("document_text", "Community work")
       .select();
-    console.log(data);
+    (data);
   };
   const deleteDocument = async () => {
     const text = "Community work";

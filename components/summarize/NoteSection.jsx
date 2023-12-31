@@ -23,7 +23,6 @@ function NoteSection() {
       if (element.chat_id == chatID) {
         tempChat[index].is_bookmarked = false;
         setChatData(tempChat);
-        console.log("working");
       }
     });
     const response = await fetch("/api/chat_db", {

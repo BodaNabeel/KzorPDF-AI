@@ -26,7 +26,6 @@ export const storeFileToStorage = async (
     .upload(`${user.id}/${formattedFileName}`, file);
 
   if (data) {
-    console.log(selectedFolder);
     const { error: db_error } = await supabaseClient.from("document").insert({
       document_name: file.name,
       document_path: formattedFileName,

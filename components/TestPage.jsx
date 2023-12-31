@@ -47,7 +47,6 @@ Question: {question}`;
     const response = await chain.call({
       query: "In length explain the ideas shared in this document?",
     });
-    console.log(response);
   };
   useEffect(() => {
     fetch();

@@ -29,7 +29,6 @@ export default function Auth() {
   };
   const getUser = async () => {
     const user = await supabaseClient.auth.getUser();
-    console.log(user);
   };
 
   const read_and_write_data = async () => {
@@ -43,7 +42,7 @@ export default function Auth() {
     const { eror } = await supabaseClient
       .from("folder")
       .insert({ folder_name: "Mathematics" });
-    console.log(data);
+    data;
   };
   const create_folder = async () => {
     const {
@@ -52,7 +51,7 @@ export default function Auth() {
     const { error } = await supabaseClient
       .from("folder")
       .insert({ folder_name: "Chemistry 28898" });
-    console.log(error);
+    error;
   };
   const create_document = async () => {
     const {

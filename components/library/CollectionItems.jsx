@@ -13,7 +13,7 @@ function Folder(props) {
     setSelectedCollection,
     documentData,
   } = props;
-  console.log(collection);
+
   const toDisplayDocument = documentData?.filter(
     (el) => el.folder_id === selectedCollection
   );
