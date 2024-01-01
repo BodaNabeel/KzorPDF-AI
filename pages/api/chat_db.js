@@ -10,10 +10,12 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
-        const { error } = await supabaseServerClient
-          .from("chat")
-          .insert({ content: body.chat_content, is_user: body.is_user });
-        return res.status(200);
+        const { error } = await supabaseServerClient.from("chat").insert({
+          content: body.chat_content,
+          is_user: body.is_user,
+          document_id: body.doc_id,
+        });
+        return res.status(200).json({ message: "Chat Updated." });
       } catch (error) {
         res.status(500).json({ error: error });
       }

@@ -26,17 +26,26 @@ export const storeFileToStorage = async (
     .upload(`${user.id}/${formattedFileName}`, file);
 
   if (data) {
-    const { error: db_error } = await supabaseClient.from("document").insert({
-      document_name: file.name,
-      document_path: formattedFileName,
-      folder_id: selectedFolder,
-    });
-
-    return true;
+    const { data: dbData, error: db_error } = await supabaseClient
+      .from("document")
+      .upsert({
+        document_name: file.name,
+        document_path: formattedFileName,
+        folder_id: selectedFolder,
+      })
+      .select()
+      .eq("document_path", formattedFileName)
+      .eq("user_id", user.id);
+    return {
+      documentPath: formattedFileName,
+      documentID: dbData[0].document_id,
+    };
   }
   if (error) return false;
 };
-
+export const foo = () => {
+  console.log("FOO");
+};
 export const deleteFileFromStorageDB = async (documentID, documentPath) => {
   const res = await fetch("/api/document", {
     method: "DELETE",
