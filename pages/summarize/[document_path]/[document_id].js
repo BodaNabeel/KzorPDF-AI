@@ -1,16 +1,19 @@
-import Summarize from "../../components/summarize/Summarize";
-import { DataContext } from "../../context/context";
+import Summarize from "../../../components/summarize/Summarize";
+import { DataContext } from "../../../context/context";
 import { useContext, useEffect } from "react";
 import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
-import NavbarLayout from "../../layout/NavbarLayout";
+import NavbarLayout from "../../../layout/NavbarLayout";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 
 export default function SummarizePage({
   document_text,
   chatData,
   bookmarkData,
+  fileURL,
+  document_id,
 }) {
   const { setDocumentData, setChatData, setBookmark } = useContext(DataContext);
 
@@ -24,7 +27,7 @@ export default function SummarizePage({
 
   return (
     <NavbarLayout>
-      <Summarize />
+      <Summarize fileURL={fileURL} document_id={document_id} />
     </NavbarLayout>
   );
 }
@@ -42,18 +45,37 @@ export async function getServerSideProps(context) {
   const user = await supabase.auth.getUser();
   const user_id = user?.data?.user?.id;
 
+  //   Path information
+  const { document_id, document_path } = context.query;
+
   // Chat
   const { data: chatData, error: chatDataError } = await supabase
     .from("chat")
     .select()
-    .eq("user_id", user_id);
+    .eq("document_id", document_id);
 
   // Bookmark
   const { data: bookmarkData, error: bookmarkDataError } = await supabase
     .from("chat")
     .select()
-    .eq("user_id", user_id)
+    .eq("document_id", document_id)
     .eq("is_bookmarked", true);
 
-  return { props: { document_text, chatData, bookmarkData } };
+  // Get File Link
+  const { data: fileURL, error: fileURLError } = await supabase.storage
+    .from(`kzor/${user_id}`)
+    .createSignedUrl(document_path, 3600);
+
+  if (!fileURL) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/summarize",
+      },
+    };
+  }
+
+  return {
+    props: { document_text, chatData, bookmarkData, fileURL, document_id },
+  };
 }

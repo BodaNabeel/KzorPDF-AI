@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
-function ChatSection() {
+function ChatSection({ document_id }) {
   const {
     documentData,
     setDocumentData,
@@ -76,6 +76,7 @@ function ChatSection() {
       body: JSON.stringify({
         chat_content: content,
         is_user: isUser,
+        doc_id: document_id,
       }),
     });
   }
