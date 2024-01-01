@@ -15,7 +15,7 @@ function NavbarLayout({ children }) {
   const pathname = router.pathname;
   const formattedPathName = pathname.replace("/", "");
   const [selectedPath, setSelectedPath] = useState(formattedPathName);
-  const assignedRoutes = ["Home", "Library", "Summarize PDF"];
+  const assignedRoutes = ["Home", "Library"];
   // const assignedRoutes = ["Home", "Test", "Summarize PDF"];
   const iconMap = {
     home: IconHome,
@@ -47,7 +47,7 @@ function NavbarLayout({ children }) {
 
           <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
             <header className="mb-10 font-source_sans">Logo of Company</header>
-            <nav className="mb-10 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
+            <nav className="mb-20 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
               {assignedRoutes.map((route, index) => {
                 const splitedRoute = route.split(" ")[0].toLowerCase();
                 const IconComponent = iconMap[splitedRoute];
