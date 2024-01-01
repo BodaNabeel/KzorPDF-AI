@@ -5,6 +5,7 @@ import { fetchFolderData, storeFileToStorage } from "../../utils/apiUtils";
 import SubmitButton from "../../utils/SubmitButton";
 import toast from "react-hot-toast";
 import { DataContext } from "../../context/context";
+import { useRouter } from "next/router";
 
 export default function ImportFile({ folders }) {
   const { setOverlay } = useContext(DataContext);
@@ -12,6 +13,8 @@ export default function ImportFile({ folders }) {
   const [selectedFolder, setSelectedFolder] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const supabaseClient = useSupabaseClient();
+
+  const router = useRouter();
 
   useEffect(() => {
     folders ? setSelectedFolder(folders[0]?.folder_id) : null;
@@ -29,6 +32,9 @@ export default function ImportFile({ folders }) {
     if (res) {
       toast.success("File uploaded successfully.");
       setOverlay(false);
+      console.log(res);
+      // send the user to /summarize
+      router.push(`/summarize/${res.documentPath}/${res.documentID}`);
     }
   };
   return (
