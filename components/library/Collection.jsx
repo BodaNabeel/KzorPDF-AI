@@ -11,7 +11,7 @@ function Collection(props) {
   } = props;
   const { setOverlay, overlay } = useContext(DataContext);
   return (
-    <div className="border-r-[1px] lg:w-[25%] min-h-max max-h-full overflow-hidden ">
+    <div className="border-r-[1px] lg:w-[25%] min-h-max max-h-full">
       <div className="[&>*]:px-4 mb-5 h-max">
         <h1 className="font-semibold text-xl py-4">My Library</h1>
 

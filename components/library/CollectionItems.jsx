@@ -79,51 +79,57 @@ function Folder(props) {
     if (!displayFilesList) {
       return <h1>No items have been found mate</h1>;
     } else {
-      return displayFilesList?.map((element, index) => {
-        return (
-          <div
-            key={index}
-            className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
-          >
-            <div
-              className="flex gap-4 hover:text-primary-400 cursor-pointer"
-              onClick={() =>
-                router.push(
-                  `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
-                )
-              }
-            >
-              <Image
-                src="/images/pdf.svg"
-                height={24}
-                width={24}
-                alt="image of pdf"
-              />
-              <span>
-                <p className="font-medium ">{element.document_name}</p>
-                <p className="text-sm ">{formattedDate(element.created_at)}</p>
-              </span>
-            </div>
-            <span
-              onClick={() =>
-                deleteFile(
-                  element.document_id,
-                  element.folder_id,
-                  element.document_path
-                )
-              }
-              className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
-            >
-              <IconSquareRoundedX />
-            </span>
-          </div>
-        );
-      });
+      return (
+        <div className="overflow-y-auto min-h-max max-h-full">
+          {displayFilesList?.map((element, index) => {
+            return (
+              <div
+                key={index}
+                className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
+              >
+                <div
+                  className="flex gap-4 hover:text-primary-400 cursor-pointer"
+                  onClick={() =>
+                    router.push(
+                      `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
+                    )
+                  }
+                >
+                  <Image
+                    src="/images/pdf.svg"
+                    height={24}
+                    width={24}
+                    alt="image of pdf"
+                  />
+                  <span>
+                    <p className="font-medium ">{element.document_name}</p>
+                    <p className="text-sm ">
+                      {formattedDate(element.created_at)}
+                    </p>
+                  </span>
+                </div>
+                <span
+                  onClick={() =>
+                    deleteFile(
+                      element.document_id,
+                      element.folder_id,
+                      element.document_path
+                    )
+                  }
+                  className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
+                >
+                  <IconSquareRoundedX />
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      );
     }
   }
 
   return (
-    <div className=" lg:w-[75%] ">
+    <div className=" lg:w-[75%] min-h-max max-h-full">
       <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
         <span className=" ">
           <p className="text-lg font-medium">
@@ -143,7 +149,7 @@ function Folder(props) {
           <p className="font-medium">Delete Collection</p>
         </span>
       </div>
-      <div className="py-2">{<DisplayCollectionItems />}</div>
+      <DisplayCollectionItems />
     </div>
   );
 }

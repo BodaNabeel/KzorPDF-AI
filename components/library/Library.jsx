@@ -9,7 +9,7 @@ function Library(props) {
   const [selectedCollection, setSelectedCollection] = useState(0);
 
   return (
-    <section className="lg:border-[1px] lg:flex lg:h-[650px] ">
+    <section className="lg:border-[1px] lg:flex border-2 lg:h-[650px] overflow-hidden ">
       {displayPopup ? (
         <Popup
           setCollection={setCollection}
