@@ -29,7 +29,7 @@ export const storeFileToStorage = async (
     .eq("document_path", formattedFileName);
 
   console.log(documentDB, documentDBError);
-  if (!documentDB) {
+  if (documentDB.length === 0) {
     const { data: dbData, error: db_error } = await supabaseClient
       .from("document")
       .upsert({
@@ -60,7 +60,11 @@ export const storeFileToStorage = async (
   }
 };
 
-export const deleteFileFromStorageDB = async (documentID, documentPath) => {
+export const deleteFileFromStorageDB = async (
+  folderID,
+  documentID,
+  documentPath
+) => {
   const res = await fetch("/api/document", {
     method: "DELETE",
     headers: {
@@ -69,6 +73,7 @@ export const deleteFileFromStorageDB = async (documentID, documentPath) => {
     body: JSON.stringify({
       document_id: documentID,
       document_path: documentPath,
+      folder_id: folderID,
     }),
   });
   return res;

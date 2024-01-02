@@ -30,14 +30,18 @@ function Folder(props) {
     setDisplayFilesList(toDisplayDocument);
   }, [selectedCollection]);
 
-  const deleteFile = async (documentID, documentPath) => {
+  const deleteFile = async (documentID, folderID, documentPath) => {
     const tempArr = [...displayFilesList];
     const newList = tempArr.filter(
       (element) => element.document_id !== documentID
     );
     setDisplayFilesList(newList);
 
-    const res = await deleteFileFromStorageDB(documentID, documentPath);
+    const res = await deleteFileFromStorageDB(
+      folderID,
+      documentID,
+      documentPath
+    );
     refreshData();
 
     if (res.status === 200) {
@@ -107,7 +111,11 @@ function Folder(props) {
             </div>
             <span
               onClick={() =>
-                deleteFile(element.document_id, element.document_path)
+                deleteFile(
+                  element.document_id,
+                  element.folder_id,
+                  element.document_path
+                )
               }
               className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
             >

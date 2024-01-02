@@ -10,6 +10,7 @@ export default async (req, res) => {
   const user = await supabaseServerClient.auth.getUser();
   const user_id = user.data.user.id;
   const bucket = "kzor";
+  // console.log(body);
 
   switch (method) {
     case "DELETE":
@@ -17,7 +18,7 @@ export default async (req, res) => {
         const { data: storageDataDelete, error: storageDataDeleteError } =
           await supabaseServerClient.storage
             .from(bucket)
-            .remove(`${user_id}/${body.document_path}`);
+            .remove(`${user_id}/${body.folder_id}/${body.document_path}`);
         const { error: databaseDeleteError } = await supabaseServerClient
           .from("document")
           .delete()
