@@ -43,11 +43,6 @@ function Folder(props) {
       documentPath
     );
     refreshData();
-
-    if (res.status === 200) {
-      // setDisplayFilesList(tempArr);
-      // refreshData();
-    }
   };
   const deleteCollection = async () => {
     const tempCollection = [...collection];
@@ -94,7 +89,7 @@ function Folder(props) {
               className="flex gap-4 hover:text-primary-400 cursor-pointer"
               onClick={() =>
                 router.push(
-                  `/summarize/${element.document_path}/${element.document_id}`
+                  `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
                 )
               }
             >
