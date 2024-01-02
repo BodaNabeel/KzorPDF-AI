@@ -22,60 +22,44 @@ export const storeFileToStorage = async (
     data: { user },
   } = await supabaseClient.auth.getUser();
 
-  const { data: dbData, error: db_error } = await supabaseClient
+  const { data: documentDB, error: documentDBError } = await supabaseClient
     .from("document")
-    .upsert({
-      document_name: file.name,
-      document_path: formattedFileName,
-      folder_id: selectedFolder,
-    })
     .select()
-    .eq("document_path", formattedFileName)
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .eq("document_path", formattedFileName);
 
-  if (dbData) {
-    console.log(dbData);
-    const { data, error } = await supabaseClient.storage
-      .from(bucket)
-      .upload(`${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`, file);
+  console.log(documentDB, documentDBError);
+  if (!documentDB) {
+    const { data: dbData, error: db_error } = await supabaseClient
+      .from("document")
+      .upsert({
+        document_name: file.name,
+        document_path: formattedFileName,
+        folder_id: selectedFolder,
+      })
+      .select()
+      .eq("document_path", formattedFileName)
+      .eq("user_id", user.id);
+    if (dbData) {
+      console.log(dbData);
+      const { data, error } = await supabaseClient.storage
+        .from(bucket)
+        .upload(
+          `${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`,
+          file
+        );
 
-    return {
-      documentPath: formattedFileName,
-      documentID: dbData[0]?.document_id,
-      folderID: selectedFolder,
-    };
+      return {
+        documentPath: formattedFileName,
+        documentID: dbData[0]?.document_id,
+        folderID: selectedFolder,
+      };
+    }
+  } else {
+    return false;
   }
-
-  // const { data, error } = await supabaseClient.storage
-  // .from(bucket)
-  // .upload(`${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`, file);
-
-  // if(data) {
-  //   const { data: dbData, error: db_error } = await supabaseClient
-  //   .from("document")
-  //   .upsert({
-  //     document_name: file.name,
-  //     document_path: formattedFileName,
-  //     folder_id: selectedFolder,
-  //   })
-  //   .select()
-  //   .eq("document_path", formattedFileName)
-  //   .eq("user_id", user.id);
-
-  //   if(dbData) {
-  //     return {
-  //       documentPath: formattedFileName,
-  //       documentID: dbData[0]?.document_id,
-  //       folderID: selectedFolder,
-  //     };
-
-  //   }
-  //   if (db_error) return false;
-  // }
 };
-export const foo = () => {
-  console.log("FOO");
-};
+
 export const deleteFileFromStorageDB = async (documentID, documentPath) => {
   const res = await fetch("/api/document", {
     method: "DELETE",
