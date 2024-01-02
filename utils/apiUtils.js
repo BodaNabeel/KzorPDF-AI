@@ -21,27 +21,57 @@ export const storeFileToStorage = async (
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
-  const { data, error } = await supabaseClient.storage
-    .from(bucket)
-    .upload(`${user.id}/${formattedFileName}`, file);
 
-  if (data) {
-    const { data: dbData, error: db_error } = await supabaseClient
-      .from("document")
-      .upsert({
-        document_name: file.name,
-        document_path: formattedFileName,
-        folder_id: selectedFolder,
-      })
-      .select()
-      .eq("document_path", formattedFileName)
-      .eq("user_id", user.id);
+  const { data: dbData, error: db_error } = await supabaseClient
+    .from("document")
+    .upsert({
+      document_name: file.name,
+      document_path: formattedFileName,
+      folder_id: selectedFolder,
+    })
+    .select()
+    .eq("document_path", formattedFileName)
+    .eq("user_id", user.id);
+
+  if (dbData) {
+    console.log(dbData);
+    const { data, error } = await supabaseClient.storage
+      .from(bucket)
+      .upload(`${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`, file);
+
     return {
       documentPath: formattedFileName,
-      documentID: dbData[0].document_id,
+      documentID: dbData[0]?.document_id,
+      folderID: selectedFolder,
     };
   }
-  if (error) return false;
+
+  // const { data, error } = await supabaseClient.storage
+  // .from(bucket)
+  // .upload(`${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`, file);
+
+  // if(data) {
+  //   const { data: dbData, error: db_error } = await supabaseClient
+  //   .from("document")
+  //   .upsert({
+  //     document_name: file.name,
+  //     document_path: formattedFileName,
+  //     folder_id: selectedFolder,
+  //   })
+  //   .select()
+  //   .eq("document_path", formattedFileName)
+  //   .eq("user_id", user.id);
+
+  //   if(dbData) {
+  //     return {
+  //       documentPath: formattedFileName,
+  //       documentID: dbData[0]?.document_id,
+  //       folderID: selectedFolder,
+  //     };
+
+  //   }
+  //   if (db_error) return false;
+  // }
 };
 export const foo = () => {
   console.log("FOO");
