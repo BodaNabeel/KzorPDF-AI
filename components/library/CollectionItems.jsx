@@ -21,6 +21,7 @@ function Folder(props) {
   const refreshData = () => {
     router.replace(router.asPath);
   };
+
   let toDisplayDocument = documentData?.filter(
     (el) => el.folder_id === selectedCollection
   );
@@ -83,9 +84,16 @@ function Folder(props) {
         return (
           <div
             key={index}
-            className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300"
+            className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
           >
-            <div className="flex gap-4">
+            <div
+              className="flex gap-4 hover:text-primary-400 cursor-pointer"
+              onClick={() =>
+                router.push(
+                  `/summarize/${element.document_path}/${element.document_id}`
+                )
+              }
+            >
               <Image
                 src="/images/pdf.svg"
                 height={24}
@@ -94,9 +102,7 @@ function Folder(props) {
               />
               <span>
                 <p className="font-medium ">{element.document_name}</p>
-                <p className="text-sm text-gray-500">
-                  {formattedDate(element.created_at)}
-                </p>
+                <p className="text-sm ">{formattedDate(element.created_at)}</p>
               </span>
             </div>
             <span

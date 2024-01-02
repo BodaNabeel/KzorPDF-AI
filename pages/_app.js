@@ -3,14 +3,29 @@ import { DataProvider } from "../context/context";
 import supabase from "../config/supabaseClient";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import LoadingBar from "react-top-loading-bar";
+import { useRouter } from "next/router";
 
 export default function MyApp({ Component, pageProps }) {
   // const [supabaseClient] = useState(() => createPagesBrowserClient());
   const [supabaseClient, setSupabaseClient] = useState(
     createPagesBrowserClient()
   );
+  const [progress, setProgress] = useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    // START VALUE - WHEN LOADING WILL START
+    router.events.on("routeChangeStart", () => {
+      setProgress(40);
+    });
+
+    // COMPLETE VALUE - WHEN LOADING IS FINISHED
+    router.events.on("routeChangeComplete", () => {
+      setProgress(100);
+    });
+  }, []);
 
   return (
     <SessionContextProvider
@@ -20,7 +35,14 @@ export default function MyApp({ Component, pageProps }) {
       <DataProvider>
         <main>
           <Toaster position="bottom-right" reverseOrder={false} />
-
+          <LoadingBar
+            color="rgb(180, 130, 251)"
+            progress={progress}
+            waitingTime={400}
+            onLoaderFinished={() => {
+              setProgress(0);
+            }}
+          />
           <Component {...pageProps} />
         </main>
       </DataProvider>

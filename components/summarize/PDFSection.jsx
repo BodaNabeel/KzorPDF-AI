@@ -3,7 +3,6 @@ import PageSelector from "./tools/PageSelector";
 import PDFMode from "./tools/PDFMode";
 import { IconDownload } from "@tabler/icons-react";
 export default function PDFSection({ fileURL }) {
-  console.log(fileURL.signedUrl);
   return (
     <div className=" h-96 mb-5 lg:h-full lg:w-[50%] border-r-4 lg:border-gray-600 ">
       <div className="  flex justify-between px-2 py-2 h-[10%] lg:h-[5%] items-center">
