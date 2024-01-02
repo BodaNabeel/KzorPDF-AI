@@ -57,12 +57,10 @@ export default async (req, res) => {
           .delete()
           .eq("folder_id", body.input);
         if (error) {
-          console.log(error);
           throw new Error("Supabase error");
         }
         return res.status(200).json({ message: "Folder deleted." });
       } catch (error) {
-        console.log(error);
         return res.status(400).json({ error: "Error found!" });
       }
     default:

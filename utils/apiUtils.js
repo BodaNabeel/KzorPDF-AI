@@ -28,7 +28,6 @@ export const storeFileToStorage = async (
     .eq("user_id", user.id)
     .eq("document_path", formattedFileName);
 
-  console.log(documentDB, documentDBError);
   if (documentDB.length === 0) {
     const { data: dbData, error: db_error } = await supabaseClient
       .from("document")
@@ -41,7 +40,6 @@ export const storeFileToStorage = async (
       .eq("document_path", formattedFileName)
       .eq("user_id", user.id);
     if (dbData) {
-      console.log(dbData);
       const { data, error } = await supabaseClient.storage
         .from(bucket)
         .upload(

@@ -49,7 +49,6 @@ export async function getServerSideProps(context) {
   const folder_id = context.query.slug[0];
   const document_id = context.query.slug[1];
   const document_path = context.query.slug[2];
-  console.log(folder_id, document_id, document_path);
 
   // Chat
   const { data: chatData, error: chatDataError } = await supabase
@@ -70,7 +69,6 @@ export async function getServerSideProps(context) {
   const { data: fileURL, error: fileURLError } = await supabase.storage
     .from(`kzor/${user_id}/${folder_id}`)
     .createSignedUrl(document_path, 3600);
-  console.log(fileURL);
 
   if (!fileURL) {
     return {
