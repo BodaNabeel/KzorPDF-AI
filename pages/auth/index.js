@@ -29,70 +29,9 @@ export default function Auth() {
   };
   const getUser = async () => {
     const user = await supabaseClient.auth.getUser();
+    console.log(user);
   };
 
-  const read_and_write_data = async () => {
-    const {
-      data: { user },
-    } = await supabaseClient.auth.getUser();
-    const { data } = await supabaseClient
-      .from("folder")
-      .select()
-      .eq("user_id", user.id);
-    const { eror } = await supabaseClient
-      .from("folder")
-      .insert({ folder_name: "Mathematics" });
-    data;
-  };
-  const create_folder = async () => {
-    const {
-      data: { user },
-    } = await supabaseClient.auth.getUser();
-    const { error } = await supabaseClient
-      .from("folder")
-      .insert({ folder_name: "Chemistry 28898" });
-    error;
-  };
-  const create_document = async () => {
-    const {
-      data: { user },
-    } = await supabaseClient.auth.getUser();
-    const { data } = await supabaseClient
-      .from("folder")
-      .select("folder_id")
-      .eq("user_id", user.id);
-    const { error } = await supabaseClient.from("document").insert({
-      document_name: "Lecture 01",
-      reference_folder: data[0].folder_id,
-    });
-  };
-  const create_chat = async () => {
-    const {
-      data: { user },
-    } = await supabaseClient.auth.getUser();
-    const { data } = await supabaseClient
-      .from("document")
-      .select()
-      .eq("user_id", user.id);
-    const { error } = await supabaseClient.from("chat").insert({
-      message: "Hey there! I am testing my supabase backend.",
-      is_user: true,
-      document_id: data[0].document_id,
-    });
-  };
-  const create_bookmark = async () => {
-    const {
-      data: { user },
-    } = await supabaseClient.auth.getUser();
-    const { data } = await supabaseClient
-      .from("document")
-      .select()
-      .eq("user_id", user.id);
-    const { error } = await supabaseClient.from("bookmark").insert({
-      bookmark_text: "Testing the bookmark?!",
-      document_id: data[0].document_id,
-    });
-  };
   return (
     <>
       <div>
@@ -113,14 +52,6 @@ export default function Auth() {
           Logout
         </button>
         <button onClick={getUser}>Show user</button>
-      </div>
-      <div className="flex flex-col">
-        <h2>Testing Database</h2>
-        <button onClick={read_and_write_data}>read_and_write_data</button>
-        <button onClick={create_folder}>Create a folder</button>
-        <button onClick={create_document}>Create a document</button>
-        <button onClick={create_chat}>Create chat</button>
-        <button onClick={create_bookmark}>Create bookmark</button>
       </div>
     </>
   );

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { IconDots, IconSquareRoundedX, IconTrashX } from "@tabler/icons-react";
+import { IconSquareRoundedX, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
 import { IconCircleMinus } from "@tabler/icons-react";
 import toast from "react-hot-toast";
 import formattedDate from "../../utils/formattedDate";
 import { IconTrash } from "@tabler/icons-react";
-import { deleteFileFromStorageDB } from "../../utils/apiUtils";
+import { deleteFileFromStorageDB, deleteFolder } from "../../utils/apiUtils";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -17,6 +17,7 @@ function Folder(props) {
     setSelectedCollection,
     documentData,
   } = props;
+
   const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
@@ -44,6 +45,7 @@ function Folder(props) {
     );
     refreshData();
   };
+
   const deleteCollection = async () => {
     const tempCollection = [...collection];
     const tempSelectedCollection = selectedCollection;
@@ -56,17 +58,10 @@ function Folder(props) {
         setCollection(updateCollection);
       }
     });
-    const response = await fetch("/api/folder", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: selectedCollection,
-      }),
-    });
 
-    if (response.status === 400) {
+    const response = await deleteFolder(selectedCollection);
+
+    if (!response) {
       setSelectedCollection(tempSelectedCollection);
       setCollection(tempCollection);
       toast.error(
@@ -80,7 +75,7 @@ function Folder(props) {
       return <h1>No items have been found mate</h1>;
     } else {
       return (
-        <div className="overflow-y-auto min-h-max max-h-full">
+        <div className="overflow-y-auto min-h-max max-h-full ">
           {displayFilesList?.map((element, index) => {
             return (
               <div
@@ -130,25 +125,28 @@ function Folder(props) {
 
   return (
     <div className=" lg:w-[75%] min-h-max max-h-full">
-      <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
-        <span className=" ">
-          <p className="text-lg font-medium">
-            {collection[selectedCollection]?.collectionName}
-          </p>
-          <p className="text-s_grey-600 font-semibold ">
-            {displayFilesList?.length}{" "}
-            {displayFilesList?.length > 1 ? "itmes" : "item"}
-          </p>
-        </span>
+      {selectedCollection ? (
+        <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
+          <span className=" ">
+            <p className="text-lg font-medium">
+              {collection[selectedCollection]?.collectionName}
+            </p>
+            <p className="text-s_grey-600 font-semibold ">
+              {displayFilesList?.length}{" "}
+              {displayFilesList?.length > 1 ? "itmes" : "item"}
+            </p>
+          </span>
 
-        <span
-          onClick={deleteCollection}
-          className="cursor-pointer flex border border-s_red-400 text-s_red-400 px-3 py-1 gap-2 rounded-md"
-        >
-          <IconTrash stroke={1.3} />
-          <p className="font-medium">Delete Collection</p>
-        </span>
-      </div>
+          <span
+            onClick={deleteCollection}
+            className="cursor-pointer flex border border-s_red-400 text-s_red-400 px-3 py-1 gap-2 rounded-md"
+          >
+            <IconTrash stroke={1.3} />
+            <p className="font-medium">Delete Collection</p>
+          </span>
+        </div>
+      ) : null}
+
       <DisplayCollectionItems />
     </div>
   );

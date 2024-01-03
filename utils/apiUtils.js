@@ -1,5 +1,7 @@
 import formatFilename from "./formatString";
 
+const bucket = "kzor";
+
 export const fetchFolderData = async () => {
   const response = await fetch("/api/folder", {
     method: "GET",
@@ -16,7 +18,6 @@ export const storeFileToStorage = async (
   supabaseClient,
   selectedFolder
 ) => {
-  const bucket = "kzor";
   const formattedFileName = formatFilename(file.name);
   const {
     data: { user },
@@ -26,7 +27,8 @@ export const storeFileToStorage = async (
     .from("document")
     .select()
     .eq("user_id", user.id)
-    .eq("document_path", formattedFileName);
+    .eq("document_path", formattedFileName)
+    .eq("folder_id", selectedFolder);
 
   if (documentDB.length === 0) {
     const { data: dbData, error: db_error } = await supabaseClient
@@ -56,6 +58,19 @@ export const storeFileToStorage = async (
   } else {
     return false;
   }
+};
+
+export const deleteFolder = async (folderID) => {
+  const res = await fetch("/api/folder", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      folder_id: folderID,
+    }),
+  });
+  return res;
 };
 
 export const deleteFileFromStorageDB = async (
