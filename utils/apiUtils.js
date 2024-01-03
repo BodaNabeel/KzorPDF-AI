@@ -30,7 +30,7 @@ export const storeFileToStorage = async (
     .eq("document_path", formattedFileName)
     .eq("folder_id", selectedFolder);
 
-  if (documentDB.length === 0) {
+  if (documentDB?.length === 0) {
     const { data: dbData, error: db_error } = await supabaseClient
       .from("document")
       .upsert({

@@ -32,9 +32,9 @@ export default function ImportFile({ folders }) {
     if (res) {
       toast.success("File uploaded successfully.");
       setOverlay(false);
-      // router.push(
-      //   `/summarize/${res.folderID}/${res.documentID}/${res.documentPath}`
-      // );
+      router.push(
+        `/summarize/${res.folderID}/${res.documentID}/${res.documentPath}`
+      );
     }
   };
   return (
