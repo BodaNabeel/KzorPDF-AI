@@ -1,12 +1,17 @@
 import Summarize from "../../components/summarize/Summarize";
 import { DataContext } from "../../context/context";
 import { useContext, useEffect } from "react";
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 import pdf from "pdf-parse";
 import NavbarLayout from "../../layout/NavbarLayout";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
+
+// async function pdfParse(pdfLink) {
+//   const document_text = await pdf(pdfLink).then((data) => data.text);
+//   return document_text;
+// }
 
 export default function SummarizePage({
   document_text,
@@ -16,7 +21,7 @@ export default function SummarizePage({
   document_id,
 }) {
   const { setDocumentData, setChatData, setBookmark } = useContext(DataContext);
-
+  console.log(document_text);
   useEffect(() => {
     if (document_text) {
       setDocumentData(document_text);
@@ -33,13 +38,6 @@ export default function SummarizePage({
 }
 
 export async function getServerSideProps(context) {
-  // File
-  const filePath = path.join(process.cwd(), "public", "final_report.pdf");
-  const dataBuffer = fs.readFileSync(filePath);
-  const document_text = await pdf(dataBuffer).then((data) => {
-    return data.text;
-  });
-
   // Supabase Configs
   const supabase = createPagesServerClient(context);
   const user = await supabase.auth.getUser();
@@ -70,6 +68,16 @@ export async function getServerSideProps(context) {
     .from(`kzor/${user_id}/${folder_id}`)
     .createSignedUrl(document_path, 3600);
 
+  // PDF-Parser
+  let document_text;
+  if (fileURL.signedUrl) {
+    const response = await fetch(fileURL.signedUrl);
+    const arrayBuffer = await response.arrayBuffer();
+    document_text = await pdf(arrayBuffer).then((data) => {
+      return data.text;
+    });
+  }
+
   if (!fileURL) {
     return {
       redirect: {
@@ -80,6 +88,12 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { document_text, chatData, bookmarkData, fileURL, document_id },
+    props: {
+      document_text,
+      chatData,
+      bookmarkData,
+      fileURL,
+      document_id,
+    },
   };
 }
