@@ -42,18 +42,26 @@ function NoteSection() {
   }
   function Note() {
     if (bookmark.length > 0) {
-      return bookmark.map((element, index) => {
+      return bookmark.map((data, index) => {
         return (
-          <div key={index} className=" mb-5 w-[90%] self-start flex px-4 pt-2">
-            <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
-              <h1>{element.content}</h1>
+          <>
+            <div key={index} className=" mb-5 w-[77%] self-start flex">
+              <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
+                {data.content.split("\n").map((element, index) => {
+                  return (
+                    <p key={index}>
+                      {element} <br />
+                    </p>
+                  );
+                })}
+              </div>
+              <div className="flex items-center">
+                <button onClick={() => deleteBookmark(data.chat_id, index)}>
+                  <IconBookmarkOff />
+                </button>
+              </div>
             </div>
-            <div className="flex items-center">
-              <button onClick={() => deleteBookmark(element.chat_id, index)}>
-                <IconBookmarkOff />
-              </button>
-            </div>
-          </div>
+          </>
         );
       });
     } else {

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
+import { uuid } from "uuidv4";
 function ChatSection({ document_id }) {
   const {
     documentData,
@@ -60,14 +61,15 @@ function ChatSection({ document_id }) {
   //     }
   //   }
   // };
-  function updateChat(response, isUser) {
+  function updateChat(response, id, isUser) {
+    console.log(id);
     setChatData((currentState) => [
       ...currentState,
-      { content: response, is_user: isUser },
+      { content: response, is_user: isUser, chat_id: id },
     ]);
   }
 
-  async function updateChatDB(content, isUser) {
+  async function updateChatDB(content, id, isUser) {
     const response = await fetch("/api/chat_db", {
       method: "POST",
       headers: {
@@ -77,6 +79,7 @@ function ChatSection({ document_id }) {
         chat_content: content,
         is_user: isUser,
         doc_id: document_id,
+        openai_id: id,
       }),
     });
   }
@@ -86,9 +89,9 @@ function ChatSection({ document_id }) {
       const message = inputRef.current.value;
 
       // embedding(message, true);
-      updateChat(message, true);
+      updateChat(message, null, true);
       fetchOpenaiResponse(message);
-      updateChatDB(message, true);
+      updateChatDB(message, null, true);
 
       inputRef.current.value = "";
     }
@@ -104,6 +107,7 @@ function ChatSection({ document_id }) {
 
     setChatData(tempChatData);
     setBookmark(tempBookmark);
+    console.log(chatID);
 
     const response = await fetch("/api/chat_db", {
       method: "PUT",
@@ -166,11 +170,11 @@ function ChatSection({ document_id }) {
         return response.json();
       })
       .then((data) => {
-        const formattedReply = data.reply.message.content.split("\n");
-        const id = data.uid;
+        const id = uuid();
+        console.log(id, "from uuid");
         setResponding(false);
-        updateChat(data.reply.message.content, false);
-        updateChatDB(data.reply.message.content, false);
+        updateChat(data.reply.message.content, id, false);
+        updateChatDB(data.reply.message.content, id, false);
       })
       .catch((error) => {
         setResponding(false);

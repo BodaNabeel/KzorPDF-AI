@@ -10,11 +10,18 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
-        const { error } = await supabaseServerClient.from("chat").insert({
+        const chatData = {
           content: body.chat_content,
           is_user: body.is_user,
           document_id: body.doc_id,
-        });
+        };
+        if (body.openai_id) {
+          chatData.chat_id = body.openai_id;
+        }
+
+        const { error } = await supabaseServerClient
+          .from("chat")
+          .insert(chatData);
         return res.status(200).json({ message: "Chat Updated." });
       } catch (error) {
         res.status(500).json({ error: error });

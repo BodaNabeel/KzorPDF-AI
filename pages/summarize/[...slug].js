@@ -50,10 +50,12 @@ export async function getServerSideProps(context) {
   // Chat
   const { data: chatData, error: chatDataError } = await supabase
     .from("chat")
-    .select()
+    .select("*")
+    .order("id", { ascending: true })
     .eq("document_id", document_id)
     .eq("user_id", user_id);
 
+  console.log(chatData);
   // // Bookmark
   const { data: bookmarkData, error: bookmarkDataError } = await supabase
     .from("chat")
@@ -69,7 +71,7 @@ export async function getServerSideProps(context) {
 
   // PDF-Parser
   let document_text;
-  if (fileURL.signedUrl) {
+  if (fileURL?.signedUrl) {
     const response = await fetch(fileURL.signedUrl);
     const arrayBuffer = await response.arrayBuffer();
     document_text = await pdf(arrayBuffer).then((data) => {
