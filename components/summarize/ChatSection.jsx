@@ -21,11 +21,11 @@ function ChatSection({ document_id }) {
   useEffect(() => {
     scrollToBottom();
   }, [chatData]);
-  useEffect(() => {
-    if (documentData) {
-      embedding(documentData, false);
-    }
-  }, [documentData]);
+  // useEffect(() => {
+  //   if (documentData) {
+  //     embedding(documentData, false);
+  //   }
+  // }, [documentData]);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "0px";
@@ -38,28 +38,28 @@ function ChatSection({ document_id }) {
   function scrollToBottom() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
-  const embedding = async (doc, isQuery) => {
-    const response = await fetch("/api/embedding", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: doc,
-      }),
-    });
-    const data = await response.json();
-    if (data.error) {
-    } else {
-      if (isQuery === true) {
-        setEmbeddedQuery(data.data[0].embedding);
-      } else {
-        const temporaryDocEmbedding = [...EmbeddedDocument];
-        temporaryDocEmbedding.push(data.data[0].embedding);
-        setEmbeddedDocument(temporaryDocEmbedding);
-      }
-    }
-  };
+  // const embedding = async (doc, isQuery) => {
+  //   const response = await fetch("/api/embedding", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       input: doc,
+  //     }),
+  //   });
+  //   const data = await response.json();
+  //   if (data.error) {
+  //   } else {
+  //     if (isQuery === true) {
+  //       setEmbeddedQuery(data.data[0].embedding);
+  //     } else {
+  //       const temporaryDocEmbedding = [...EmbeddedDocument];
+  //       temporaryDocEmbedding.push(data.data[0].embedding);
+  //       setEmbeddedDocument(temporaryDocEmbedding);
+  //     }
+  //   }
+  // };
   function updateChat(response, isUser) {
     setChatData((currentState) => [
       ...currentState,
@@ -85,7 +85,7 @@ function ChatSection({ document_id }) {
       setResponding(true);
       const message = inputRef.current.value;
 
-      embedding(message, true);
+      // embedding(message, true);
       updateChat(message, true);
       fetchOpenaiResponse(message);
       updateChatDB(message, true);
@@ -170,7 +170,7 @@ function ChatSection({ document_id }) {
         const id = data.uid;
         setResponding(false);
         updateChat(formattedReply, false);
-
+        console.log(data.reply.message);
         updateChatDB(data.reply.message.content, false);
       })
       .catch((error) => {
@@ -198,6 +198,7 @@ function ChatSection({ document_id }) {
       >
         {chatData?.length > 0 &&
           chatData?.map((data, index) => {
+            const splitText = data.content.split("\n");
             if (!data?.is_user) {
               return (
                 <div
@@ -205,9 +206,16 @@ function ChatSection({ document_id }) {
                   id={data.chat_id}
                   className=" mb-5 w-[77%] self-start flex"
                 >
-                  <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4 ">
-                    <h1>{data.content}</h1>
+                  <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
+                    {splitText.map((element) => {
+                      return (
+                        <p>
+                          {element} <br />
+                        </p>
+                      );
+                    })}
                   </div>
+
                   <div className="flex items-center">
                     {data.is_bookmarked ? (
                       <button
@@ -231,7 +239,7 @@ function ChatSection({ document_id }) {
                   key={index}
                   className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-md px-4 py-4 rounded-tr-none border-[1px]"
                 >
-                  <h1>{data.content}</h1>
+                  <p>{data.content}</p>
                 </div>
               );
             }

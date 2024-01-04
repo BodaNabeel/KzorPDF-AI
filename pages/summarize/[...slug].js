@@ -21,7 +21,6 @@ export default function SummarizePage({
   document_id,
 }) {
   const { setDocumentData, setChatData, setBookmark } = useContext(DataContext);
-  console.log(document_text);
   useEffect(() => {
     if (document_text) {
       setDocumentData(document_text);
