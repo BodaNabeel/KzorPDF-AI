@@ -42,7 +42,7 @@ function Collection(props) {
                   : `hover:bg-gray-100 transition-all duration-300`
               } `}
             >
-              {collection.folder_id === selectedCollection ? (
+              {folder.folder_id === selectedCollection ? (
                 <IconFolderFilled />
               ) : (
                 <IconFolder />
