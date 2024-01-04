@@ -169,8 +169,7 @@ function ChatSection({ document_id }) {
         const formattedReply = data.reply.message.content.split("\n");
         const id = data.uid;
         setResponding(false);
-        updateChat(formattedReply, false);
-        console.log(data.reply.message);
+        updateChat(data.reply.message.content, false);
         updateChatDB(data.reply.message.content, false);
       })
       .catch((error) => {
@@ -198,7 +197,6 @@ function ChatSection({ document_id }) {
       >
         {chatData?.length > 0 &&
           chatData?.map((data, index) => {
-            const splitText = data.content.split("\n");
             if (!data?.is_user) {
               return (
                 <div
@@ -207,15 +205,14 @@ function ChatSection({ document_id }) {
                   className=" mb-5 w-[77%] self-start flex"
                 >
                   <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
-                    {splitText.map((element) => {
+                    {data.content.split("\n").map((element, index) => {
                       return (
-                        <p>
+                        <p key={index}>
                           {element} <br />
                         </p>
                       );
                     })}
                   </div>
-
                   <div className="flex items-center">
                     {data.is_bookmarked ? (
                       <button
