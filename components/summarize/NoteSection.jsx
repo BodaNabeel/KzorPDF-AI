@@ -81,7 +81,11 @@ function NoteSection() {
     }
   }
 
-  return <Note />;
+  return (
+    <div className="px-4">
+      <Note />
+    </div>
+  );
 }
 
 export default NoteSection;
