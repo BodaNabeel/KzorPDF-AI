@@ -6,7 +6,9 @@ function Library(props) {
   const { folderData, documentData } = props;
   const [collection, setCollection] = useState(folderData);
   const [displayPopup, setDisplayPopup] = useState(false);
-  const [selectedCollection, setSelectedCollection] = useState(0);
+  const [selectedCollection, setSelectedCollection] = useState(
+    folderData[0].folder_id
+  );
 
   return (
     <section className="lg:border-[1px] lg:flex border-2 lg:h-[650px] overflow-hidden ">

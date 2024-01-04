@@ -57,7 +57,7 @@ export default async (req, res) => {
         const { error } = await supabaseServerClient
           .from("folder")
           .delete()
-          .eq("folder_id", body.input);
+          .eq("folder_id", body.folder_id);
         if (error) {
           throw new Error("Supabase error");
         }

@@ -61,7 +61,7 @@ function Folder(props) {
 
     const response = await deleteFolder(selectedCollection);
 
-    if (!response) {
+    if (response.status !== 200) {
       setSelectedCollection(tempSelectedCollection);
       setCollection(tempCollection);
       toast.error(
