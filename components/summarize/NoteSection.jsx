@@ -82,7 +82,7 @@ function NoteSection() {
   }
 
   return (
-    <div className="px-4">
+    <div className="px-4 overflow-y-auto">
       <Note />
     </div>
   );
