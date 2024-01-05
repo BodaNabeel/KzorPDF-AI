@@ -11,9 +11,9 @@ export default function Auth() {
     await supabase.auth.signUp({
       email: "bodanabeel001@gmail.com",
       password: "ProductionTest123",
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
+      // options: {
+      //   emailRedirectTo: `${location.origin}/auth/callback`,
+      // },
     });
   };
   const signInUser = async () => {
