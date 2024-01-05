@@ -18,8 +18,8 @@ export default function Auth() {
   };
   const signInUser = async () => {
     await supabaseClient.auth.signInWithPassword({
-      // email: "bodanabeel001@gmail.com",
-      email: "nabeelboda0@gmail.com",
+      email: "bodanabeel001@gmail.com",
+      // email: "nabeelboda0@gmail.com",
       password: "ProductionTest123",
     });
   };

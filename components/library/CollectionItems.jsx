@@ -16,6 +16,7 @@ function Folder(props) {
     selectedCollection,
     setSelectedCollection,
     documentData,
+    selected,
   } = props;
 
   const router = useRouter();
@@ -23,13 +24,13 @@ function Folder(props) {
     router.replace(router.asPath);
   };
 
-  let toDisplayDocument = documentData?.filter(
-    (el) => el.folder_id === selectedCollection
-  );
   const [displayFilesList, setDisplayFilesList] = useState();
   useEffect(() => {
-    setDisplayFilesList(toDisplayDocument);
-  }, [selectedCollection]);
+    const displayItem = documentData?.filter(
+      (element) => element.folder_id === selected
+    );
+    setDisplayFilesList(displayItem);
+  }, [selected]);
 
   const deleteFile = async (documentID, folderID, documentPath) => {
     const tempArr = [...displayFilesList];
@@ -48,10 +49,10 @@ function Folder(props) {
 
   const deleteCollection = async () => {
     const tempCollection = [...collection];
-    const tempSelectedCollection = selectedCollection;
+    const tempSelectedCollection = selected;
     const updateCollection = [...collection];
     updateCollection.map((element, index) => {
-      if (element.folder_id === selectedCollection) {
+      if (element.folder_id === selected) {
         const newFolderId = updateCollection[index - 1]?.folder_id;
         setSelectedCollection(newFolderId);
         updateCollection.splice(index, 1);
@@ -59,7 +60,7 @@ function Folder(props) {
       }
     });
 
-    const response = await deleteFolder(selectedCollection);
+    const response = await deleteFolder(selected);
 
     if (response.status !== 200) {
       setSelectedCollection(tempSelectedCollection);
@@ -71,65 +72,61 @@ function Folder(props) {
   };
 
   function DisplayCollectionItems() {
-    if (!displayFilesList) {
-      return <h1>No items have been found mate</h1>;
-    } else {
-      return (
-        <div className="overflow-y-auto min-h-max max-h-full ">
-          {displayFilesList?.map((element, index) => {
-            return (
+    return (
+      <div className="overflow-y-auto min-h-max max-h-full ">
+        {displayFilesList?.map((element, index) => {
+          return (
+            <div
+              key={index}
+              className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
+            >
               <div
-                key={index}
-                className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
+                className="flex gap-4 hover:text-primary-400 cursor-pointer"
+                onClick={() =>
+                  router.push(
+                    `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
+                  )
+                }
               >
-                <div
-                  className="flex gap-4 hover:text-primary-400 cursor-pointer"
-                  onClick={() =>
-                    router.push(
-                      `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
-                    )
-                  }
-                >
-                  <Image
-                    src="/images/pdf.svg"
-                    height={24}
-                    width={24}
-                    alt="image of pdf"
-                  />
-                  <span>
-                    <p className="font-medium ">{element.document_name}</p>
-                    <p className="text-sm ">
-                      {formattedDate(element.created_at)}
-                    </p>
-                  </span>
-                </div>
-                <span
-                  onClick={() =>
-                    deleteFile(
-                      element.document_id,
-                      element.folder_id,
-                      element.document_path
-                    )
-                  }
-                  className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
-                >
-                  <IconSquareRoundedX />
+                <Image
+                  src="/images/pdf.svg"
+                  height={24}
+                  width={24}
+                  alt="image of pdf"
+                />
+                <span>
+                  <p className="font-medium ">{element.document_name}</p>
+                  <p className="text-sm ">
+                    {formattedDate(element.created_at)}
+                  </p>
                 </span>
               </div>
-            );
-          })}
-        </div>
-      );
-    }
+              <span
+                onClick={() =>
+                  deleteFile(
+                    element.document_id,
+                    element.folder_id,
+                    element.document_path
+                  )
+                }
+                className="text-s_grey-600 cursor-pointer self-center hover:text-s_red-400 transition-all"
+              >
+                <IconSquareRoundedX />
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   return (
     <div className=" lg:w-[75%] min-h-max max-h-full">
-      {selectedCollection ? (
+      {selected ? (
         <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
           <span className=" ">
             <p className="text-lg font-medium">
-              {collection[selectedCollection]?.collectionName}
+              {collection[selected]?.collectionName}
             </p>
             <p className="text-s_grey-600 font-semibold ">
               {displayFilesList?.length}{" "}

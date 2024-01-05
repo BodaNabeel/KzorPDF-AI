@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { IconFolder, IconFolderFilled, IconPlus } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
+import Link from "next/link";
+import { useRouter } from "next/router";
 function Collection(props) {
   const {
     collection,
@@ -8,8 +10,10 @@ function Collection(props) {
     selectedCollection,
     setSelectedCollection,
     folderData,
+    selected,
   } = props;
   const { setOverlay, overlay } = useContext(DataContext);
+  const router = useRouter();
   return (
     <div className="border-r-[1px] lg:w-[25%] min-h-max max-h-full">
       <div className="[&>*]:px-4 mb-5 h-max">
@@ -32,23 +36,41 @@ function Collection(props) {
       <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
         {collection?.map((folder, index) => {
           return (
-            <li
+            // <li
+            //   key={index}
+            //   id={folder.folder_id}
+            //   onClick={() => setSelectedCollection(folder.folder_id)}
+            //   className={`flex gap-2 transition-all ${
+            //     folder.folder_id === selectedCollection
+            //       ? `bg-primary-50 `
+            //       : `hover:bg-gray-100 transition-all duration-300`
+            //   } `}
+            // >
+            //   {folder.folder_id === selectedCollection ? (
+            //     <IconFolderFilled />
+            //   ) : (
+            //     <IconFolder />
+            //   )}
+            //   <p>{folder.folder_name}</p>
+            // </li>
+            <Link
               key={index}
               id={folder.folder_id}
-              onClick={() => setSelectedCollection(folder.folder_id)}
+              // onClick={() => setSelectedCollection(folder.folder_id)}
+              href={`?collection=${folder.folder_id}`}
               className={`flex gap-2 transition-all ${
-                folder.folder_id === selectedCollection
+                folder.folder_id === selected
                   ? `bg-primary-50 `
                   : `hover:bg-gray-100 transition-all duration-300`
               } `}
             >
-              {folder.folder_id === selectedCollection ? (
+              {folder.folder_id === selected ? (
                 <IconFolderFilled />
               ) : (
                 <IconFolder />
               )}
               <p>{folder.folder_name}</p>
-            </li>
+            </Link>
           );
         })}
       </ul>
