@@ -55,7 +55,6 @@ export async function getServerSideProps(context) {
     .eq("document_id", document_id)
     .eq("user_id", user_id);
 
-  console.log(chatData);
   // // Bookmark
   const { data: bookmarkData, error: bookmarkDataError } = await supabase
     .from("chat")

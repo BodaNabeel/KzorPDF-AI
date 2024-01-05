@@ -62,7 +62,6 @@ function ChatSection({ document_id }) {
   //   }
   // };
   function updateChat(response, id, isUser) {
-    console.log(id);
     setChatData((currentState) => [
       ...currentState,
       { content: response, is_user: isUser, chat_id: id },
@@ -107,7 +106,6 @@ function ChatSection({ document_id }) {
 
     setChatData(tempChatData);
     setBookmark(tempBookmark);
-    console.log(chatID);
 
     const response = await fetch("/api/chat_db", {
       method: "PUT",
@@ -171,7 +169,6 @@ function ChatSection({ document_id }) {
       })
       .then((data) => {
         const id = uuid();
-        console.log(id, "from uuid");
         setResponding(false);
         updateChat(data.reply.message.content, id, false);
         updateChatDB(data.reply.message.content, id, false);

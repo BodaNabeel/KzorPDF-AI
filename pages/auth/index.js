@@ -29,7 +29,6 @@ export default function Auth() {
   };
   const getUser = async () => {
     const user = await supabaseClient.auth.getUser();
-    console.log(user);
   };
 
   return (

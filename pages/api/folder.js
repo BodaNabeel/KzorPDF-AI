@@ -17,12 +17,10 @@ export default async (req, res) => {
             .select()
             .eq("user_id", user_id)
             .ilike("folder_name", body.input);
-        console.log(folderData);
         if (folderData.length === 0) {
           const { data, error } = await supabaseServerClient
             .from("folder")
             .insert({ folder_name: body.input });
-          console.log(error);
           if (error) res.status(500).json({ message: error.message });
           return res
             .status(200)
