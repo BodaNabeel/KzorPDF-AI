@@ -7,7 +7,7 @@ function Library(props) {
   const [collection, setCollection] = useState(folderData);
   const [displayPopup, setDisplayPopup] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState(
-    folderData[0].folder_id
+    folderData[0]?.folder_id
   );
 
   return (
