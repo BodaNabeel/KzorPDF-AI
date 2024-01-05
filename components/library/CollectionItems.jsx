@@ -52,7 +52,12 @@ function Folder(props) {
     const updateCollection = [...collection];
     updateCollection.map((element, index) => {
       if (element.folder_id === selectedCollection) {
-        const newFolderId = updateCollection[index - 1]?.folder_id;
+        let newFolderId;
+        if (index === 0) {
+          newFolderId = updateCollection[index + 1]?.folder_id;
+        } else {
+          newFolderId = updateCollection[index - 1]?.folder_id;
+        }
         setSelectedCollection(newFolderId);
         updateCollection.splice(index, 1);
         setCollection(updateCollection);
