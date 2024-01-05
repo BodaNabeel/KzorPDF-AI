@@ -14,7 +14,7 @@ function Summarize({ fileURL, document_id }) {
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
       >
-        <div className=" bg-white flex flex-col  min-h-max max-h-full  ">
+        <div className=" bg-white flex flex-col h-full ">
           {selectedOption === 0 ? (
             <ChatSection document_id={document_id} />
           ) : (
