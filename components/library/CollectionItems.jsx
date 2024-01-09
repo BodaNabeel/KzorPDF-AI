@@ -8,6 +8,7 @@ import { IconTrash } from "@tabler/icons-react";
 import { deleteFileFromStorageDB, deleteFolder } from "../../utils/apiUtils";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Folder(props) {
   const {
@@ -87,13 +88,9 @@ function Folder(props) {
                 key={index}
                 className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
               >
-                <div
+                <Link
+                  href={`/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`}
                   className="flex gap-4 hover:text-primary-400 cursor-pointer"
-                  onClick={() =>
-                    router.push(
-                      `/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`
-                    )
-                  }
                 >
                   <Image
                     src="/images/pdf.svg"
@@ -107,7 +104,7 @@ function Folder(props) {
                       {formattedDate(element.created_at)}
                     </p>
                   </span>
-                </div>
+                </Link>
                 <span
                   onClick={() =>
                     deleteFile(
