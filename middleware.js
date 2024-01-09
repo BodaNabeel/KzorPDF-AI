@@ -16,5 +16,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/library", "/home", "/summarize"],
+  matcher: ["/library", "/home", "/summarize/:document", "/summarize"],
 };
