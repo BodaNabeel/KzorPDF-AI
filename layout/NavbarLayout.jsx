@@ -16,10 +16,8 @@ function NavbarLayout({ children }) {
   const formattedPathName = pathname.replace("/", "");
   const [selectedPath, setSelectedPath] = useState(formattedPathName);
   const assignedRoutes = ["Home", "Library"];
-  // const assignedRoutes = ["Home", "Test", "Summarize PDF"];
   const iconMap = {
     home: IconHome,
-    // test: IconBooks,
     library: IconBooks,
     summarize: IconBolt,
   };

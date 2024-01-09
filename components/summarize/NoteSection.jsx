@@ -45,7 +45,7 @@ function NoteSection() {
       return bookmark.map((data, index) => {
         return (
           <>
-            <div key={index} className=" mb-5 w-[77%] self-start flex">
+            <div key={index} className=" mb-5 lg:w-[77%]  self-start flex">
               <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
                 {data.content.split("\n").map((element, index) => {
                   return (

@@ -191,10 +191,10 @@ function ChatSection({ document_id }) {
   }
 
   return (
-    <div className="flex justify-around flex-col overflow-y-auto h-full ">
+    <div className="flex justify-between flex-col overflow-y-auto h-full ">
       <div
         ref={chatContainerRef}
-        className="overflow-y-auto flex flex-col  px-4 pt-2 min-h-[90%] "
+        className="overflow-y-auto flex flex-col  px-4 pt-2 lg:max-h-[90%] h-[75%]"
       >
         {chatData?.length > 0 &&
           chatData?.map((data, index) => {
@@ -203,9 +203,9 @@ function ChatSection({ document_id }) {
                 <div
                   key={index}
                   id={data.chat_id}
-                  className=" mb-5 w-[77%] self-start flex"
+                  className=" mb-5 lg:w-[77%] self-start flex"
                 >
-                  <div className="bg-[#f9f9fe]  rounded-2xl rounded-tl-none  border-[1px] px-2 py-4">
+                  <div className="bg-[#f9f9fe]  rounded-2xl rounded-tl-none w-[100%]  border-[1px] px-2 py-4">
                     {data.content.split("\n").map((element, index) => {
                       return (
                         <p key={index}>
@@ -235,7 +235,7 @@ function ChatSection({ document_id }) {
               return (
                 <div
                   key={index}
-                  className="bg-primary-400 text-white mb-5 w-[77%] self-end rounded-2xl px-4 py-4 rounded-tr-none border-[1px]"
+                  className="bg-primary-400 text-white mb-5 lg:w-[77%] self-end rounded-2xl px-4 py-4 rounded-tr-none border-[1px]"
                 >
                   <p>{data.content}</p>
                 </div>
