@@ -18,13 +18,13 @@ function HomePage() {
     fetchData();
   }, []);
   return (
-    <>
+    <main className="min-h-screen">
       {overlay ? <ImportFile folders={folders} /> : null}
       <div className="mb-5">
         <h1 className="font-bold text-lg">Welcome, Nabeel</h1>
       </div>
       <Import />
-    </>
+    </main>
   );
 }
 

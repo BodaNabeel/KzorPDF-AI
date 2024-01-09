@@ -16,23 +16,9 @@ export default function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeStart", () => NProgress.start());
   Router.events.on("routeChangeComplete", () => NProgress.done());
   Router.events.on("routeChangeError", () => NProgress.done());
-  // const [supabaseClient] = useState(() => createPagesBrowserClient());
   const [supabaseClient, setSupabaseClient] = useState(
     createPagesBrowserClient()
   );
-  // const [progress, setProgress] = useState(0);
-  // const router = useRouter();
-  // useEffect(() => {
-  //   // START VALUE - WHEN LOADING WILL START
-  //   router.events.on("routeChangeStart", () => {
-  //     setProgress(40);
-  //   });
-
-  //   // COMPLETE VALUE - WHEN LOADING IS FINISHED
-  //   router.events.on("routeChangeComplete", () => {
-  //     setProgress(100);
-  //   });
-  // }, []);
 
   return (
     <SessionContextProvider

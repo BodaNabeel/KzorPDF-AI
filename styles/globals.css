@@ -4,16 +4,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
+/* body {
   min-height: 100vh;
   max-width: max-content;
-}
+} */
 /* textarea */
 .text-area::-webkit-scrollbar {
   width: 8px;
 }
 body {
-  background: white;
+  background-color: white;
+}
+select {
+  background-color: white;
 }
 .text-area::-webkit-scrollbar-track {
   background-color: #e4e4e4;

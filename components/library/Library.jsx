@@ -11,7 +11,7 @@ function Library(props) {
   );
 
   return (
-    <section className="lg:border-[1px] lg:flex border-2 lg:h-[650px] overflow-hidden ">
+    <section className="lg:border-[1px] lg:flex border-2 lg:h-[650px] overflow-hidden h-screen">
       {displayPopup ? (
         <Popup
           setCollection={setCollection}
