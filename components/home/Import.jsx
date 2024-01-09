@@ -20,20 +20,6 @@ function Import() {
           <p className="font-source_sans">IMPORT</p>
         </button>
       </div>
-      {/* <div className="flex gap-4 mt-5 justify-evenly">
-        {features.map((feature, index) => {
-          return (
-            <div key={index} className="bg-white  rounded-xl p-8 ">
-              <h1 className="text-xl font-medium">Chat</h1>
-              <p className="text-sm font text-s_grey-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consectetur, maiores. Fuga repudiandae tenetur rerum rem vitae, 
-                officia eligendi doloribus sequi, dolor numquam excepturi.
-              </p>
-            </div>
-          );
-        })}
-      </div> */}
     </section>
   );
 }

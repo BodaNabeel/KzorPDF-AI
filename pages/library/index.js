@@ -12,17 +12,19 @@ export default function Lib(props) {
 
 export async function getServerSideProps(context) {
   const supabase = createPagesServerClient(context);
-  const user = await supabase.auth.getUser();
-  const user_id = user.data.user.id;
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const { data: folderData, error: folderDataError } = await supabase
     .from("folder")
     .select()
-    .eq("user_id", user_id);
+    .eq("user_id", user.id);
   const { data: documentData, error: documentDataError } = await supabase
     .from("document")
     .select()
-    .eq("user_id", user_id);
+    .eq("user_id", user.id);
 
   return {
     props: {

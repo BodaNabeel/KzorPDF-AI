@@ -5,21 +5,20 @@ import ImportFile from "../import/ImportFile";
 import { DataContext } from "../../context/context";
 import { fetchFolderData } from "../../utils/apiUtils";
 
-function HomePage() {
+function HomePage({ folderData }) {
   const { overlay } = useContext(DataContext);
-  const [folders, setFolders] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const folderDataFromAPI = await fetchFolderData();
-      setFolders(folderDataFromAPI);
-    };
-
-    fetchData();
-  }, []);
+  const [selectedFolder, setSelectedFolder] = useState(
+    folderData.folderData[0].folder_id
+  );
   return (
     <main className="min-h-screen">
-      {overlay ? <ImportFile folders={folders} /> : null}
+      {overlay ? (
+        <ImportFile
+          folderData={folderData}
+          setSelectedFolder={setSelectedFolder}
+          selectedFolder={selectedFolder}
+        />
+      ) : null}
       <div className="mb-5">
         <h1 className="font-bold text-lg">Welcome, Nabeel</h1>
       </div>

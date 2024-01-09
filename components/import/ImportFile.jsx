@@ -7,18 +7,17 @@ import toast from "react-hot-toast";
 import { DataContext } from "../../context/context";
 import { useRouter } from "next/router";
 
-export default function ImportFile({ folders }) {
+export default function ImportFile({
+  folderData,
+  setSelectedFolder,
+  selectedFolder,
+}) {
   const { setOverlay } = useContext(DataContext);
   const [file, setFile] = useState();
-  const [selectedFolder, setSelectedFolder] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const supabaseClient = useSupabaseClient();
 
   const router = useRouter();
-
-  useEffect(() => {
-    folders ? setSelectedFolder(folders[0]?.folder_id) : null;
-  }, []);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -48,12 +47,13 @@ export default function ImportFile({ folders }) {
       <div className="lg:m-10 m-2 mb-5">
         <div>
           <p>SELECT COLLECTION:</p>
+          <p>{selectedFolder}</p>
 
           <select
             onChange={(obj) => setSelectedFolder(obj.target.value)}
             className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md cursor-pointer"
           >
-            {folders?.map((element, index) => {
+            {folderData?.folderData.map((element, index) => {
               return (
                 <option
                   value={element.folder_id}
