@@ -70,7 +70,7 @@ export const deleteFolder = async (folderID) => {
       folder_id: folderID,
     }),
   });
-  return res;
+  return res.status;
 };
 
 export const deleteFileFromStorageDB = async (
@@ -89,5 +89,5 @@ export const deleteFileFromStorageDB = async (
       folder_id: folderID,
     }),
   });
-  return res;
+  return res.status;
 };

@@ -5,7 +5,6 @@ import NavbarLayout from "../../layout/NavbarLayout";
 import { fetchFolderData } from "../../utils/apiUtils";
 import { supabase } from "../../config/supabaseClient";
 export default function Home(folderData) {
-  console.log(folderData);
   return (
     <NavbarLayout>
       <HomePage folderData={folderData} />

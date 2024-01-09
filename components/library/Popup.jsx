@@ -5,21 +5,14 @@ import { ClipLoader, FadeLoader } from "react-spinners";
 import { useRouter } from "next/router";
 function Popup(props) {
   const {
-    collection,
     setCollection,
     displayPopup,
     setDisplayPopup,
     setSelectedCollection,
   } = props;
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
-
   const inputRef = useRef();
   const [folderName, setFolderName] = useState();
   const { setOverlay, overlay } = useContext(DataContext);
-  const [setsuccessResponse, setSetsuccessResponse] = useState(false);
   const [sendingReq, setSendingReq] = useState(false);
   const createCollection = async (folder) => {
     const response = await fetch("/api/folder", {
@@ -39,7 +32,6 @@ function Popup(props) {
     });
     const data = await responseGetData.json();
     if (response.status === 200) {
-      refreshData();
       setFolderName("");
 
       setSendingReq(false);
@@ -60,7 +52,6 @@ function Popup(props) {
     e.preventDefault();
     if (!folderName) {
     } else {
-      // arr.push({ collectionName: folderName, collectionItems: [] });
       createCollection(folderName);
       setSendingReq(true);
     }

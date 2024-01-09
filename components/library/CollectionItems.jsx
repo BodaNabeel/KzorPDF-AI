@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IconSquareRoundedX, IconTrashX } from "@tabler/icons-react";
 import Image from "next/image";
 import { IconCircleMinus } from "@tabler/icons-react";
@@ -9,6 +9,7 @@ import { deleteFileFromStorageDB, deleteFolder } from "../../utils/apiUtils";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { DataContext } from "../../context/context";
 
 function Folder(props) {
   const {
@@ -16,35 +17,35 @@ function Folder(props) {
     setCollection,
     selectedCollection,
     setSelectedCollection,
-    documentData,
+    documents,
+    setDocuments,
   } = props;
 
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
-
-  let toDisplayDocument = documentData?.filter(
-    (el) => el.folder_id === selectedCollection
-  );
   const [displayFilesList, setDisplayFilesList] = useState();
   useEffect(() => {
+    const toDisplayDocument = documents?.filter(
+      (el) => el.folder_id === selectedCollection
+    );
     setDisplayFilesList(toDisplayDocument);
-  }, [selectedCollection]);
+  }, [selectedCollection, documents]);
 
   const deleteFile = async (documentID, folderID, documentPath) => {
-    const tempArr = [...displayFilesList];
+    const tempArr = [...documents];
     const newList = tempArr.filter(
       (element) => element.document_id !== documentID
     );
-    setDisplayFilesList(newList);
-
+    setDocuments(newList);
     const res = await deleteFileFromStorageDB(
       folderID,
       documentID,
       documentPath
     );
-    refreshData();
+    if (res !== 200) {
+      setDocuments(tempArr);
+      toast.error(
+        "An error occurred while deleting the file. Please try again."
+      );
+    }
   };
 
   const deleteCollection = async () => {
@@ -66,8 +67,7 @@ function Folder(props) {
     });
 
     const response = await deleteFolder(selectedCollection);
-
-    if (response.status !== 200) {
+    if (response !== 200) {
       setSelectedCollection(tempSelectedCollection);
       setCollection(tempCollection);
       toast.error(

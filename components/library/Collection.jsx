@@ -7,7 +7,6 @@ function Collection(props) {
     setDisplayPopup,
     selectedCollection,
     setSelectedCollection,
-    folderData,
   } = props;
   const { setOverlay, overlay } = useContext(DataContext);
   return (
