@@ -4,14 +4,12 @@ import Popup from "./Popup";
 import CollectionItems from "./CollectionItems";
 import { DataContext } from "../../context/context";
 function Library(props) {
-  const { folderData } = props;
+  const { selectedFolder } = props;
   // const [collection, setCollection] = useState(folderData);
   const [displayPopup, setDisplayPopup] = useState(false);
   const { documents, setDocuments, folders, setFolders } =
     useContext(DataContext);
-  const [selectedCollection, setSelectedCollection] = useState(
-    folderData[0]?.folder_id
-  );
+  const [selectedCollection, setSelectedCollection] = useState(selectedFolder);
 
   return (
     <section className="lg:border-[1px] lg:flex border-2 lg:h-[650px] overflow-hidden h-screen">

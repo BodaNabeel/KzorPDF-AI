@@ -3,6 +3,7 @@ import { DataContext } from "../../context/context";
 import toast from "react-hot-toast";
 import { ClipLoader, FadeLoader } from "react-spinners";
 import { useRouter } from "next/router";
+import { updateSelectedCollection } from "../../utils/updateSelectedCollection";
 function Popup(props) {
   const {
     setCollection,
@@ -14,6 +15,7 @@ function Popup(props) {
   const [folderName, setFolderName] = useState();
   const { setOverlay, overlay } = useContext(DataContext);
   const [sendingReq, setSendingReq] = useState(false);
+  const router = useRouter();
   const createCollection = async (folder) => {
     const response = await fetch("/api/folder", {
       method: "POST",
@@ -33,7 +35,6 @@ function Popup(props) {
     const data = await responseGetData.json();
     if (response.status === 200) {
       setFolderName("");
-
       setSendingReq(false);
       setOverlay(false);
       setDisplayPopup(false);
@@ -41,7 +42,14 @@ function Popup(props) {
 
       const len = data.length - 1;
       setCollection(data);
-      setSelectedCollection(data[len].folder_id);
+
+      const folderID = data[len].folder_id;
+      // setSelectedCollection(data[len].folder_id);
+      updateSelectedCollection(
+        setSelectedCollection,
+        router,
+        data[len].folder_id
+      );
     }
     if (response.status === 400) {
       toast.error("Folder name already exist");

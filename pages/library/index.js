@@ -4,7 +4,7 @@ import NavbarLayout from "../../layout/NavbarLayout";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../../context/context";
 export default function Lib(props) {
-  const { folderData, documentData } = props;
+  const { folderData, documentData, selectedFolder } = props;
   const { setFolders, setDocuments } = useContext(DataContext);
   useEffect(() => {
     setFolders(folderData);
@@ -13,7 +13,7 @@ export default function Lib(props) {
 
   return (
     <NavbarLayout>
-      <Library folderData={folderData} />
+      <Library selectedFolder={selectedFolder} />
     </NavbarLayout>
   );
 }
@@ -33,11 +33,16 @@ export async function getServerSideProps(context) {
     .from("document")
     .select()
     .eq("user_id", user.id);
+  const selectedFolder = context.query.id
+    ? context.query.id
+    : folderData[0].folder_id;
+  console.log(selectedFolder);
 
   return {
     props: {
       folderData,
       documentData,
+      selectedFolder,
     },
   };
 }

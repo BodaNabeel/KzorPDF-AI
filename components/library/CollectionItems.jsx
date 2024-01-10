@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { DataContext } from "../../context/context";
+import { updateSelectedCollection } from "../../utils/updateSelectedCollection";
 
 function Folder(props) {
   const {
@@ -20,7 +21,7 @@ function Folder(props) {
     documents,
     setDocuments,
   } = props;
-
+  const router = useRouter();
   const [displayFilesList, setDisplayFilesList] = useState();
   useEffect(() => {
     const toDisplayDocument = documents?.filter(
@@ -60,7 +61,8 @@ function Folder(props) {
         } else {
           newFolderId = updateCollection[index - 1]?.folder_id;
         }
-        setSelectedCollection(newFolderId);
+        // setSelectedCollection(newFolderId);
+        updateSelectedCollection(setSelectedCollection, router, newFolderId);
         updateCollection.splice(index, 1);
         setCollection(updateCollection);
       }
@@ -68,7 +70,9 @@ function Folder(props) {
 
     const response = await deleteFolder(selectedCollection);
     if (response !== 200) {
-      setSelectedCollection(tempSelectedCollection);
+      // setSelectedCollection(tempSelectedCollection);
+      updateSelectedCollection(setSelectedCollection, router, tempCollection);
+
       setCollection(tempCollection);
       toast.error(
         "An error occurred while deleting the folder. Please try again."
