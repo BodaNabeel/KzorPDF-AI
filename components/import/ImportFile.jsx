@@ -47,7 +47,6 @@ export default function ImportFile({
       <div className="lg:m-10 m-2 mb-5">
         <div>
           <p>SELECT COLLECTION:</p>
-          <p>{selectedFolder}</p>
 
           <select
             onChange={(obj) => setSelectedFolder(obj.target.value)}
