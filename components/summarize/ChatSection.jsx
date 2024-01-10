@@ -194,7 +194,7 @@ function ChatSection({ document_id }) {
     <div className="flex justify-between flex-col overflow-y-auto h-full ">
       <div
         ref={chatContainerRef}
-        className="overflow-y-auto flex flex-col  px-4 pt-2 lg:max-h-[90%] h-[75%]"
+        className="overflow-y-auto flex flex-col  px-4 pt-2 lg:h-[90%] h-[75%]"
       >
         {chatData?.length > 0 &&
           chatData?.map((data, index) => {
