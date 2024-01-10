@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 function ChatSection({ document_id }) {
   const {
     documentData,
@@ -168,7 +168,7 @@ function ChatSection({ document_id }) {
         return response.json();
       })
       .then((data) => {
-        const id = uuid();
+        const id = uuidv4();
         setResponding(false);
         updateChat(data.reply.message.content, id, false);
         updateChatDB(data.reply.message.content, id, false);
