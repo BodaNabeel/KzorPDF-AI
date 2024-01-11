@@ -36,7 +36,6 @@ export async function getServerSideProps(context) {
   const selectedFolder = context.query.id
     ? context.query.id
     : folderData[0].folder_id;
-  console.log(selectedFolder);
 
   return {
     props: {
