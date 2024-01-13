@@ -67,7 +67,13 @@ export default function IndexPage() {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="input">Prompt</label>
-      <p> {respond}</p>
+      {respond?.split("\n").map((element, index) => {
+        return (
+          <p key={index}>
+            {element} <br />
+          </p>
+        );
+      })}
       <input name="prompt" id="input" ref={ref} />
       <button type="submit">Submit</button>
     </form>
