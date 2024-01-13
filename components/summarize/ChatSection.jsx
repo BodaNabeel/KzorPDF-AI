@@ -150,33 +150,74 @@ function ChatSection({ document_id }) {
       setBookmark(disposalBookmark);
     }
   }
-  async function fetchOpenaiResponse(value) {
-    fetch("/api/chat", {
+  const [responseFromOpenAI, setResponseFromOpenAI] = useState("");
+  async function fetchOpenaiResponse(prompt) {
+    const response = await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: value,
-        doc: documentData,
+        prompt,
       }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          response.statusText;
+    });
+    data = response.body;
+    if (!data) {
+      return;
+    }
+    const onParseGPT = (event) => {
+      if (event.type === "event") {
+        const data = event.data;
+        try {
+          const text = JSON.parse(data).text ?? "";
+          setResponseFromOpenAI((prev) => prev + text);
+        } catch (e) {
+          console.error(e);
         }
-        return response.json();
-      })
-      .then((data) => {
-        const id = uuidv4();
-        setResponding(false);
-        updateChat(data.reply.message.content, id, false);
-        updateChatDB(data.reply.message.content, id, false);
-      })
-      .catch((error) => {
-        setResponding(false);
-      });
+      }
+    };
+    const onParse = onParseGPT;
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    const parser = createParser(onParse);
+    let done = false;
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      parser.feed(chunkValue);
+    }
+    if (done) {
+      console.log(responseFromOpenAI);
+    }
   }
+  // async function fetchOpenaiResponse(value) {
+  //   fetch("/api/chat", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       message: value,
+  //       doc: documentData,
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         response.statusText;
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       const id = uuidv4();
+  //       setResponding(false);
+  //       updateChat(data.reply.message.content, id, false);
+  //       updateChatDB(data.reply.message.content, id, false);
+  //     })
+  //     .catch((error) => {
+  //       setResponding(false);
+  //     });
+  // }
 
   function Loading() {
     return (
