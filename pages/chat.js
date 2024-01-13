@@ -12,6 +12,7 @@ export default function IndexPage() {
 
   const handleSubmit = async (e) => {
     const prompt = ref.current.value;
+    console.log(prompt);
     e.preventDefault();
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -61,7 +62,7 @@ export default function IndexPage() {
       <label htmlFor="input">Prompt</label>
       <p> {respond}</p>
       <input name="prompt" id="input" ref={ref} />
-      <button type={handleSubmit}>Submit</button>
+      <button type="submit">Submit</button>
     </form>
   );
 }
