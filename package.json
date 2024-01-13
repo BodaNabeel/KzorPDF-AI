@@ -20,6 +20,7 @@
     "eventsource-parser": "^1.1.1",
     "fs": "^0.0.1-security",
     "langchain": "^0.0.162",
+    "lottie-web": "^5.12.2",
     "natural": "^6.7.2",
     "next": "13.4.18",
     "next-auth": "^4.24.5",

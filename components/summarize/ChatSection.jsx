@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
-import {} from "../../utils/Header";
 import {
   createParser,
   ParsedEvent,
   ReconnectInterval,
 } from "eventsource-parser";
 import { v4 as uuidv4 } from "uuid";
+import { BeatLoader } from "react-spinners";
 function ChatSection({ document_id }) {
   const {
     documentData,
@@ -156,9 +156,19 @@ function ChatSection({ document_id }) {
     }
   }
   const [responseFromOpenAI, setResponseFromOpenAI] = useState("");
-  function fireResponse() {
-    console.log(responseFromOpenAI);
-  }
+  const [replyRecieved, setReplyRecieved] = useState(false);
+  useEffect(() => {
+    if (replyRecieved) {
+      const id = uuidv4();
+      updateChat(responseFromOpenAI, id, false);
+      updateChatDB(responseFromOpenAI, id, false);
+      setResponseFromOpenAI("");
+
+      setReplyRecieved(false);
+      setResponding(false);
+    }
+  }, [replyRecieved]);
+
   async function fetchOpenaiResponse(prompt) {
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -195,11 +205,7 @@ function ChatSection({ document_id }) {
       const chunkValue = decoder.decode(value);
       parser.feed(chunkValue);
     }
-    if (done) {
-      setResponding(false);
-      console.log("all response recorded");
-      fireResponse();
-    }
+    setReplyRecieved(true);
   }
   // async function fetchOpenaiResponse(value) {
   //   fetch("/api/chat", {
@@ -219,10 +225,10 @@ function ChatSection({ document_id }) {
   //       return response.json();
   //     })
   //     .then((data) => {
-  //       const id = uuidv4();
-  //       setResponding(false);
-  //       updateChat(data.reply.message.content, id, false);
-  //       updateChatDB(data.reply.message.content, id, false);
+  // const id = uuidv4();
+  // setResponding(false);
+  // updateChat(data.reply.message.content, id, false);
+  // updateChatDB(data.reply.message.content, id, false);
   //     })
   //     .catch((error) => {
   //       setResponding(false);
@@ -293,7 +299,10 @@ function ChatSection({ document_id }) {
               );
             }
           })}
-        {responding ? <Loading /> : null}
+        {/* {responding ? <Loading /> : null} */}
+        {responding ? (
+          <BeatLoader color="	#0e3ea4" speedMultiplier={0.3} />
+        ) : null}
       </div>
 
       <div className="flex items-center overflow-hidden  border-2  border-s_grey-50 px-2 py-2 mb-2 rounded-lg shadow-[0px_48px_100px_10px_#110c2e26] mx-5 gap-2 ">
