@@ -2,6 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { IconBookmark, IconSend, IconBookmarkOff } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import {} from "../../utils/Header";
+import {
+  createParser,
+  ParsedEvent,
+  ReconnectInterval,
+} from "eventsource-parser";
 import { v4 as uuidv4 } from "uuid";
 function ChatSection({ document_id }) {
   const {
@@ -161,7 +166,7 @@ function ChatSection({ document_id }) {
         prompt,
       }),
     });
-    data = response.body;
+    const data = response.body;
     if (!data) {
       return;
     }
