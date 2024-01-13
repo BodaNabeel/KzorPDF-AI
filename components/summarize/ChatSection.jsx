@@ -156,6 +156,9 @@ function ChatSection({ document_id }) {
     }
   }
   const [responseFromOpenAI, setResponseFromOpenAI] = useState("");
+  function fireResponse() {
+    console.log(responseFromOpenAI);
+  }
   async function fetchOpenaiResponse(prompt) {
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -193,7 +196,9 @@ function ChatSection({ document_id }) {
       parser.feed(chunkValue);
     }
     if (done) {
-      console.log(responseFromOpenAI);
+      setResponding(false);
+      console.log("all response recorded");
+      fireResponse();
     }
   }
   // async function fetchOpenaiResponse(value) {
