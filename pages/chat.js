@@ -8,6 +8,10 @@ import {
 
 export default function IndexPage() {
   const [respond, setRespond] = useState("");
+  const [isDone, setIsDone] = useState(false);
+  useEffect(() => {
+    isDone ? console.log(respond) : null;
+  }, [isDone]);
 
   const ref = useRef();
 
@@ -56,7 +60,7 @@ export default function IndexPage() {
     }
     if (done) {
       console.log("All response recorded");
-      console.log(respond);
+      setIsDone(true);
     }
   };
 
