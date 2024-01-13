@@ -12,7 +12,6 @@ export default function IndexPage() {
 
   const handleSubmit = async (e) => {
     const prompt = ref.current.value;
-    console.log(prompt);
     e.preventDefault();
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -25,7 +24,7 @@ export default function IndexPage() {
     });
 
     if (!response.ok) {
-      console.log(response.statusText);
+      console.log(response.body);
     }
 
     const data = response.body;
@@ -43,7 +42,7 @@ export default function IndexPage() {
         }
       }
     };
-
+    console.log(respond);
     const onParse = onParseGPT;
     const reader = data.getReader();
     const decoder = new TextDecoder();
