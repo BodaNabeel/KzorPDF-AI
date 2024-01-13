@@ -7,7 +7,7 @@ import {
 } from "eventsource-parser";
 
 export default function IndexPage() {
-  const [respond, setRespond] = useState("yolo");
+  const [respond, setRespond] = useState();
   const ref = useRef();
 
   const handleSubmit = async (e) => {
@@ -42,7 +42,6 @@ export default function IndexPage() {
         }
       }
     };
-    console.log(respond);
     const onParse = onParseGPT;
     const reader = data.getReader();
     const decoder = new TextDecoder();
@@ -53,6 +52,9 @@ export default function IndexPage() {
       done = doneReading;
       const chunkValue = decoder.decode(value);
       parser.feed(chunkValue);
+    }
+    if (done) {
+      console.log(respond);
     }
   };
 
