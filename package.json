@@ -17,6 +17,7 @@
     "ai": "^2.2.31",
     "autoprefixer": "10.4.15",
     "cheerio": "^1.0.0-rc.12",
+    "eventsource-parser": "^1.1.1",
     "fs": "^0.0.1-security",
     "langchain": "^0.0.162",
     "natural": "^6.7.2",
