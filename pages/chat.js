@@ -1,5 +1,5 @@
 import { useChat } from "ai/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   createParser,
   ParsedEvent,
@@ -7,7 +7,13 @@ import {
 } from "eventsource-parser";
 
 export default function IndexPage() {
-  const [respond, setRespond] = useState();
+  const [respond, setRespond] = useState("");
+  const [reply, setReply] = useState("");
+
+  useEffect(() => {
+    console.log(respond);
+  }, [respond]);
+
   const ref = useRef();
 
   const handleSubmit = async (e) => {
@@ -42,6 +48,7 @@ export default function IndexPage() {
         }
       }
     };
+    console.log(respond);
     const onParse = onParseGPT;
     const reader = data.getReader();
     const decoder = new TextDecoder();
@@ -52,9 +59,6 @@ export default function IndexPage() {
       done = doneReading;
       const chunkValue = decoder.decode(value);
       parser.feed(chunkValue);
-    }
-    if (done) {
-      console.log(respond);
     }
   };
 
