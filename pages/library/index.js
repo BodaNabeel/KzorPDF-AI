@@ -33,9 +33,17 @@ export async function getServerSideProps(context) {
     .from("document")
     .select()
     .eq("user_id", user.id);
-  const selectedFolder = context.query.id
-    ? context.query.id
-    : folderData[0].folder_id;
+
+  let selectedFolder;
+  if (context.query.id) {
+    selectedFolder = context.query.id;
+  } else {
+    if (folderData[0]?.folder_id === undefined) {
+      selectedFolder = null;
+    } else {
+      selectedFolder = folderData[0]?.folder_id;
+    }
+  }
 
   return {
     props: {
