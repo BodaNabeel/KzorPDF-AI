@@ -9,7 +9,7 @@ export default function SignUp() {
       options: {
         queryParams: {
           access_type: "offline",
-          //   redirectTo: "https://kzor-pdf-ai.vercel.app/home",
+          redirectTo: "https://kzor-pdf-ai.vercel.app/home",
         },
       },
     });
