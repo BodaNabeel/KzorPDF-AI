@@ -16,16 +16,16 @@ export default function SignUp() {
   };
 
   async function handleLogin() {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          redirectTo: getURL(),
-        },
-      },
-    });
-    // console.log(getURL());
+    // const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     queryParams: {
+    //       access_type: "offline",
+    //       redirectTo: getURL(),
+    //     },
+    //   },
+    // });
+    console.log(getURL());
   }
   return (
     <button
