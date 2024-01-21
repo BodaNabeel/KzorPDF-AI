@@ -11,7 +11,7 @@ export default function SignUp() {
     // Make sure to include `https://` when not localhost.
     url = url.includes("http") ? url : `https://${url}`;
     // Make sure to include a trailing `/`.
-    url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+    url = url.charAt(url.length - 1) === "/home" ? url : `${url}/home`;
     return url;
   };
 
@@ -25,6 +25,7 @@ export default function SignUp() {
         },
       },
     });
+    // console.log(getURL());
   }
   return (
     <button
