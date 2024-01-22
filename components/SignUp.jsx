@@ -11,20 +11,20 @@ export default function SignUp() {
     // Make sure to include `https://` when not localhost.
     url = url.includes("http") ? url : `https://${url}/home`;
     // Make sure to include a trailing `/`.
-    url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+    // url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
     return url;
   };
 
   async function handleLogin() {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          redirectTo: getURL(),
-        },
-      },
-    });
+    // const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     queryParams: {
+    //       access_type: "offline",
+    //       redirectTo: getURL(),
+    //     },
+    //   },
+    // });
     console.log(getURL());
   }
   return (
