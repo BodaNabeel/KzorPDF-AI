@@ -19,10 +19,7 @@ export default function SignUp() {
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
       options: {
-        queryParams: {
-          access_type: "offline",
-          redirectTo: "https://kzor-pdf-ai.vercel.app/home",
-        },
+        redirectTo: "http://localhost:3000/home",
       },
     });
     // console.log(getURL());
