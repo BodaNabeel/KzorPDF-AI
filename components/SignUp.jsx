@@ -2,6 +2,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 
 export default function SignUp() {
+  const supabaseClient = useSupabaseClient();
   const getURL = () => {
     let url =
       process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
