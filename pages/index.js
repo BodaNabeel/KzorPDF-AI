@@ -1,9 +1,6 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { DUMMY_DATA } from "../../DUMMY_DATA";
-import HomePage from "../../components/home/Home";
-import NavbarLayout from "../../layout/NavbarLayout";
-import { fetchFolderData } from "../../utils/apiUtils";
-import { supabase } from "../../config/supabaseClient";
+import HomePage from "../components/home/Home";
+import NavbarLayout from "../layout/NavbarLayout";
 export default function Home(folderData) {
   return (
     <NavbarLayout>
