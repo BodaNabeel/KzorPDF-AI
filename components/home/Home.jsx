@@ -8,7 +8,7 @@ import { fetchFolderData } from "../../utils/apiUtils";
 function HomePage({ folderData }) {
   const { overlay } = useContext(DataContext);
   const [selectedFolder, setSelectedFolder] = useState(
-    folderData.folderData[0].folder_id
+    folderData?.folderData[0].folder_id
   );
   return (
     <main className="min-h-screen">
