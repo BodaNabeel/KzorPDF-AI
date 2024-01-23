@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SignUp from "../../components/SignUp";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 export default function Auth() {
   return (
@@ -30,4 +31,26 @@ export default function Auth() {
       </section>
     </main>
   );
+}
+
+export async function getServerSideProps(context) {
+  const supabase = createPagesServerClient(context);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    return {
+      props: {},
+      redirect: {
+        permanent: false,
+        destination: "/home",
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 }
