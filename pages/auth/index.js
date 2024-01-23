@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SignUp from "../../components/SignUp";
 
 export default function Auth() {
@@ -19,7 +20,14 @@ export default function Auth() {
         </div>
       </section>
 
-      <section className=" lg:w-[50%] bg-[url('/images/abstract.jpg')] bg-cover bg-blend-hue"></section>
+      <section className="lg:w-[50%] relative">
+        <Image
+          className="object-cover object-center h-full w-full"
+          src="/images/abstract.jpg"
+          layout="fill"
+          alt="Image of Abstract"
+        />
+      </section>
     </main>
   );
 }
