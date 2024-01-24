@@ -11,7 +11,7 @@ function SubmitButton({
     <button
       type="submit"
       onClick={allowUpload ? functionSubmit : null}
-      className={` flex gap-2 items-center px-4 py-2 rounded-md transition-all duration-300 ${
+      className={` flex gap-2 items-center px-4 py-2 rounded-md transition-all duration-300 focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-75 ${
         allowUpload && !isUploading
           ? "bg-primary-800 text-primary-100  "
           : "bg-s_grey-100 text-s_grey-600 cursor-not-allowed"

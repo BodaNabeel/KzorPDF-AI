@@ -16,10 +16,10 @@ export default function Dropzone({ file, setFile }) {
 
   return (
     <div
-      className="flex flex-col justify-center items-center cursor-pointer"
+      className="flex flex-col justify-center items-center cursor-pointer focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75"
       {...getRootProps()}
     >
-      <input {...getInputProps()} />
+      <input className="" {...getInputProps()} />
       {file ? (
         <>
           <div className="hidden lg:block">

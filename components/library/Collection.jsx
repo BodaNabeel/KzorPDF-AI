@@ -3,6 +3,7 @@ import { IconFolder, IconFolderFilled, IconPlus } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 import { Router, useRouter } from "next/router";
 import { updateSelectedCollection } from "../../utils/updateSelectedCollection";
+import Link from "next/link";
 function Collection(props) {
   const {
     collection,

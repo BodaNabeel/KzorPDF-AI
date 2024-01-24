@@ -49,7 +49,7 @@ function Navbar() {
               const IconComponent = iconMap[splitedRoute];
               return (
                 <Link
-                  className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start ${
+                  className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start focus:ring-primary-300 transition-all transition-75 ${
                     splitedRoute === selectedPath
                       ? "bg-primary-50 text-primary-700 "
                       : null
@@ -69,9 +69,9 @@ function Navbar() {
             <p className="w-[90%] mb-2">
               Elevate with Premium: Effortlessly import PDFs, plus get 1-month
               free trial. Simplify tasks and boost productivity – make the
-              switch now!
+              switch now
             </p>
-            <button className="bg-white mt-12 py-1 px-3 rounded-md w-[90%]">
+            <button className="bg-white mt-12 py-1 px-3 rounded-md w-[90%] focus:ring-primary-300 transition-all transition-75">
               <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-700 to-primary-300 font-source_sans">
                 Upgrade to Pro
               </h1>

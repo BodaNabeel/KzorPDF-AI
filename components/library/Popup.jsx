@@ -102,7 +102,7 @@ function Popup(props) {
           <div className="flex justify-end gap-5">
             <button
               onClick={(e) => cancelFolder(e)}
-              className="bg-primary-100 text-primary-700 px-4 py-2 rounded-md"
+              className="bg-primary-100 text-primary-700 px-4 py-2 rounded-md focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-75"
             >
               Cancel
             </button>
@@ -110,10 +110,10 @@ function Popup(props) {
             <button
               type="submit"
               onClick={(e) => saveFolder(e)}
-              className={` flex gap-2 items-center px-4 py-2 rounded-md  transition-all duration-300 ${
+              className={`flex gap-2 items-center px-4 py-2 rounded-md transition-all duration-300 focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-75 ${
                 !folderName || sendingReq
-                  ? "bg-s_grey-100 text-s_grey-600 cursor-not-allowed "
-                  : "bg-primary-800 text-primary-100  "
+                  ? "bg-s_grey-100 text-s_grey-600 cursor-not-allowed"
+                  : "bg-primary-800 text-primary-100"
               }`}
             >
               {sendingReq ? (

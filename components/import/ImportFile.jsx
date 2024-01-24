@@ -50,7 +50,7 @@ export default function ImportFile({
 
           <select
             onChange={(obj) => setSelectedFolder(obj.target.value)}
-            className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md cursor-pointer"
+            className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75"
           >
             {folderData?.folderData.map((element, index) => {
               return (
@@ -69,7 +69,7 @@ export default function ImportFile({
       <div className="self-end lg:mr-10 mr-2 flex lg:gap-3 gap-1 pb-3">
         <button
           onClick={() => setOverlay(false)}
-          className="bg-primary-100 text-primary-700 px-2 py-1 lg:px-4 lg:py-2 rounded-md"
+          className="bg-primary-100 text-primary-700 px-2 py-1 lg:px-4 lg:py-2 rounded-md focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75"
         >
           Cancel
         </button>

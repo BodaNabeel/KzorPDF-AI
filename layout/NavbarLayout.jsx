@@ -51,7 +51,7 @@ function NavbarLayout({ children }) {
                 const IconComponent = iconMap[splitedRoute];
                 return (
                   <Link
-                    className={`flex gap-3  py-[5px] px-[10px] rounded-md   items-start ${
+                    className={`flex gap-3  py-[5px] px-[10px] rounded-md items-start focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 ${
                       splitedRoute === selectedPath
                         ? "bg-primary-50 text-primary-700 "
                         : null
@@ -71,33 +71,33 @@ function NavbarLayout({ children }) {
               <p className="w-[90%] mb-2">
                 Elevate with Premium: Effortlessly import PDFs, plus get 1-month
                 free trial. Simplify tasks and boost productivity – make the
-                switch now!
+                switch now
               </p>
-              <button className="bg-white mt-12 py-1 px-3 rounded-md w-[90%]">
+              <button className="bg-white mt-12 py-1 px-3 rounded-md w-[90%] focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75">
                 <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-700 to-primary-300 font-source_sans">
                   Upgrade to Pro
                 </h1>
               </button>
             </div>
             <div className=" m w-[80%] font-medium gap-5 flex flex-col justify-self-end h-full justify-end">
-              <div className="flex gap-3 items-end">
+              <button className="flex gap-3 items-end focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 rounded-md">
                 {
                   <IconDotsCircleHorizontal
                     stroke={1.5}
                     className="h-6 w-6 text-blac"
                   />
                 }
-                <button>Help & Information</button>
-              </div>
-              <div className="flex gap-3 items-end">
+                <p>Help & Information</p>
+              </button>
+              <button className="flex gap-3 items-end focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 rounded-md">
                 {
                   <IconDotsCircleHorizontal
                     stroke={1.5}
                     className="h-6 w-6 text-black"
                   />
                 }{" "}
-                <button>Logout</button>
-              </div>
+                <p>Logout</p>
+              </button>
             </div>
           </div>
         </div>
