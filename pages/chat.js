@@ -9,9 +9,6 @@ import {
 export default function IndexPage() {
   const [respond, setRespond] = useState("");
   const [isDone, setIsDone] = useState(false);
-  useEffect(() => {
-    isDone ? console.log(respond) : null;
-  }, [isDone]);
 
   const ref = useRef();
 
@@ -27,10 +24,6 @@ export default function IndexPage() {
         prompt,
       }),
     });
-
-    if (!response.ok) {
-      console.log(response.body);
-    }
 
     const data = response.body;
     if (!data) {
@@ -59,7 +52,6 @@ export default function IndexPage() {
       parser.feed(chunkValue);
     }
     if (done) {
-      console.log("All response recorded");
       setIsDone(true);
     }
   };

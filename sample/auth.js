@@ -36,7 +36,6 @@ export default function Auth() {
     const {
       data: { user },
     } = await supabaseClient.auth.getUser();
-    console.log(user);
   };
 
   const googleAuth = async () => {

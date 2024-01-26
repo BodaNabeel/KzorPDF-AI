@@ -3,11 +3,7 @@ import { IconUpload } from "@tabler/icons-react";
 import { DataContext } from "../../context/context";
 function Import() {
   const { setOverlay } = useContext(DataContext);
-  const features = [
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam veniam nesciunt eum velit officiis, ",
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam veniam nesciunt ",
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam veniam nesciunt eum velit officiis, suscipit nemo esse qui quas saepe soluta cupiditate",
-  ];
+
   return (
     <button
       onClick={() => setOverlay("bg-[#000000]")}
