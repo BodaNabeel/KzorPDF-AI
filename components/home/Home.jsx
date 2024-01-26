@@ -10,7 +10,6 @@ import {
   IconNotebook,
   IconThumbUpFilled,
 } from "@tabler/icons-react";
-import Timeline from "../Timeline";
 
 function HomePage({ folderData, userName }) {
   const { overlay } = useContext(DataContext);
