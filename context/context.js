@@ -9,6 +9,9 @@ export const DataProvider = ({ children }) => {
   const [bookmark, setBookmark] = useState([]);
   const [folders, setFolders] = useState([]);
   const [documents, setDocuments] = useState([]);
+  const [documentCount, setDocumentCount] = useState(0);
+  const [chatCount, setChatCount] = useState(0);
+  const [bookmarkCount, setBookmarkCount] = useState(0);
   return (
     <DataContext.Provider
       value={{
@@ -24,6 +27,12 @@ export const DataProvider = ({ children }) => {
         setFolders,
         documents,
         setDocuments,
+        documentCount,
+        setDocumentCount,
+        chatCount,
+        setChatCount,
+        bookmarkCount,
+        setBookmarkCount,
       }}
     >
       {children}

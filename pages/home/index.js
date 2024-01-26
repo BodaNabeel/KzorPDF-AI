@@ -1,11 +1,21 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { DUMMY_DATA } from "../../DUMMY_DATA";
 import HomePage from "../../components/home/Home";
 import NavbarLayout from "../../layout/NavbarLayout";
-import { fetchFolderData } from "../../utils/apiUtils";
-import { supabase } from "../../config/supabaseClient";
+import { useContext, useEffect } from "react";
+import { DataContext } from "../../context/context";
+
 export default function Home(props) {
-  const { folderData, userName } = props;
+  const { folderData, userName, documentCount, chatCount, bookmarkCount } =
+    props;
+  const { setDocumentCount, setChatCount, setBookmarkCount } =
+    useContext(DataContext);
+
+  useEffect(() => {
+    setDocumentCount(documentCount);
+    setChatCount(chatCount);
+    setBookmarkCount(bookmarkCount);
+  }, []);
+
   return (
     <NavbarLayout>
       <HomePage folderData={folderData} userName={userName} />
@@ -20,15 +30,35 @@ export async function getServerSideProps(context) {
     data: { user },
   } = await supabase.auth.getUser();
   const userName = user.user_metadata.full_name;
+
   const { data: folderData, error: folderDataError } = await supabase
     .from("collection")
     .select()
     .eq("user_id", user.id);
 
+  const { count: documentCount, error: documentCountError } = await supabase
+    .from("document")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id);
+
+  const { count: chatCount, error: chatCountError } = await supabase
+    .from("chat")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id);
+
+  const { count: bookmarkCount, error: bookmarkCountError } = await supabase
+    .from("chat")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("is_bookmarked", true);
+
   return {
     props: {
       folderData,
       userName,
+      documentCount,
+      chatCount,
+      bookmarkCount,
     },
   };
 }
