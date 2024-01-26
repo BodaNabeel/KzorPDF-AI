@@ -5,11 +5,10 @@ import ImportFile from "../import/ImportFile";
 import { DataContext } from "../../context/context";
 import { fetchFolderData } from "../../utils/apiUtils";
 
-function HomePage({ folderData }) {
+function HomePage({ folderData, userName }) {
   const { overlay } = useContext(DataContext);
-  const [selectedFolder, setSelectedFolder] = useState(
-    folderData?.folderData[0]?.folder_id
-  );
+  const [selectedFolder, setSelectedFolder] = useState(folderData[0].folder_id);
+
   return (
     <main className="min-h-screen">
       {overlay ? (
@@ -20,7 +19,7 @@ function HomePage({ folderData }) {
         />
       ) : null}
       <div className="mb-5">
-        <h1 className="font-bold text-lg">Welcome, Nabeel</h1>
+        <h1 className="font-bold text-lg">Welcome ${userName}</h1>
       </div>
       <Import />
     </main>

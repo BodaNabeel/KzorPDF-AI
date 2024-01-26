@@ -52,7 +52,7 @@ export default function ImportFile({
             onChange={(obj) => setSelectedFolder(obj.target.value)}
             className="mt-1 border-2 border-s_grey-200 w-[60%] text-lg px-2 py-2 rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75"
           >
-            {folderData?.folderData.map((element, index) => {
+            {folderData.map((element, index) => {
               return (
                 <option
                   value={element.folder_id}
