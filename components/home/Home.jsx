@@ -13,7 +13,9 @@ import {
 
 function HomePage({ folderData, userName }) {
   const { overlay } = useContext(DataContext);
-  const [selectedFolder, setSelectedFolder] = useState(folderData[0].folder_id);
+  const [selectedFolder, setSelectedFolder] = useState(
+    folderData[0]?.colelction_id
+  );
 
   return (
     <main className="min-h-screen">
