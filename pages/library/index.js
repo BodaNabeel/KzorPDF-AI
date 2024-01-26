@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   } = await supabase.auth.getUser();
 
   const { data: folderData, error: folderDataError } = await supabase
-    .from("folder")
+    .from("collection")
     .select()
     .eq("user_id", user.id);
   const { data: documentData, error: documentDataError } = await supabase
@@ -38,13 +38,12 @@ export async function getServerSideProps(context) {
   if (context.query.id) {
     selectedFolder = context.query.id;
   } else {
-    if (folderData[0]?.folder_id === undefined) {
+    if (folderData[0]?.collection_id === undefined) {
       selectedFolder = null;
     } else {
-      selectedFolder = folderData[0]?.folder_id;
+      selectedFolder = folderData[0]?.collection_id;
     }
   }
-
   return {
     props: {
       folderData,

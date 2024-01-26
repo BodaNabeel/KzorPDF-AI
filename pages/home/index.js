@@ -21,9 +21,10 @@ export async function getServerSideProps(context) {
   } = await supabase.auth.getUser();
   const userName = user.user_metadata.full_name;
   const { data: folderData, error: folderDataError } = await supabase
-    .from("folder")
+    .from("collection")
     .select()
     .eq("user_id", user.id);
+
   return {
     props: {
       folderData,

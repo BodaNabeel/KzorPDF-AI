@@ -55,11 +55,11 @@ export default function ImportFile({
             {folderData.map((element, index) => {
               return (
                 <option
-                  value={element.folder_id}
+                  value={element.collection_id}
                   className="cursor-pointer"
                   key={index}
                 >
-                  {element.folder_name}
+                  {element.collection_name}
                 </option>
               );
             })}

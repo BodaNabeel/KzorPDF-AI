@@ -28,7 +28,7 @@ export const storeFileToStorage = async (
     .select()
     .eq("user_id", user.id)
     .eq("document_path", formattedFileName)
-    .eq("folder_id", selectedFolder);
+    .eq("collection_id", selectedFolder);
 
   if (documentDB?.length === 0) {
     const { data: dbData, error: db_error } = await supabaseClient
@@ -36,16 +36,17 @@ export const storeFileToStorage = async (
       .upsert({
         document_name: file.name,
         document_path: formattedFileName,
-        folder_id: selectedFolder,
+        collection_id: selectedFolder,
       })
       .select()
       .eq("document_path", formattedFileName)
       .eq("user_id", user.id);
+
     if (dbData) {
       const { data, error } = await supabaseClient.storage
         .from(bucket)
         .upload(
-          `${user.id}/${dbData[0]?.folder_id}/${formattedFileName}`,
+          `${user.id}/${dbData[0]?.collection_id}/${formattedFileName}`,
           file
         );
 
@@ -61,15 +62,16 @@ export const storeFileToStorage = async (
 };
 
 export const deleteFolder = async (folderID) => {
-  const res = await fetch("/api/folder", {
+  const res = await fetch("/api/collection", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      folder_id: folderID,
+      collection_id: folderID,
     }),
   });
+  console.log(res);
   return res.status;
 };
 
@@ -86,7 +88,7 @@ export const deleteFileFromStorageDB = async (
     body: JSON.stringify({
       document_id: documentID,
       document_path: documentPath,
-      folder_id: folderID,
+      collection_id: folderID,
     }),
   });
   return res.status;

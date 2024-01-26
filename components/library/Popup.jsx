@@ -17,7 +17,7 @@ function Popup(props) {
   const [sendingReq, setSendingReq] = useState(false);
   const router = useRouter();
   const createCollection = async (folder) => {
-    const response = await fetch("/api/folder", {
+    const response = await fetch("/api/collection", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ function Popup(props) {
         input: folder,
       }),
     });
-    const responseGetData = await fetch("/api/folder", {
+    const responseGetData = await fetch("/api/collection", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -43,12 +43,10 @@ function Popup(props) {
       const len = data.length - 1;
       setCollection(data);
 
-      const folderID = data[len].folder_id;
-      // setSelectedCollection(data[len].folder_id);
       updateSelectedCollection(
         setSelectedCollection,
         router,
-        data[len].folder_id
+        data[len].collection_id
       );
     }
     if (response.status === 400) {
@@ -56,6 +54,7 @@ function Popup(props) {
       setSendingReq(false);
     }
   };
+
   function saveFolder(e) {
     e.preventDefault();
     if (!folderName) {

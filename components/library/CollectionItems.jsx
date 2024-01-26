@@ -25,7 +25,7 @@ function Folder(props) {
   const [displayFilesList, setDisplayFilesList] = useState();
   useEffect(() => {
     const toDisplayDocument = documents?.filter(
-      (el) => el.folder_id === selectedCollection
+      (el) => el.collection_id === selectedCollection
     );
     setDisplayFilesList(toDisplayDocument);
   }, [selectedCollection, documents]);
@@ -51,17 +51,15 @@ function Folder(props) {
 
   const deleteCollection = async () => {
     const tempCollection = [...collection];
-    const tempSelectedCollection = selectedCollection;
     const updateCollection = [...collection];
     updateCollection.map((element, index) => {
-      if (element.folder_id === selectedCollection) {
+      if (element.collection_id === selectedCollection) {
         let newFolderId;
         if (index === 0) {
-          newFolderId = updateCollection[index + 1]?.folder_id;
+          newFolderId = updateCollection[index + 1]?.collection_id;
         } else {
-          newFolderId = updateCollection[index - 1]?.folder_id;
+          newFolderId = updateCollection[index - 1]?.collection_id;
         }
-        // setSelectedCollection(newFolderId);
         updateSelectedCollection(setSelectedCollection, router, newFolderId);
         updateCollection.splice(index, 1);
         setCollection(updateCollection);
@@ -93,7 +91,7 @@ function Folder(props) {
                 className="flex justify-between px-4 py-2 hover:bg-gray-100 transition-all duration-300 "
               >
                 <Link
-                  href={`/summarize/${element.folder_id}/${element.document_id}/${element.document_path}`}
+                  href={`/summarize/${element.collection_id}/${element.document_id}/${element.document_path}`}
                   className="flex gap-4 hover:text-primary-400 cursor-pointer"
                 >
                   <Image
@@ -113,7 +111,7 @@ function Folder(props) {
                   onClick={() =>
                     deleteFile(
                       element.document_id,
-                      element.folder_id,
+                      element.collection_id,
                       element.document_path
                     )
                   }

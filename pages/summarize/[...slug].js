@@ -43,7 +43,7 @@ export async function getServerSideProps(context) {
   const user_id = user?.data?.user?.id;
 
   //   Path information
-  const folder_id = context.query.slug[0];
+  const collection_id = context.query.slug[0];
   const document_id = context.query.slug[1];
   const document_path = context.query.slug[2];
 
@@ -65,7 +65,7 @@ export async function getServerSideProps(context) {
 
   // Get File Link
   const { data: fileURL, error: fileURLError } = await supabase.storage
-    .from(`kzor/${user_id}/${folder_id}`)
+    .from(`kzor/${user_id}/${collection_id}`)
     .createSignedUrl(document_path, 3600);
 
   // PDF-Parser

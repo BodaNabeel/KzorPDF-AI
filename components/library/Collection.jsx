@@ -14,10 +14,6 @@ function Collection(props) {
   const { setOverlay, overlay } = useContext(DataContext);
   const router = useRouter();
 
-  // function updateSelectedCollection(id) {
-  //   setSelectedCollection(id);
-  //   router.push(`?id=${id}`, undefined, { shallow: true });
-  // }
   return (
     <div className="border-r-[1px] lg:w-[25%] min-h-max max-h-full">
       <div className="[&>*]:px-4 mb-5 h-max">
@@ -42,27 +38,26 @@ function Collection(props) {
           return (
             <li
               key={index}
-              id={folder.folder_id}
-              // onClick={() => setSelectedCollection(folder.folder_id)}
+              id={folder.collection_id}
               onClick={() =>
                 updateSelectedCollection(
                   setSelectedCollection,
                   router,
-                  folder.folder_id
+                  folder.collection_id
                 )
               }
               className={`flex gap-2 transition-all ${
-                folder.folder_id === selectedCollection
+                folder.collection_id === selectedCollection
                   ? `bg-primary-50 `
                   : `hover:bg-gray-100 transition-all duration-300`
               } `}
             >
-              {folder.folder_id === selectedCollection ? (
+              {folder.collection_id === selectedCollection ? (
                 <IconFolderFilled />
               ) : (
                 <IconFolder />
               )}
-              <p>{folder.folder_name}</p>
+              <p>{folder.collection_name}</p>
             </li>
           );
         })}
