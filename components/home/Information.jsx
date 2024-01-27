@@ -15,7 +15,7 @@ function Information() {
     return Object.entries(objective).map(([key, value]) => (
       <div
         key={key}
-        className=" border-2 border-primary-100 lg:px-4 lg:py-2 rounded-lg lg:mr-10 mr-2 p-[5px] m-[2px] lg:mb-0 mb-2 lg:w-fit w-32"
+        className=" border-2 border-primary-100 lg:px-4 lg:py-2 rounded-lg lg:mr-10 mr-2 p-[3px] m-[1px] lg:mb-0 mb-2 lg:w-fit w-32"
       >
         <h3 className="font-semibold lg:mb-2 ">{key}</h3>
         <h2 className="lg:text-3xl font-bold text-primary-700">{value}</h2>
