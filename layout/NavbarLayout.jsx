@@ -27,10 +27,10 @@ function NavbarLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="lg:flex lg:w-screen">
+    <div className="lg:flex lg:w-screen ">
       <Overlay />
 
-      <nav className="drawer lg:drawer-open w-min">
+      <nav className="drawer lg:drawer-open w-min ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center ">
           <label
