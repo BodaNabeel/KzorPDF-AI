@@ -20,7 +20,8 @@ module.exports = {
     // },
     extend: {
       screens: {
-        lg: "800px",
+        lg: "1024px",
+        md: "650px",
       },
       colors: {
         primary: {
