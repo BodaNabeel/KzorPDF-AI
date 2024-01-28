@@ -45,7 +45,9 @@ function NavbarLayout({ children }) {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
           <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
-            <header className="mb-10 font-source_sans">Logo of Company</header>
+            <header className="mb-10 font-source_sans cursor-pointer">
+              Kzor-PDF AI
+            </header>
             <nav className="mb-20 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
               {assignedRoutes.map((route, index) => {
                 const splitedRoute = route.split(" ")[0].toLowerCase();

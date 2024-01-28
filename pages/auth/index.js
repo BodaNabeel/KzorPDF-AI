@@ -7,7 +7,7 @@ export default function Auth() {
     <main className="flex font-sans h-screen">
       <section className="lg:ml-16 lg:mt-5 flex flex-col lg:w-[50%] ">
         <header className="">
-          <h1>Company Logo</h1>
+          <h1>Kzor-PDF AI</h1>
         </header>
         <div className="lg:border-y-[2px] border-t-[2px]    border-primary-300 h-full flex flex-col justify-center items-center mt-8 mb-16 lg:w-[90%]">
           <h2 className="font-bold lg:text-4xl lg:mb-2 text-xl text-primary-700">
