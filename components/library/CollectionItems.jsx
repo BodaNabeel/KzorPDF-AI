@@ -83,7 +83,7 @@ function Folder(props) {
       return <h1>No items have been found mate</h1>;
     } else {
       return (
-        <div className="overflow-y-auto min-h-max max-h-full ">
+        <div className="md:overflow-y-auto md:h-[90%]">
           {displayFilesList?.map((element, index) => {
             return (
               <div
@@ -92,7 +92,7 @@ function Folder(props) {
               >
                 <Link
                   href={`/summarize/${element.collection_id}/${element.document_id}/${element.document_path}`}
-                  className="flex gap-4 hover:text-primary-400 cursor-pointer"
+                  className="flex gap-4 transition-all duration-300  hover:text-primary-400 cursor-pointer"
                 >
                   <Image
                     src="/images/pdf.svg"
@@ -128,9 +128,9 @@ function Folder(props) {
   }
 
   return (
-    <div className=" lg:w-[75%] min-h-max max-h-full">
+    <div className=" lg:w-[75%] md:min-h-max md:max-h-full">
       {selectedCollection ? (
-        <div className="border-b-[1px] flex px-4 py-4  items-center justify-between">
+        <div className="border-b-[1px] flex px-4 py-4 md:h-[10%]  items-center justify-between">
           <span className=" ">
             <p className="text-lg font-medium">
               {collection[selectedCollection]?.collectionName}
