@@ -27,11 +27,6 @@ function ChatSection({ document_id }) {
   useEffect(() => {
     scrollToBottom();
   }, [chatData]);
-  // useEffect(() => {
-  //   if (documentData) {
-  //     embedding(documentData, false);
-  //   }
-  // }, [documentData]);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "0px";
@@ -177,6 +172,7 @@ function ChatSection({ document_id }) {
       },
       body: JSON.stringify({
         prompt,
+        documentData,
       }),
     });
     const data = response.body;

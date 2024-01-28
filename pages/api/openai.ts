@@ -8,18 +8,24 @@ export const config = {
   runtime: "edge",
 };
 
-const handler = async (req: Request): Promise<Response> => {
-  const { prompt } = (await req.json()) as {
+const handler = async (req: Request, res: Response): Promise<Response> => {
+  const { prompt, documentData } = (await req.json()) as {
     prompt?: string;
+    documentData?: string;
   };
-
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
   }
+  const systemContent =
+    `Answer questions from this doc: ${documentData}` ||
+    "Default System Content";
 
   const payload: OpenAIStreamPayload = {
     model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: prompt }],
+    messages: [
+      { role: "system", content: systemContent },
+      { role: "user", content: prompt },
+    ],
     temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,
