@@ -19,6 +19,7 @@ export const storeFileToStorage = async (
   selectedFolder
 ) => {
   const formattedFileName = formatFilename(file.name);
+
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
@@ -29,34 +30,41 @@ export const storeFileToStorage = async (
     .eq("user_id", user.id)
     .eq("document_path", formattedFileName)
     .eq("collection_id", selectedFolder);
+  if (documentDBError) {
+    return { error: documentDBError };
+  }
   if (documentDB?.length === 0) {
-    const { data: dbData, error: db_error } = await supabaseClient
-      .from("document")
-      .upsert({
-        document_name: file.name,
-        document_path: formattedFileName,
-        collection_id: selectedFolder,
-      })
-      .select()
-      .eq("document_path", formattedFileName)
-      .eq("user_id", user.id);
-
-    if (dbData) {
-      const { data, error } = await supabaseClient.storage
+    const { data: storageData, error: storageError } =
+      await supabaseClient.storage
         .from(bucket)
-        .upload(
-          `${user.id}/${dbData[0]?.collection_id}/${formattedFileName}`,
-          file
-        );
+        .upload(`${user.id}/${selectedFolder}/${formattedFileName}`, file);
 
-      return {
-        documentPath: formattedFileName,
-        documentID: dbData[0]?.document_id,
-        folderID: selectedFolder,
-      };
+    if (storageError) {
+      return { error: storageError.message };
+    } else {
+      const { data: dbData, error: dbError } = await supabaseClient
+        .from("document")
+        .upsert({
+          document_name: file.name,
+          document_path: formattedFileName,
+          collection_id: selectedFolder,
+        })
+        .select()
+        .eq("document_path", formattedFileName)
+        .eq("user_id", user.id);
+
+      if (dbError) {
+        return { error: dbError };
+      } else {
+        return {
+          documentPath: formattedFileName,
+          documentID: dbData[0]?.document_id,
+          folderID: selectedFolder,
+        };
+      }
     }
   } else {
-    return false;
+    return { error: "File already exist in the selected collection." };
   }
 };
 

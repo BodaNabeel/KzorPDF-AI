@@ -25,10 +25,10 @@ export default function ImportFile({
     if (res || !res) {
       setIsUploading(false);
     }
-    if (!res) {
-      toast.error("The file name already exist.");
+    if (res.error) {
+      toast.error(res.error);
     }
-    if (res) {
+    if (!res.error) {
       toast.success("File uploaded successfully.");
       setOverlay(false);
       router.push(
