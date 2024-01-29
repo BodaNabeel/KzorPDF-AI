@@ -36,6 +36,7 @@ const handler = async (req: Request, res: Response): Promise<Response> => {
   };
 
   const stream = await OpenAIStream(payload);
+
   return new Response(stream, {
     headers: new Headers({
       "Cache-Control": "no-cache",

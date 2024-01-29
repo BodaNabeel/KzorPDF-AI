@@ -6,7 +6,7 @@ export default function Card({ recentDocuments }) {
   return recentDocuments.map((element, index) => (
     <div
       key={index}
-      className="border-2 border-primary-100  rounded-lg lg:mr-10  w-64  flex flex-col justify-between mb-2 mr-5 lg:h-72 h-60"
+      className="border-2 border-primary-100  rounded-lg   w-64  flex flex-col justify-between mb-2 mr-5 lg:h-72 h-60"
     >
       <p className="text-sm font-bold text-s_grey-700 self-end  mr-3 mt-3">
         {timeDifference(element.created_at)}

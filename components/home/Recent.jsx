@@ -9,7 +9,7 @@ export default function Recent() {
   return (
     <div className="">
       <div className="divider divider-start mb-5">Recent</div>
-      <div className="flex lg:flex-nowrap md:flex-wrap flex-wrap justify-center md:justify-normal md:mx-10 lg:mx-0 w-full">
+      <div className="flex flex-wrap items-center justify-center lg:justify-normal w-full lg:flex-nowrap">
         <Card recentDocuments={recentDocuments} />
       </div>
     </div>

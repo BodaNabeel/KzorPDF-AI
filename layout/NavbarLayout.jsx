@@ -28,15 +28,15 @@ function NavbarLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="lg:flex lg:w-screen ">
+    <div className="md:flex md:w-screen ">
       <Overlay />
 
-      <nav className="drawer lg:drawer-open w-min ">
+      <nav className="drawer md:drawer-open w-min ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center ">
           <label
             htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden w-screen flex justify-start rounded-none bg-[#4865ff] border-none"
+            className="btn btn-primary drawer-button md:hidden w-screen flex justify-start rounded-none bg-[#4865ff] border-none"
           >
             <IconMenu2 stroke={1.5} className="h-6 w-6 text-white left-0" />
           </label>
@@ -44,34 +44,35 @@ function NavbarLayout({ children }) {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
-          <div className="menu p-4 w-80 min-h-screen max-h-max lg:h-screen  text-base-content bg-white items-center flex-nowrap  text-lg ">
-            <header className="mb-10 font-source_sans cursor-pointer">
-              Kzor-PDF AI
-            </header>
-            <nav className="mb-20 flex flex-col w-[80%] gap-5  justify-self-center font-medium">
-              {assignedRoutes.map((route, index) => {
-                const splitedRoute = route.split(" ")[0].toLowerCase();
-                const IconComponent = iconMap[splitedRoute];
-                return (
-                  <Link
-                    className={`flex gap-3  py-[5px] px-[10px] rounded-md items-start focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 ${
-                      splitedRoute === selectedPath
-                        ? "bg-primary-50 text-primary-700 "
-                        : null
-                    }`}
-                    href={`/${splitedRoute}`}
-                    onClick={() => setSelectedPath(splitedRoute)}
-                    key={index}
-                  >
-                    <IconComponent stroke={1.5} />
-
-                    <p>{route}</p>
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="bg-gradient-to-r from-primary-700 to-primary-300  py-10 w-[90%] text-white rounded-md  h-max flex flex-col items-center mb-10">
-              <p className="w-[90%] mb-2">
+          <div className="menu p-4 w-80 min-h-screen max-h-max md:h-screen  text-base-content bg-white justify-between flex-nowrap  text-lg flex ">
+            <div className="w-full flex flex-col justify-between gap-6">
+              <header className="font-source_sans cursor-pointer self-center">
+                Kzor-PDF AI
+              </header>
+              <nav className=" flex flex-col gap-5  justify-self-center font-medium ">
+                {assignedRoutes.map((route, index) => {
+                  const splitedRoute = route.split(" ")[0].toLowerCase();
+                  const IconComponent = iconMap[splitedRoute];
+                  return (
+                    <Link
+                      className={`flex gap-3  py-[5px] px-[10px] rounded-md items-start focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 ${
+                        splitedRoute === selectedPath
+                          ? "bg-primary-50 text-primary-700 "
+                          : null
+                      }`}
+                      href={`/${splitedRoute}`}
+                      onClick={() => setSelectedPath(splitedRoute)}
+                      key={index}
+                    >
+                      <IconComponent stroke={1.5} />
+                      <p>{route}</p>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+            <div className="bg-gradient-to-r from-primary-700 to-primary-300  py-10  text-white rounded-md  h-max flex flex-col items-center ">
+              <p className=" p-2">
                 Elevate with Premium: Effortlessly import PDFs, plus get 1-month
                 free trial. Simplify tasks and boost productivity – make the
                 switch now
@@ -82,7 +83,7 @@ function NavbarLayout({ children }) {
                 </h1>
               </button>
             </div>
-            <div className=" m w-[80%] font-medium gap-5 flex flex-col justify-self-end h-full justify-end">
+            <div className="   font-medium gap-5 flex flex-col ">
               <button className="flex gap-3 items-end focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 rounded-md">
                 {
                   <IconDotsCircleHorizontal
@@ -97,7 +98,7 @@ function NavbarLayout({ children }) {
           </div>
         </div>
       </nav>
-      <main className="lg:w-[80%] lg:justify-self-center lg:self-center lg:mx-auto">
+      <main className="md:w-[80%] md:justify-self-center md:self-center md:mx-auto">
         {children}
       </main>
     </div>
