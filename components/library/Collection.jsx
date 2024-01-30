@@ -33,7 +33,10 @@ function Collection(props) {
         </span>
       </div>
 
-      <ul className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto ">
+      <ul
+        className="[&>*]:px-4 [&>*]:py-2  [&>*:hover]:cursor-pointer text-gray-600  h-[80%] overflow-y-auto 
+      "
+      >
         {collection?.map((folder, index) => {
           return (
             <li

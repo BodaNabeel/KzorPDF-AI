@@ -44,24 +44,22 @@ function NoteSection() {
     if (bookmark.length > 0) {
       return bookmark.map((data, index) => {
         return (
-          <>
-            <div key={index} className=" mb-5 lg:w-[77%]  self-start flex">
-              <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
-                {data.content.split("\n").map((element, index) => {
-                  return (
-                    <p key={index}>
-                      {element} <br />
-                    </p>
-                  );
-                })}
-              </div>
-              <div className="flex items-center">
-                <button onClick={() => deleteBookmark(data.chat_id, index)}>
-                  <IconBookmarkOff />
-                </button>
-              </div>
+          <div key={index} className=" mb-5 lg:w-[77%]  self-start flex">
+            <div className="bg-[#f9f9fe]  rounded-md rounded-tl-none  border-[1px] px-2 py-4">
+              {data.content.split("\n").map((element, index) => {
+                return (
+                  <p key={index}>
+                    {element} <br />
+                  </p>
+                );
+              })}
             </div>
-          </>
+            <div className="flex items-center">
+              <button onClick={() => deleteBookmark(data.chat_id, index)}>
+                <IconBookmarkOff />
+              </button>
+            </div>
+          </div>
         );
       });
     } else {

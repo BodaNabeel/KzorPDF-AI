@@ -28,7 +28,7 @@ function NavbarLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="md:flex md:w-screen ">
+    <div className="md:flex md:w-screen">
       <Overlay />
 
       <nav className="drawer md:drawer-open w-min ">
@@ -44,7 +44,7 @@ function NavbarLayout({ children }) {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
-          <div className="menu p-4 w-80 min-h-screen max-h-max md:h-screen  text-base-content bg-white justify-between flex-nowrap  text-lg flex ">
+          <div className="menu p-4 w-80 min-h-screen max-h-max md:h-screen  bg-white justify-between flex-nowrap  text-lg flex ">
             <div className="w-full flex flex-col justify-between gap-6">
               <header className="font-source_sans cursor-pointer self-center">
                 Kzor-PDF AI
@@ -98,9 +98,7 @@ function NavbarLayout({ children }) {
           </div>
         </div>
       </nav>
-      <main className="md:w-[80%] md:justify-self-center md:self-center md:mx-auto">
-        {children}
-      </main>
+      <main className="w-full">{children}</main>
     </div>
   );
 }

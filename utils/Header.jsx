@@ -7,7 +7,7 @@ export default function Header({
   setSelectedOption,
 }) {
   return (
-    <div className="lg:w-[50%] lg:h-screen">
+    <div className="lg:max-w-[50%]  lg:h-screen">
       <div className="flex gap-5 px-2 py-2 h-[5%]">
         <span
           onClick={() => setSelectedOption(0)}

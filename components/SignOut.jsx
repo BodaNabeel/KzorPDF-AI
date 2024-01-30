@@ -17,7 +17,7 @@ export default function SignOut() {
       onClick={signOut}
       className="flex gap-3 items-end focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-200 transition-all transition-75 rounded-md"
     >
-      {<IconDotsCircleHorizontal stroke={1.5} className="h-6 w-6 text-black" />}{" "}
+      {<IconDotsCircleHorizontal stroke={1.5} className="h-6 w-6" />}{" "}
       <p>Logout</p>
     </button>
   );

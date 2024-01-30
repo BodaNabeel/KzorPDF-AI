@@ -9,6 +9,7 @@
   max-width: max-content;
 } */
 /* textarea */
+
 .text-area::-webkit-scrollbar {
   width: 8px;
 }
@@ -16,6 +17,7 @@ body {
   background-color: white;
   overflow-x: hidden;
   color: black;
+  color-scheme: light;
 }
 select {
   background-color: white;

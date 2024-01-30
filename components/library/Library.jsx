@@ -12,34 +12,34 @@ function Library(props) {
   const [selectedCollection, setSelectedCollection] = useState(selectedFolder);
 
   return (
-    <section className="md:border-[1px] lg:flex border-2 md:h-[650px] overflow-hidden">
-      {displayPopup ? (
-        <Popup
-          setCollection={setFolders}
+    <div className="h-full lg:flex lg:items-center lg:justify-center">
+      <section className="md:border-[1px] lg:flex border-2 lg:h-[600px] overflow-hidden lg:w-[90%]">
+        {displayPopup ? (
+          <Popup
+            setCollection={setFolders}
+            collection={folders}
+            displayPopup={displayPopup}
+            setDisplayPopup={setDisplayPopup}
+            setSelectedCollection={setSelectedCollection}
+          />
+        ) : null}
+        <Collection
           collection={folders}
           displayPopup={displayPopup}
           setDisplayPopup={setDisplayPopup}
+          selectedCollection={selectedCollection}
           setSelectedCollection={setSelectedCollection}
         />
-      ) : null}
-
-      <Collection
-        collection={folders}
-        displayPopup={displayPopup}
-        setDisplayPopup={setDisplayPopup}
-        selectedCollection={selectedCollection}
-        setSelectedCollection={setSelectedCollection}
-      />
-
-      <CollectionItems
-        collection={folders}
-        setCollection={setFolders}
-        selectedCollection={selectedCollection}
-        setSelectedCollection={setSelectedCollection}
-        documents={documents}
-        setDocuments={setDocuments}
-      />
-    </section>
+        <CollectionItems
+          collection={folders}
+          setCollection={setFolders}
+          selectedCollection={selectedCollection}
+          setSelectedCollection={setSelectedCollection}
+          documents={documents}
+          setDocuments={setDocuments}
+        />
+      </section>
+    </div>
   );
 }
 

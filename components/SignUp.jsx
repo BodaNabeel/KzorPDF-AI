@@ -18,7 +18,7 @@ export default function SignUp() {
   return (
     <button
       onClick={handleLogin}
-      className=" lg:w-[50%] w-[90%]  border-[2px] border-primary-300 flex items-center justify-center gap-3 mt-8 py-1 px-5 rounded-md 
+      className="border-[2px] border-primary-300 flex items-center justify-center gap-3 mt-8 py-1 px-5 rounded-md 
       focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-300 transition-75"
     >
       <Image height={17} width={17} src="/images/google.svg" />
