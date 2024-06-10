@@ -21,7 +21,7 @@ const handler = async (req: Request, res: Response): Promise<Response> => {
     "Default System Content";
 
   const payload: OpenAIStreamPayload = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4-turbo",
     messages: [
       { role: "system", content: systemContent },
       { role: "user", content: prompt },
