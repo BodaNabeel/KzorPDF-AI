@@ -22,7 +22,7 @@ const handler = async (req: Request, res: Response): Promise<Response> => {
 
   const payload: OpenAIStreamPayload = {
     // model: "gpt-4-turbo",
-    model: "gpt-3.5-turbo",
+    model: "GPT-4o mini",
     messages: [
       { role: "system", content: systemContent },
       { role: "user", content: prompt },
